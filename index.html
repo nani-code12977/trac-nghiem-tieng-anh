@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ Thống Luyện Thi & Kiểm Tra Ngữ Pháp Tiếng Anh</title>
+  <style>
+    :root {
+      --bg-main: #f4f7fb;
+      --bg-card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --success-border: #34d399;
+      --danger: #ef4444;
+      --danger-bg: #fef2f2;
+      --danger-border: #f87171;
+      --warning: #f59e0b;
+      --warning-bg: #fffbeb;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* Header & Sticky Bar */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--primary);
+    }
+
+    .mode-tabs {
+      display: flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 10px;
+      gap: 4px;
+    }
+
+    .mode-tab {
+      border: none;
+      background: transparent;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-tab.active {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Sub-toolbar */
+    .toolbar {
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+    }
+
+    .toolbar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.9rem;
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      font-size: 0.9rem;
+      color: var(--text-main);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background: var(--bg-card);
+      border-color: var(--border);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #059669;
+    }
+
+    .status-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    .pill.green {
+      background: var(--success-bg);
+      color: #065f46;
+      border: 1px solid var(--success-border);
+    }
+
+    .pill.red {
+      background: var(--danger-bg);
+      color: #991b1b;
+      border: 1px solid var(--danger-border);
+    }
+
+    .pill.blue {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    /* Question Cards */
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s ease;
+    }
+
+    .question-card.card-correct {
+      border-color: var(--success-border);
+    }
+
+    .question-card.card-wrong {
+      border-color: var(--danger-border);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .q-number {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .q-badge {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .q-badge.correct {
+      background: var(--success-bg);
+      color: #047857;
+    }
+
+    .q-badge.wrong {
+      background: var(--danger-bg);
+      color: #b91c1c;
+    }
+
+    .q-badge.unanswered {
+      background: var(--warning-bg);
+      color: #b45309;
+    }
+
+    .q-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 0.96rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    /* Exam mode selected */
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .option-btn.selected .opt-letter {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Correct & Wrong highlighting */
+    .option-btn.is-correct {
+      border-color: var(--success) !important;
+      background: var(--success-bg) !important;
+      color: #065f46 !important;
+      font-weight: 600;
+    }
+
+    .option-btn.is-correct .opt-letter {
+      background: var(--success) !important;
+      color: #ffffff !important;
+    }
+
+    .option-btn.is-wrong {
+      border-color: var(--danger) !important;
+      background: var(--danger-bg) !important;
+      color: #991b1b !important;
+      font-weight: 600;
+    }
+
+    .option-btn.is-wrong .opt-letter {
+      background: var(--danger) !important;
+      color: #ffffff !important;
+    }
+
+    /* Exam Submit Footer */
+    .exam-footer {
+      margin-top: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-submit-lg {
+      padding: 12px 28px;
+      font-size: 1rem;
+    }
+
+    /* Results / Statistics Dashboard */
+    .stats-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .score-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 6px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+    }
+
+    .score-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+
+    .score-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .stat-card {
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+    }
+
+    .stat-card .val {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .stat-card .lbl {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .brand {
+        justify-content: center;
+      }
+      .mode-tabs {
+        justify-content: center;
+      }
+      .question-card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span>📘 Hệ Thống Luyện Thi Ngữ Pháp Tiếng Anh</span>
+      </div>
+      <div class="mode-tabs">
+        <button id="tabPractice" class="mode-tab active" onclick="switchMode('practice')">Chế độ Ôn tập</button>
+        <button id="tabExam" class="mode-tab" onclick="switchMode('exam')">Chế độ Làm đề</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="toolbar-inner">
+        <div class="controls-group">
+          <label for="questionCountSelect"><strong>Số câu hỏi:</strong></label>
+          <select id="questionCountSelect" onchange="initSession()">
+            <option value="20">20 câu ngẫu nhiên</option>
+            <option value="40" selected>40 câu ngẫu nhiên</option>
+            <option value="60">60 câu ngẫu nhiên</option>
+            <option value="100">100 câu ngẫu nhiên</option>
+            <option value="200">200 câu ngẫu nhiên</option>
+            <option value="400">Toàn bộ ngân hàng (400 câu)</option>
+          </select>
+          <button class="btn btn-outline" onclick="initSession()">🔄 Đổi bộ câu hỏi mới</button>
+        </div>
+
+        <!-- Status in Practice Mode -->
+        <div id="practiceStats" class="status-pills">
+          <span class="pill blue" id="pracProgress">Đã làm: 0/40</span>
+          <span class="pill green" id="pracCorrect">Đúng: 0</span>
+          <span class="pill red" id="pracWrong">Sai: 0</span>
+        </div>
+
+        <!-- Status in Exam Mode -->
+        <div id="examStats" class="status-pills hidden">
+          <span class="pill blue" id="examProgress">Đã chọn: 0/40</span>
+          <span class="pill" id="examTimer">⏱ 00:00</span>
+          <button id="topSubmitBtn" class="btn btn-success" onclick="submitExam()">Nộp bài</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Statistics View (Only visible after submitting Exam) -->
+    <section id="statsSection" class="hidden">
+      <div class="stats-box">
+        <div class="score-circle">
+          <div class="score-num" id="finalScore10">0.0</div>
+          <div class="score-label">THANG ĐIỂM 10</div>
+        </div>
+        <h2 id="resultHeadline" style="margin-bottom: 6px;">Kết quả bài làm</h2>
+        <p id="resultSubtext" style="color: var(--text-muted); font-size: 0.95rem;"></p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="val" id="statTotal">0</div>
+            <div class="lbl">Tổng số câu</div>
+          </div>
+          <div class="stat-card" style="border-color: var(--success-border); background: var(--success-bg);">
+            <div class="val" style="color: #047857;" id="statCorrect">0</div>
+            <div class="lbl" style="color: #065f46;">Câu làm đúng</div>
+          </div>
+          <div class="stat-card" style="border-color: var(--danger-border); background: var(--danger-bg);">
+            <div class="val" style="color: #b91c1c;" id="statWrong">0</div>
+            <div class="lbl" style="color: #991b1b;">Câu làm sai</div>
+          </div>
+          <div class="stat-card" style="border-color: #fde68a; background: var(--warning-bg);">
+            <div class="val" style="color: #b45309;" id="statUnanswered">0</div>
+            <div class="lbl" style="color: #92400e;">Chưa chọn</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-submit-lg" onclick="initSession()">📝 Làm lại đề mới</button>
+      </div>
+
+      <div class="filter-bar">
+        <h3>Chi tiết bài làm</h3>
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="filterReview('all', this)">Tất cả</button>
+          <button class="filter-btn" onclick="filterReview('wrong', this)">Câu sai & Chưa làm</button>
+          <button class="filter-btn" onclick="filterReview('correct', this)">Câu làm đúng</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Questions List -->
+    <section id="questionsContainer" class="question-list"></section>
+
+    <!-- Bottom Submit Bar for Exam Mode -->
+    <div id="examFooter" class="exam-footer hidden">
+      <div>
+        <strong>Hoàn thành bài thi?</strong>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Kiểm tra kỹ các đáp án trước khi bấm Nộp bài để xem điểm và đáp án chi tiết.</p>
+      </div>
+      <button class="btn btn-success btn-submit-lg" onclick="submitExam()">✅ Nộp bài & Chấm điểm</button>
+    </div>
+  </main>
+
+  <script>
+    /*
+     * NGÂN HÀNG 400 CÂU HỎI TRẮC NGHIỆM (UNITS 1 - 10)
+     * Cấu trúc mỗi phần tử: [Câu hỏi, Đáp án ĐÚNG, Phương án nhiễu 1, Phương án nhiễu 2, Phương án nhiễu 3]
+     * Khi hiển thị, thuật toán sẽ tự động trộn thứ tự cả câu hỏi lẫn 4 đáp án A, B, C, D.
+     */
+    const RAW_QUESTIONS = [
+      // --- SET 1 ---
+      ["Water ___ at 100 degrees Celsius under standard atmospheric pressure.", "boils", "is boiling", "boiled", "has boiled"],
+      ["Look! The bus ___. We need to hurry up or we will miss it.", "is coming", "comes", "came", "has come"],
+      ["My father usually ___ coffee in the morning, but today he is drinking tea.", "drinks", "is drinking", "drank", "has drunk"],
+      ["The express train to London ___ at 7:45 AM every Tuesday.", "leaves", "is leaving", "left", "has left"],
+      ["Be quiet, please! The baby ___ in the next room right now.", "is sleeping", "sleeps", "slept", "has slept"],
+      ["She ___ three languages fluently: English, French, and Spanish.", "speaks", "is speaking", "spoke", "speaking"],
+      ["I ___ what you mean right now, so you don't need to explain it again.", "understand", "am understanding", "understood", "have understood"],
+      ["This vintage dictionary ___ to my grandfather.", "belongs", "is belonging", "belonged", "has belonged"],
+      ["Right now, my sister ___ about changing her job because she feels stressed.", "is thinking", "thinks", "thought", "has thought"],
+      ["I ___ that learning foreign languages is essential for young people.", "think", "am thinking", "was thinking", "have thought"],
+      ["Why ___ the soup? Is there something wrong with the seasoning?", "are you tasting", "do you taste", "did you taste", "have you tasted"],
+      ["This homemade strawberry jam ___ wonderful!", "tastes", "is tasting", "tasted", "has tasted"],
+      ["Mr. Miller ___ a spacious house in the suburbs and two electric cars.", "has", "is having", "had had", "having"],
+      ["Can you call back in twenty minutes? We ___ dinner with our guests at the moment.", "are having", "have", "had", "have had"],
+      ["He ___ very tired today because he worked late last night.", "seems", "is seeming", "seemed to be", "was seeming"],
+      ["Do you ___ the name of the hotel where we stayed two years ago?", "remember", "remembering", "are remembering", "remembered"],
+      ["At the moment, the engineers ___ a new bridge across the river.", "are building", "build", "built", "have built"],
+      ["My brother ___ in a small apartment in Hanoi until his new house is ready.", "is living", "lives", "lived", "has lived"],
+      ["Vegetarians are people who ___ meat or fish.", "do not eat", "are not eating", "did not eat", "have not eaten"],
+      ["Listen! Someone ___ the piano upstairs.", "is playing", "plays", "played", "has played"],
+      ["Why ___ my jacket without asking me first? You always do that!", "are you wearing", "do you wear", "did you wear", "have you worn"],
+      ["The Earth ___ around the Sun once every 365.25 days.", "revolves", "is revolving", "revolved", "has revolved"],
+      ["She ___ any help with her luggage right now.", "doesn't need", "isn't needing", "didn't need", "hasn't needed"],
+      ["How often ___ to the dentist for a routine check-up?", "do you go", "are you going", "did you go", "have you gone"],
+      ["Currently, gas prices ___ rapidly all over the world.", "are rising", "rise", "rose", "have risen"],
+      ["I ___ your excuse; it sounds completely made up.", "don't believe", "am not believing", "didn't believe", "haven't believed"],
+      ["Our flight ___ from Gate 14 at 9:15 tomorrow morning according to the schedule.", "departs", "is departing", "departed", "has departed"],
+      ["Who ___ that luxury sports car parked in front of the pharmacy?", "owns", "is owning", "owned", "has owned"],
+      ["The chef ___ the sauce right now to see if it needs more salt.", "is tasting", "tastes", "tasted", "has tasted"],
+      ["Most students ___ nervous before taking an important final examination.", "feel", "are feeling", "felt", "have felt"],
+      ["My parents ___ playing badminton in the park every Sunday morning.", "enjoy", "decide", "hope", "plan"],
+      ["The driver managed ___ the car just in time to avoid hitting the dog.", "to stop", "stopping", "stop", "stopped"],
+      ["Would you mind ___ the window? It's getting quite chilly in here.", "closing", "to close", "close", "closed"],
+      ["They have decided ___ their summer vacation in Da Nang this year.", "to spend", "spending", "spend", "spent"],
+      ["You should avoid ___ too much coffee late in the evening.", "drinking", "to drink", "drink", "drank"],
+      ["My uncle promised ___ me a new laptop if I passed the entrance exam.", "to buy", "buying", "buy", "bought"],
+      ["Have you finished ___ the report that the manager requested?", "writing", "to write", "write", "wrote"],
+      ["She suggested ___ to the art museum instead of watching a movie.", "going", "to go", "go", "went"],
+      ["We can't afford ___ a brand-new car right now, so we'll buy a used one.", "to buy", "buying", "buy", "bought"],
+      ["He refused ___ any questions without his lawyer present.", "to answer", "answering", "answer", "answered"],
+
+      // --- SET 2 ---
+      ["I really look forward to ___ from you soon.", "hearing", "hear", "to hear", "heard"],
+      ["She spends two hours every evening ___ English pronunciation.", "practising", "to practise", "practise", "practised"],
+      ["When I was walking home, I stopped ___ some bread at the bakery.", "to buy", "buying", "buy", "bought"],
+      ["The doctor advised him to stop ___ immediately for the sake of his lungs.", "smoking", "to smoke", "smoke", "smoked"],
+      ["Please remember ___ all the lights before you leave the office.", "to lock", "locking", "lock", "locked"],
+      ["I clearly remember ___ the front door this morning, so nobody could have walked in.", "locking", "to lock", "lock", "locked"],
+      ["I will never forget ___ the Eiffel Tower for the very first time in 2018.", "seeing", "to see", "see", "saw"],
+      ["Don't forget ___ your umbrella because it looks like it's going to rain.", "to take", "taking", "take", "took"],
+      ["If the soup is too bland, try ___ a little lemon juice and black pepper.", "adding", "to add", "add", "added"],
+      ["The firefighters tried ___ the burning warehouse, but the flames were too strong.", "to save", "saving", "save", "saved"],
+      ["My roommate keeps ___ his dirty dishes in the sink, which annoys me.", "leaving", "to leave", "leave", "left"],
+      ["Do you fancy ___ out for Italian food tonight?", "going", "to go", "go", "went"],
+      ["I can't stand ___ in long queues at the supermarket on weekends.", "waiting", "to wait", "wait", "waited"],
+      ["No one could help ___ when the comedian told that hilarious joke.", "laughing", "to laugh", "laugh", "laughed"],
+      ["After three months of trying, he finally gave up ___ sugar in his tea.", "putting", "to put", "put", "puts"],
+      ["We expect ___ the project results by the end of this week.", "to receive", "receiving", "receive", "received"],
+      ["My little brother is learning ___ a bicycle without training wheels.", "to ride", "riding", "ride", "rode"],
+      ["She offered ___ me carry those heavy boxes up to the third floor.", "to help", "helping", "help", "helped"],
+      ["Can you imagine ___ on Mars without fresh air and green trees?", "living", "to live", "live", "lived"],
+      ["Unfortunately, he failed ___ the driving test on his first attempt.", "to pass", "passing", "pass", "passed"],
+      ["I would like ___ a table for four people at 7:30 PM, please.", "to book", "booking", "book", "booked"],
+      ["They agreed ___ the profits equally among all team members.", "to divide", "dividing", "divide", "divided"],
+      ["It started ___ heavily just as we stepped out of the theater.", "to rain", "rain", "rained", "rains"],
+      ["She plans ___ a master's degree in economics next autumn.", "to pursue", "pursuing", "pursue", "pursued"],
+      ["I don't mind ___ overtime if the company pays me fairly.", "working", "to work", "work", "worked"],
+      ["Mozart ___ more than 600 pieces of music before his death in 1791.", "composed", "has composed", "composes", "was composing"],
+      ["Where ___ your summer holidays last year?", "did you spend", "have you spent", "do you spend", "were you spending"],
+      ["We ___ the movie last night because we arrived at the cinema too late.", "didn't see", "haven't seen", "don't see", "weren't seeing"],
+      ["At 8 o'clock yesterday evening, I ___ for my final history exam.", "was studying", "studied", "have studied", "study"],
+      ["While my mother ___ dinner, my father was fixing the kitchen sink.", "was cooking", "cooked", "is cooking", "has cooked"],
+      ["I ___ down the street when I suddenly bumped into my old high school teacher.", "was walking", "walked", "have walked", "am walking"],
+      ["What ___ when the power went out across the neighborhood last night?", "were you doing", "did you do", "have you done", "do you do"],
+      ["When we arrived at the party, everyone ___ happily to the music.", "was dancing", "danced", "has danced", "dances"],
+      ["He broke his wrist while he ___ basketball with his classmates yesterday.", "was playing", "played", "is playing", "has played"],
+      ["The Titanic ___ the Atlantic Ocean when it struck a massive iceberg in 1912.", "was crossing", "crossed", "has crossed", "crosses"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "wanted", "played", "opened", "lived"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "watched", "cleaned", "stayed", "arrived"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "needed", "stopped", "laughed", "washed"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "cleaned", "worked", "helped", "kissed"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "decided", "cooked", "finished", "looked"],
+
+      // --- SET 3 ---
+      ["Choose the word whose ending '-ed' is pronounced /ɪd/:", "invited", "watched", "repaired", "missed"],
+      ["Choose the word whose ending '-ed' is pronounced /t/:", "coughed", "Robbed", "visited", "travelled"],
+      ["Choose the word whose ending '-ed' is pronounced /d/:", "smiled", "painted", "pushed", "fixed"],
+      ["Yesterday morning, I got up early, brushed my teeth, and ___ a quick breakfast.", "had", "was having", "have had", "have"],
+      ["She ___ asleep while she was reading an English novel on the sofa.", "fell", "was falling", "falls", "has fallen"],
+      ["They ___ in Paris from 2012 to 2017 before moving to Berlin.", "lived", "have lived", "were living", "live"],
+      ["While the teacher ___ the lesson, two students at the back were whispering.", "was explaining", "explained", "is explaining", "has explained"],
+      ["Did you ___ the thunderstorm that hit our town last Tuesday night?", "hear", "heard", "hearing", "were hearing"],
+      ["Why ___ at the meeting yesterday afternoon?", "weren't you", "didn't you be", "haven't you been", "aren't you"],
+      ["As I ___ the road, a cyclist nearly knocked me over.", "was crossing", "crossed", "have crossed", "cross"],
+      ["The children were playing in the garden when it suddenly ___ to hail.", "began", "was beginning", "begins", "has begun"],
+      ["Alexander Graham Bell ___ the telephone in 1876.", "invented", "was inventing", "has invented", "invents"],
+      ["My grandfather ___ a soldier during the war sixty years ago.", "was", "has been", "were", "had been"],
+      ["I called you three times yesterday afternoon, but you ___ the phone.", "didn't answer", "weren't answering", "haven't answered", "don't answer"],
+      ["While Anna was vacuuming the living room, Tom ___ the windows.", "was washing", "washed", "is washing", "has washed"],
+      ["Would you like ___ more iced tea before we order dessert?", "some", "any", "many", "a few"],
+      ["There isn't ___ milk left in the refrigerator for tomorrow's breakfast.", "any", "some", "many", "a few"],
+      ["Can I have ___ water, please? I'm extremely thirsty after the run.", "some", "any", "many", "few"],
+      ["How ___ luggage are you allowed to take on a domestic flight?", "much", "many", "few", "a few"],
+      ["How ___ chairs do we need to set up for the conference room?", "many", "much", "little", "a little"],
+      ["He doesn't have ___ patience when dealing with rude customers.", "much", "many", "a few", "few"],
+      ["We only have ___ minutes left before the exam ends, so write quickly!", "a few", "a little", "much", "any"],
+      ["Could you add ___ sugar to my espresso? Just half a spoonful.", "a little", "a few", "many", "few"],
+      ["Very ___ people attended the midnight screening because of the heavy storm.", "few", "little", "much", "a little"],
+      ["There is ___ hope of finding the lost ring in such a huge beach.", "little", "few", "many", "a few"],
+      ["She has made ___ friends since she transferred to this university.", "a lot of", "much", "a little", "little"],
+      ["Are there ___ vegetarian dishes on the restaurant menu tonight?", "any", "some", "much", "a little"],
+      ["You can take ___ bus from this station; they all go directly to the city center.", "any", "some", "many", "a few"],
+      ["I need ___ information about the scholarship application procedure.", "some", "many", "a few", "few"],
+      ["Don't worry, we still have ___ eggs in the basket to make an omelet.", "a few", "a little", "much", "little"],
+      ["He speaks ___ Spanish, so it is hard for him to communicate in Madrid.", "little", "few", "many", "a few"],
+      ["Fortunately, there was ___ traffic on the highway this morning.", "little", "few", "many", "a few"],
+      ["My uncle bought ___ antique furniture for his new living room.", "a lot of", "many", "a few", "few"],
+      ["There weren't ___ tourists at the museum on Monday morning.", "many", "much", "a little", "little"],
+      ["I have ___ free time this afternoon; let's grab a cup of coffee together.", "a little", "a few", "many", "few"],
+      ["It took us more than ___ hour to find a parking space near the stadium.", "an", "a", "the", "Ø (no article)"],
+      ["His sister is studying law at ___ university in the north of England.", "a", "an", "the", "Ø (no article)"],
+      ["To everyone's surprise, ___ honest man returned the wallet full of cash.", "an", "a", "the", "Ø (no article)"],
+      ["She bought ___ umbrella and a raincoat before heading out.", "an", "a", "the", "Ø (no article)"],
+      ["All students at this high school have to wear ___ uniform on Mondays.", "a", "an", "the", "Ø (no article)"],
+
+      // --- SET 4 ---
+      ["I saw a cat and a dog in the yard. ___ cat was chasing a butterfly.", "The", "A", "An", "Ø (no article)"],
+      ["___ Sun rises in the east and sets in the west.", "The", "A", "An", "Ø (no article)"],
+      ["My brother learned to play ___ guitar when he was only ten years old.", "the", "a", "an", "Ø (no article)"],
+      ["The boys often play ___ football in the schoolyard after classes.", "Ø (no article)", "the", "a", "an"],
+      ["What time do you usually have ___ breakfast on weekdays?", "Ø (no article)", "a", "the", "an"],
+      ["___ Pacific Ocean is the largest and deepest ocean on Earth.", "The", "A", "An", "Ø (no article)"],
+      ["Have you ever been to ___ Netherlands during the tulip season?", "the", "a", "an", "Ø (no article)"],
+      ["She went to ___ France last summer to improve her culinary skills.", "Ø (no article)", "the", "a", "an"],
+      ["Mount Blanc is the highest peak in ___ Alps.", "the", "a", "an", "Ø (no article)"],
+      ["This is ___ best documentary about wildlife I have ever watched.", "the", "a", "an", "Ø (no article)"],
+      ["___ life would be much harder without electricity and clean water.", "Ø (no article)", "The", "A", "An"],
+      ["He works as ___ architect for a multinational construction company.", "an", "a", "the", "Ø (no article)"],
+      ["___ United Kingdom consists of England, Scotland, Wales, and Northern Ireland.", "The", "A", "An", "Ø (no article)"],
+      ["In which of the following phrases is 'the' pronounced as /ðiː/?", "the apple", "the banana", "the university", "the teacher"],
+      ["In which of the following phrases is 'the' pronounced as /ðiː/?", "the hour", "the house", "the uniform", "the European Union"],
+      ["In which of the following phrases is 'the' pronounced as /ðə/?", "the uniform", "the orange", "the honest man", "the elephant"],
+      ["Nowadays, billions of people rely on ___ internet for daily communication.", "the", "an", "a", "Ø (no article)"],
+      ["Neil Armstrong was ___ first person to walk on the Moon.", "the", "a", "an", "Ø (no article)"],
+      ["My favorite subject at school is ___ mathematics.", "Ø (no article)", "the", "a", "an"],
+      ["They are planning a boat trip along ___ Nile River next winter.", "the", "a", "an", "Ø (no article)"],
+      ["Tokyo is much ___ than most towns in my country.", "bigger", "more big", "biggest", "the biggest"],
+      ["This leather armchair is ___ than the wooden chair in the kitchen.", "more comfortable", "comfortabler", "most comfortable", "the most comfortable"],
+      ["Mount Everest is ___ mountain peak in the world.", "the highest", "higher", "the most high", "highest"],
+      ["Who is ___ student in your medical class?", "the most hard-working", "more hard-working", "the hard-workingest", "most hard-working"],
+      ["Your laptop battery lasts much ___ than mine.", "longer", "more long", "longest", "the longest"],
+      ["The weather this winter is even ___ than it was last year.", "worse", "badder", "more bad", "the worst"],
+      ["In my opinion, health is far ___ than wealth.", "more important", "importanter", "the most important", "most important"],
+      ["That was ___ meal I have ever eaten at a restaurant!", "the worst", "worse", "the baddest", "most bad"],
+      ["She speaks English ___ than her older brother does.", "more fluently", "fluentlyer", "most fluently", "the most fluently"],
+      ["Of the three runners, David ran ___ and won the gold medal.", "the fastest", "faster", "more fast", "most fast"],
+      ["For ___ information, please contact our customer service desk.", "further", "farer", "more far", "furthest"],
+      ["After taking the medicine, the patient felt much ___ this morning.", "better", "gooder", "more good", "best"],
+      ["This street is ___ during rush hour than it is at night.", "noisier", "more noisy", "noisiest", "the noisiest"],
+      ["Buying a train ticket is usually ___ than flying first class.", "less expensive", "least expensive", "expensiver", "not expensive"],
+      ["Which is ___ planet from the Sun in our solar system?", "the farthest", "farther", "the farrest", "more far"],
+      ["My new apartment is ___ than my old one, so I have fewer neighbours.", "quieter", "more quiet", "quietest", "the quietest"],
+      ["He earned ___ money this month than he did last month.", "less", "fewer", "littler", "least"],
+      ["Yesterday was ___ day of the entire summer so far.", "the hottest", "hotter", "the most hot", "hottest"],
+      ["She seems ___ now that she has passed all her exams.", "happier", "more happy", "happiest", "the happiest"],
+      ["Out of all the candidates, Sarah gave ___ presentation.", "the best", "better", "the goodest", "most good"],
+
+      // --- SET 5 ---
+      ["The movie wasn't ___ as the novel it was based on.", "as exciting", "more exciting", "excitinger", "most exciting"],
+      ["My younger brother is now just ___ as my father.", "as tall", "taller", "so tall", "tallest"],
+      ["This puzzle is ___ difficult for a five-year-old child to solve.", "too", "enough", "as", "more"],
+      ["He isn't ___ to apply for a driver's license in this country.", "old enough", "enough old", "too old", "as old"],
+      ["We don't have ___ to finish painting the whole house before dark.", "enough time", "time enough", "too time", "many time"],
+      ["The suitcase was ___ heavy for the little girl to lift by herself.", "too", "enough", "so", "as"],
+      ["Did she speak ___ for everyone at the back of the hall to hear?", "clearly enough", "enough clearly", "too clearly", "as clearly"],
+      ["There aren't ___ for all the guests, so some people will have to stand.", "enough chairs", "chairs enough", "too chairs", "much chairs"],
+      ["'The water is too cold for us to swim in.' means:", "The water isn't warm enough for us to swim in.", "The water is warm enough for us to swim in.", "The water is so warm that we can swim in it.", "The water isn't too cold for us to swim in."],
+      ["'He isn't tall enough to reach the top shelf.' means:", "He is too short to reach the top shelf.", "He is tall enough to reach the top shelf.", "He is too tall to reach the top shelf.", "He is as tall as the top shelf."],
+      ["'This shirt is too small for me to wear.' means:", "This shirt isn't big enough for me to wear.", "This shirt is big enough for me to wear.", "This shirt isn't small enough for me to wear.", "This shirt is so big that I can wear it."],
+      ["'The test was too difficult for most students to pass.' means:", "The test wasn't easy enough for most students to pass.", "The test was easy enough for most students to pass.", "The test wasn't difficult enough for most students to pass.", "Most students were clever enough to pass the test."],
+      ["Today isn't ___ as it was yesterday; the breeze is quite pleasant.", "as humid", "more humid", "humider", "the most humid"],
+      ["Is your new computer ___ as the one at your office?", "as fast", "faster", "fastest", "more fast"],
+      ["The coffee is ___ hot to drink right now; let it cool down a bit.", "too", "enough", "as", "more"],
+      ["Are you sure you have ___ to pay for the taxi fare home?", "enough cash", "cash enough", "too cash", "many cash"],
+      ["He drove ___ slowly to arrive at the station on time.", "too", "enough", "as", "much"],
+      ["She is ___ to understand the consequences of her actions.", "mature enough", "enough mature", "too mature", "more mature"],
+      ["Silver is not ___ as gold.", "as valuable", "valuabler", "more valuable", "the most valuable"],
+      ["The instructions were ___ complicated for me to follow without help.", "too", "enough", "as", "more"],
+      ["Mr. Brown isn't in his office right now; he ___ to the bank and will be back at 3 PM.", "has gone", "has been", "went", "was going"],
+      ["I ___ to Kyoto twice, and I would love to visit it again someday.", "have been", "have gone", "went", "was"],
+      ["Where are the kids? — They ___ to the playground down the street; they're still there.", "have gone", "have been", "go", "were going"],
+      ["My parents ___ married for twenty-five years now.", "have been", "were", "are", "had been"],
+      ["She has worked as a pediatric nurse at this hospital ___ 2019.", "since", "for", "in", "ago"],
+      ["We haven't heard anything from our cousin ___ over six months.", "for", "since", "from", "during"],
+      ["___ have you known your best friend?", "How long", "When", "What time", "How often"],
+      ["He has lived in this coastal town ___ he was ten years old.", "since", "for", "when", "from"],
+      ["Have you ___ tried traditional Vietnamese pho for breakfast?", "ever", "never", "yet", "since"],
+      ["I haven't finished reading the chemistry textbook ___.", "yet", "already", "just", "ever"],
+      ["The postman has ___ delivered a parcel for you; it's on the table.", "just", "yet", "ever", "since"],
+      ["We have ___ seen that movie three times, so let's pick another one.", "already", "yet", "since", "ago"],
+      ["My sister ___ her keys yesterday morning and still hasn't found them.", "lost", "has lost", "loses", "was losing"],
+      ["I ___ three cups of coffee so far this morning.", "have drunk", "drank", "drink", "was drinking"],
+      ["Shakespeare ___ many famous tragedies during the 16th and 17th centuries.", "wrote", "has written", "was writing", "writes"],
+      ["They ___ a new shopping mall in our district two months ago.", "opened", "have opened", "open", "were opening"],
+      ["Up to now, the charity organization ___ over fifty schools in rural areas.", "has built", "built", "builds", "was building"],
+      ["'She started learning Japanese three years ago.' means:", "She has learned Japanese for three years.", "She has learned Japanese since three years.", "She learned Japanese for three years.", "It is three years since she has learned Japanese."],
+      ["'I last saw my former teacher five years ago.' means:", "I haven't seen my former teacher for five years.", "I didn't see my former teacher for five years.", "I have seen my former teacher five years ago.", "The last time I have seen my former teacher was five years ago."],
+      ["'It is two months since he last went to the cinema.' means:", "He hasn't gone to the cinema for two months.", "He didn't go to the cinema for two months.", "He has gone to the cinema two months ago.", "He started going to the cinema two months ago."],
+
+      // --- SET 6 ---
+      ["'This is the first time I have ever eaten sushi.' means:", "I have never eaten sushi before.", "I didn't eat sushi before.", "I haven't eaten sushi since a long time.", "I last ate sushi a long time ago."],
+      ["'We haven't visited our hometown since last summer.' means:", "The last time we visited our hometown was last summer.", "We started visiting our hometown last summer.", "It is last summer since we visited our hometown.", "We didn't visit our hometown since last summer."],
+      ["'Tom began playing the violin when he was seven.' means:", "Tom has played the violin since he was seven.", "Tom has played the violin for seven years.", "Tom played the violin since he was seven.", "The last time Tom played the violin was when he was seven."],
+      ["'I have never read such an inspiring book before.' means:", "This is the first time I have ever read such an inspiring book.", "I last read such an inspiring book a long time ago.", "It is a long time since I read an inspiring book.", "I started reading this inspiring book before."],
+      ["'The last time it snowed in this region was ten years ago.' means:", "It hasn't snowed in this region for ten years.", "It didn't snow in this region for ten years.", "It has snowed in this region ten years ago.", "It started snowing in this region ten years ago."],
+      ["How long ___ your current smartphone?", "have you had", "did you have", "are you having", "do you have"],
+      ["My brother ___ from university in 2022 and immediately found a job.", "graduated", "has graduated", "graduates", "was graduating"],
+      ["We ___ each other since we attended the summer camp in Da Lat.", "haven't met", "didn't meet", "don't meet", "weren't meeting"],
+      ["Have you ___ to the new science exhibition at the National Museum?", "been", "gone", "went", "going"],
+      ["She has worked on this research project ___ a very long time.", "for", "since", "in", "ago"],
+      ["Look at that man on the ladder! It's wobbling badly—he ___ fall!", "is going to", "will", "shall", "might not"],
+      ["The phone is ringing. — Don't get up, I ___ answer it for you.", "will", "am going to", "go to", "answered"],
+      ["I think robots ___ most of the housework for humans in the next fifty years.", "will do", "are going to do", "do", "have done"],
+      ["We have already bought the plane tickets. We ___ fly to Bangkok next Friday.", "are going to", "will", "would", "might"],
+      ["I promise I ___ tell anyone your secret.", "won't", "am not going to", "don't", "didn't"],
+      ["Watch out! You ___ step in that puddle of mud!", "are going to", "will", "would", "can"],
+      ["'I've left my wallet at home.' — 'Don't worry, I ___ lend you some money.'", "will", "am going to", "lent", "have lent"],
+      ["Why are you putting on your running shoes? — Because I ___ go for a jog in the park.", "am going to", "will", "would", "go"],
+      ["Perhaps she ___ pass the audition if she practices hard enough.", "will", "is going to", "goes to", "passed"],
+      ["Look at the dark clouds gathering in the sky. It ___ rain any minute now.", "is going to", "will", "rains", "rained"],
+      ["If you heat ice above zero degrees Celsius, it ___ into water.", "melts", "will melt", "melted", "would melt"],
+      ["When the sun goes down, the temperature in the desert ___ rapidly.", "drops", "will drop", "dropped", "would drop"],
+      ["If you mix blue and yellow paint together, you ___ green.", "get", "will get", "got", "would get"],
+      ["If a stranger asks you for your bank password, ___ it to them!", "don't give", "won't give", "not give", "didn't give"],
+      ["Plants ___ if they do not receive enough sunlight and water.", "die", "will die", "died", "would die"],
+      ["If you feel dizzy while exercising, ___ immediately and drink some water.", "stop", "will stop", "stopped", "stopping"],
+      ["Whenever my sister eats seafood, she ___ an allergic rash.", "gets", "will get", "got", "would get"],
+      ["Water freezes if the temperature ___ below zero degrees Celsius.", "falls", "will fall", "fell", "would fall"],
+      ["Where is David? — I'm not sure, he ___ be in the library studying.", "might", "mustn't", "couldn't", "needs"],
+      ["Take a warm coat with you because it ___ get cold later tonight.", "may", "couldn't", "mustn't", "needn't"],
+      ["We aren't sure about our holiday plans yet; we ___ go camping in the mountains.", "could", "couldn't", "must", "have to"],
+      ["Don't wait for me tonight; I ___ finish my lab report on time.", "might not", "couldn't", "could not", "must"],
+      ["She hasn't replied to my invitation yet, so she ___ come to the party tomorrow.", "may not", "couldn't", "could not", "needn't"],
+      ["That rumor ___ be true! I saw him in London with my own eyes just an hour ago.", "couldn't", "might not", "may not", "needn't"],
+      ["They ___ arrive a bit late because there is a traffic jam on the bridge, though I'm not certain.", "might", "couldn't", "mustn't", "won't"],
+      ["Ask Sarah if she wants this book; however, she ___ like science fiction.", "might not", "couldn't", "mustn't", "doesn't have to"],
+      ["There's someone knocking at the door. It ___ be the delivery driver.", "could", "couldn't", "might not", "mustn't"],
+      ["The restaurant ___ be open today because it's a public holiday, so let's call first to check.", "may not", "couldn't", "could not", "needn't"],
+      ["I'm sure our team ___ win the championship this season.", "will", "is going to", "goes to", "won"],
+      ["When you press this green button, the machine ___ automatically.", "starts", "will start", "started", "would start"],
+
+      // --- SET 7 ---
+      ["Passengers ___ fasten their seatbelts during takeoff and landing.", "must", "needn't", "may not", "couldn't"],
+      ["You ___ touch that exposed electrical wire; it is extremely dangerous!", "mustn't", "needn't", "don't have to", "might not"],
+      ["Tomorrow is Sunday, so I ___ wake up at 6 AM like usual.", "needn't", "mustn't", "must", "couldn't"],
+      ["Visitors ___ smoke anywhere inside the hospital building.", "mustn't", "don't have to", "needn't", "might not"],
+      ["You ___ bring your own towel to the swimming pool; they provide clean ones for free.", "don't have to", "mustn't", "must", "couldn't"],
+      ["All applicants ___ submit their forms before Friday's deadline.", "must", "needn't", "mustn't", "might"],
+      ["We have plenty of milk in the fridge, so you ___ buy any more today.", "needn't", "mustn't", "must", "have to"],
+      ["Students ___ use mobile phones or dictionaries during the final examination.", "mustn't", "needn't", "don't need to", "don't have to"],
+      ["You ___ wash those strawberries; I have already washed them thoroughly.", "needn't", "mustn't", "must", "should"],
+      ["Drivers ___ stop immediately when the traffic light turns red.", "must", "needn't", "don't have to", "may"],
+      ["'It isn't necessary for you to pay for the ticket in advance.' means:", "You needn't pay for the ticket in advance.", "You mustn't pay for the ticket in advance.", "You must pay for the ticket in advance.", "You couldn't pay for the ticket in advance."],
+      ["'Taking photographs inside the art gallery is strictly prohibited.' means:", "You mustn't take photographs inside the art gallery.", "You needn't take photographs inside the art gallery.", "You don't have to take photographs inside the art gallery.", "You might not take photographs inside the art gallery."],
+      ["If it ___ tomorrow morning, we will cancel the outdoor picnic.", "rains", "will rain", "rained", "would rain"],
+      ["You will miss the first lecture unless you ___ right now.", "leave", "don't leave", "will leave", "left"],
+      ["If she ___ hard this semester, she will definitely win the scholarship.", "studies", "will study", "studied", "would study"],
+      ["We won't go to the beach this weekend if the weather ___ cold.", "is", "will be", "was", "were"],
+      ["___ you need any further assistance, please do not hesitate to call our hotline.", "Should", "Were", "Had", "Unless"],
+      ["'If you don't water these orchids regularly, they will wither.' means:", "Unless you water these orchids regularly, they will wither.", "Unless you don't water these orchids regularly, they will wither.", "If you water these orchids regularly, they will wither.", "Should you water these orchids regularly, they will wither."],
+      ["If he ___ enough money by June, he will buy a new mountain bike.", "saves", "will save", "saved", "would save"],
+      ["Unless he ___ for his rude behavior, she will not forgive him.", "apologizes", "doesn't apologize", "will apologize", "apologized"],
+      ["What ___ you do if the train is delayed for more than two hours?", "will", "would", "did", "have"],
+      ["If you eat too much fast food, you ___ put on weight quickly.", "will", "would", "could have", "had"],
+      ["Should the fire alarm ___, leave the building immediately via the stairs.", "ring", "rings", "rang", "rung"],
+      ["You ___ tell anyone what I just said; it's strictly confidential!", "mustn't", "needn't", "don't have to", "don't need to"],
+      ["She ___ cook dinner tonight because we are ordering pizza.", "doesn't need to", "mustn't", "must", "has to"],
+      ["If I ___ you, I would accept that job offer without hesitation.", "were", "am", "will be", "had been"],
+      ["If we had a larger garden, we ___ grow our own organic vegetables.", "would", "will", "can", "may"],
+      ["What would you do if you suddenly ___ a million dollars in the lottery?", "won", "win", "will win", "had won"],
+      ["If she ___ his phone number, she would call him right away.", "knew", "knows", "will know", "had known"],
+      ["He would travel around the world if he ___ more free time.", "had", "has", "will have", "would have"],
+      ["___ I rich, I would build a free medical clinic in my hometown.", "Were", "Should", "Had", "If"],
+      ["If there ___ no gravity on Earth, everything would float into space.", "were", "is", "will be", "has been"],
+      ["Were she ___ the truth now, she would be deeply disappointed.", "to know", "knew", "knows", "knowing"],
+      ["If I lived closer to the university, I ___ have to take the bus every morning.", "wouldn't", "won't", "don't", "didn't"],
+      ["I don't have a laptop right now. I wish I ___ one to finish my assignment.", "had", "have", "will have", "would have"],
+      ["It is raining heavily outside. If only it ___ raining so we could play tennis!", "weren't", "isn't", "won't be", "hasn't been"],
+      ["I stayed up too late playing games last night. I wish I ___ to bed earlier.", "had gone", "went", "would go", "go"],
+      ["She regrets telling him her secret. She wishes she ___ him anything.", "hadn't told", "didn't tell", "wouldn't tell", "doesn't tell"],
+      ["My neighbor keeps playing loud music at midnight. I wish he ___ the volume down!", "would turn", "turns", "has turned", "will turn"],
+      ["I have to work all day tomorrow. I wish I ___ to work tomorrow!", "didn't have", "wouldn't have", "don't have", "won't have"],
+
+      // --- SET 8 ---
+      ["We can't attend the concert next Saturday. We wish we ___ go with you.", "could", "would", "can", "will"],
+      ["I am very short. I wish I ___ taller so I could join the basketball team.", "were", "am", "will be", "would be"],
+      ["They missed the flight because they left home late. If only they ___ a taxi earlier!", "had taken", "took", "would take", "take"],
+      ["'I'm sorry I don't know how to swim.' means:", "I wish I knew how to swim.", "I wish I know how to swim.", "I wish I had known how to swim.", "I wish I would know how to swim."],
+      ["'It's a pity that you didn't attend the workshop yesterday.' means:", "I wish you had attended the workshop yesterday.", "I wish you attended the workshop yesterday.", "I wish you would attend the workshop yesterday.", "If only you attend the workshop yesterday."],
+      ["He wishes he ___ speak French fluently like his wife.", "could", "would", "can", "will"],
+      ["If only I ___ more attention during the lecture yesterday morning!", "had paid", "paid", "would pay", "pay"],
+      ["My car breaks down all the time. I wish it ___ breaking down!", "would stop", "stops", "will stop", "has stopped"],
+      ["If he ___ so lazy, he would get much better grades at school.", "weren't", "isn't", "won't be", "hasn't been"],
+      ["I wish I ___ enough money right now to buy that guitar.", "had", "have", "would have", "will have"],
+      ["By the time we arrived at the train station, the train ___ already left.", "had", "has", "was", "would"],
+      ["After the guests ___ home, we started cleaning up the dining room.", "had gone", "went", "have gone", "were going"],
+      ["She realized that she ___ her passport on the kitchen table.", "had left", "left", "has left", "was leaving"],
+      ["Before he moved to Rome in 2020, he ___ Italian for two years.", "had studied", "studied", "has studied", "was studying"],
+      ["When I turned on the television, the football match ___ already finished.", "had", "has", "was", "did"],
+      ["If you had told me about the problem earlier, I ___ helped you.", "would have", "will have", "would", "had"],
+      ["They wouldn't have got lost if they ___ a map with them.", "had brought", "brought", "would bring", "have brought"],
+      ["___ she studied harder, she would have passed the medical entrance exam.", "Had", "Were", "Should", "If"],
+      ["The plants died because nobody ___ watered them while we were away.", "had", "has", "was", "did"],
+      ["By the time the firefighters arrived, the neighbors ___ the fire.", "had put out", "put out", "have put out", "were putting out"],
+      ["He had never seen snow before he ___ to Canada last winter.", "went", "had gone", "has gone", "was going"],
+      ["As soon as she ___ her homework, she went out to play with her friends.", "had finished", "finishes", "has finished", "was finishing"],
+      ["If I ___ known you were in hospital, I would have visited you.", "had", "have", "were", "did"],
+      ["'I am preparing for my presentation right now,' Anna said. -> Anna said that she ___ for her presentation then.", "was preparing", "is preparing", "has been preparing", "prepared"],
+      ["Tom ___ me that he had bought a new motorcycle the week before.", "told", "said", "spoke", "talked"],
+      ["She ___ that she would call me as soon as she arrived at the hotel.", "said", "told", "asked", "spoke"],
+      ["'I visited my grandparents yesterday,' said Nam. -> Nam said that he had visited his grandparents ___.", "the day before", "yesterday", "the next day", "tomorrow"],
+      ["'We will launch the new product tomorrow,' the director said. -> The director said they would launch the new product ___.", "the following day", "tomorrow", "the day before", "yesterday"],
+      ["'I can't find my glasses here,' Mary said. -> Mary said that she couldn't find her glasses ___.", "there", "here", "this", "now"],
+      ["Our science teacher told us that the Earth ___ around the Sun.", "moves", "moved", "had moved", "was moving"],
+      ["'I have already seen this documentary,' he said. -> He said that he ___ already seen that documentary.", "had", "has", "was", "would"],
+      ["She says that she ___ very busy with her final project every day.", "is", "was", "had been", "would be"],
+      ["'I must leave early tonight,' David said. -> David said that he ___ leave early that night.", "had to", "must", "has to", "will have to"],
+      ["'We moved into this apartment two years ago,' they told me. -> They told me they had moved into that apartment two years ___.", "before", "ago", "later", "then"],
+      ["He told his sister that he ___ lend her his bicycle the next day.", "would", "will", "can", "may"],
+      ["The receptionist said to me, 'Wait here for a moment.' -> In reported speech, 'here' changes to ___.", "there", "this", "then", "that"],
+      ["'I bought these shoes last week,' she said. -> She said she ___ those shoes the week before.", "had bought", "bought", "has bought", "was buying"],
+      ["Had I not missed the bus this morning, I ___ been late for the interview.", "wouldn't have", "won't have", "wouldn't", "hadn't"],
+      ["Before the police got there, the thief ___ through the back window.", "had escaped", "escaped", "has escaped", "was escaping"],
+      ["My friend told ___ that she was going to study abroad the following year.", "me", "to me", "I", "with me"],
+
+      // --- SET 9 ---
+      ["Millions of smartphones ___ all over the world every year.", "are sold", "sell", "were sold", "have sold"],
+      ["The Sydney Opera House ___ in 1973 after fourteen years of construction.", "was opened", "opened", "is opened", "has been opened"],
+      ["A new metro line ___ in our city right now to reduce traffic congestion.", "is being built", "is building", "was being built", "has built"],
+      ["All the flight tickets ___ out before we even reached the booking counter.", "had been sold", "were sold", "have been sold", "are sold"],
+      ["The final results of the competition ___ announced tomorrow afternoon.", "will be", "will", "are", "have been"],
+      ["This medicine must ___ in a cool, dry place away from children.", "be kept", "keep", "kept", "be keeping"],
+      ["Over three hundred trees ___ in the neighborhood park since last month.", "have been planted", "were planted", "are planted", "planted"],
+      ["When we walked into the hotel room, the beds ___ by the housekeeper.", "were being made", "were made", "are being made", "had made"],
+      ["I'm going to the garage to have my car ___ before the long road trip.", "serviced", "service", "to service", "servicing"],
+      ["She got her wedding dress ___ by a famous designer in Milan.", "made", "make", "to make", "making"],
+      ["People say that he lives in a castle. -> He is said ___ in a castle.", "to live", "living", "lived", "that lives"],
+      ["Choose the sentence with the correct word order in the passive voice:", "The bridge was destroyed by the storm last night.", "The bridge was destroyed last night by the storm.", "The bridge by the storm was destroyed last night.", "The bridge was last night destroyed by the storm."],
+      ["Choose the sentence with the correct word order in the passive voice:", "The documents were found in the safe by the police yesterday.", "The documents were found by the police in the safe yesterday.", "The documents were found yesterday in the safe by the police.", "The documents in the safe were found yesterday by the police."],
+      ["English ___ as an official language in more than fifty countries.", "is spoken", "speaks", "was spoken", "has spoken"],
+      ["My bicycle ___ outside the library yesterday evening.", "was stolen", "stole", "is stolen", "has been stolen"],
+      ["The broken window ___ repaired yet; it's still letting cold air in.", "hasn't been", "wasn't", "isn't", "won't"],
+      ["Smartphones must not ___ into the examination hall.", "be brought", "bring", "brought", "be bringing"],
+      ["We had our roof ___ after the severe hailstorm last week.", "repaired", "repair", "to repair", "repairing"],
+      ["It is believed that the ancient treasure ___ buried under this island.", "is", "be", "to be", "being"],
+      ["The suspect is reported ___ the country on a fake passport two days ago.", "to have left", "leaving", "to leave", "left"],
+      ["The hotel room we booked online was ___ cheap, yet very clean.", "amazingly", "amazing", "amaze", "amazed"],
+      ["The final math problem on the exam was ___ difficult to solve.", "extremely", "extreme", "extremeness", "more extreme"],
+      ["Because of the thick fog, all vehicles were moving ___ slowly on the motorway.", "incredibly", "incredible", "more incredible", "incredibleness"],
+      ["She learned to speak Korean ___ quickly after moving to Seoul.", "surprisingly", "surprising", "surprised", "surprise"],
+      ["The soup at that new bistro tasted ___ good.", "remarkably", "remarkable", "remark", "remarked"],
+      ["He handled the emergency situation ___ calmly.", "impressively", "impressive", "impress", "impressed"],
+      ["The winter nights in the northern mountains can get ___ cold.", "terribly", "terrible", "terribleness", "more terrible"],
+      ["Our team worked ___ hard to meet the client's deadline.", "exceptionally", "exceptional", "exception", "except"],
+      ["The concert tickets were ___ expensive, so we watched the livestream instead.", "ridiculously", "ridiculous", "ridicule", "more ridiculous"],
+      ["Despite his injury, the athlete ran ___ fast in the final lap.", "unbelievably", "unbelievable", "unbelieving", "believe"],
+      ["The instructions in the manual are ___ easy to understand.", "fairly", "fair", "fairness", "more fair"],
+      ["She was ___ exhausted after working a twelve-hour shift at the hospital.", "completely", "complete", "completing", "completion"],
+      ["The new software update runs ___ smoothly on older computers.", "wonderfully", "wonderful", "wonder", "wondering"],
+      ["That documentary about deep-sea creatures was ___ fascinating.", "truly", "true", "truth", "truer"],
+      ["He spoke ___ quietly that nobody at the back could hear him.", "so", "such", "too", "enough"],
+      ["Letters ___ delivered to this remote island once a week by boat.", "are", "is", "were", "have"],
+      ["Penicillin ___ discovered by Alexander Fleming in 1928.", "was", "is", "has been", "had"],
+      ["The conference room ___ being cleaned right now, so please wait outside.", "is", "was", "has", "will"],
+      ["Your application form ___ be signed in black ink before submission.", "must", "needn't", "couldn't", "has"],
+      ["I'm going to get my hair ___ before the graduation ceremony tomorrow.", "cut", "to cut", "cutting", "cuts"],
+
+      // --- SET 10 ---
+      ["My sister ___ as a translator for an international organization in Geneva.", "works", "is working", "worked", "has worked"],
+      ["Shh! The baby ___ right now; please don't make any loud noise.", "is sleeping", "sleeps", "slept", "has slept"],
+      ["I ___ with your decision; I think it's the safest choice for everyone.", "agree", "am agreeing", "was agreeing", "have agreed"],
+      ["This perfume ___ like fresh jasmine flowers in spring.", "smells", "is smelling", "smelled", "has smelled"],
+      ["Why ___ the milk? Do you think it has gone sour?", "are you smelling", "do you smell", "did you smell", "have you smelled"],
+      ["They ___ a big farewell party for their colleague this Saturday evening.", "are having", "have", "had", "have had"],
+      ["He ___ two vintage motorcycles in his garage.", "has", "is having", "was having", "having"],
+      ["We ___ of redecorating our living room during the upcoming holiday.", "are thinking", "think", "thought", "have thought"],
+      ["She ___ that solar energy is the best solution for the future.", "thinks", "is thinking", "was thinking", "thought"],
+      ["How much ___ this leather backpack cost?", "does", "is", "did", "has"],
+      ["I really enjoy ___ books in a quiet coffee shop on rainy afternoons.", "reading", "to read", "read", "reads"],
+      ["He promised ___ home before 10 PM, but he hasn't arrived yet.", "to come", "coming", "come", "came"],
+      ["Would you mind ___ me a hand with this heavy suitcase?", "giving", "to give", "give", "gave"],
+      ["She avoided ___ eye contact with him during the entire meeting.", "making", "to make", "make", "made"],
+      ["After discussing for hours, the committee decided ___ the event until next month.", "to postpone", "postponing", "postpone", "postponed"],
+      ["Don't forget ___ the gas stove before you go to bed.", "to turn off", "turning off", "turn off", "turned off"],
+      ["I clearly remember ___ him the key yesterday afternoon.", "giving", "to give", "give", "gave"],
+      ["He stopped ___ a phone call when he heard his phone ring in his pocket.", "to answer", "answering", "answer", "answered"],
+      ["You should stop ___ so much time scrolling through social media.", "wasting", "to waste", "waste", "wasted"],
+      ["Try ___ the router if your internet connection keeps dropping.", "restarting", "to restart", "restart", "restarted"],
+      ["The mountaineers tried ___ the summit before the blizzard hit.", "to reach", "reaching", "reach", "reached"],
+      ["My brother offered ___ me to the airport early tomorrow morning.", "to drive", "driving", "drive", "drove"],
+      ["She practices ___ the cello for three hours every single day.", "playing", "to play", "play", "played"],
+      ["We are looking forward to ___ our grandparents this weekend.", "visiting", "visit", "to visit", "visited"],
+      ["I can't help ___ nervous whenever I have to speak in public.", "feeling", "to feel", "feel", "felt"],
+      ["Last summer, our family ___ a wonderful week in Phu Quoc.", "spent", "has spent", "was spending", "spends"],
+      ["While I ___ the dishes, I accidentally dropped a porcelain plate.", "was washing", "washed", "have washed", "am washing"],
+      ["What ___ at 10 PM last night when I texted you?", "were you doing", "did you do", "have you done", "do you do"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "visited", "talked", "missed", "watched"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "played", "walked", "brushed", "laughed"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "wanted", "Lived", "opened", "arrived"],
+      ["Choose the word whose ending '-ed' is pronounced /ɪd/:", "started", "helped", "called", "cleaned"],
+      ["Choose the word whose ending '-ed' is pronounced /t/:", "washed", "begged", "ended", "Robbed"],
+      ["While Tom was fixing his bicycle, his sister ___ her English essay.", "was writing", "wrote", "is writing", "has written"],
+      ["The lights suddenly went out while we ___ dinner.", "were having", "had", "have had", "are having"],
+      ["She ___ in London three years ago, so she knows the city well.", "studied", "has studied", "was studying", "studies"],
+      ["When I woke up this morning, the birds ___ cheerfully outside my window.", "were singing", "sang", "have sung", "sing"],
+      ["He didn't hear the doorbell because he ___ a shower.", "was taking", "took", "has taken", "takes"],
+      ["How ___ apples did you buy at the market this morning?", "many", "much", "little", "a little"],
+      ["There isn't ___ butter left to make the cake.", "much", "many", "a few", "few"],
+
+      // --- SET 11 ---
+      ["Would you like ___ biscuits with your cup of tea?", "some", "any", "much", "a little"],
+      ["I don't have ___ cash on me right now; can I pay by card?", "any", "some", "many", "a few"],
+      ["Only ___ students managed to solve the bonus physics question.", "a few", "a little", "much", "any"],
+      ["We have ___ flour in the cupboard, not enough to bake a loaf of bread.", "little", "few", "a few", "many"],
+      ["There are very ___ buses running after midnight in this small town.", "few", "little", "much", "a little"],
+      ["Just add ___ olive oil to the salad before serving.", "a little", "a few", "many", "few"],
+      ["He has read ___ books on modern European history.", "a lot of", "much", "a little", "little"],
+      ["My cousin is studying at ___ European university on a full scholarship.", "a", "an", "the", "Ø (no article)"],
+      ["It is ___ honor to welcome you all to our annual medical conference.", "an", "a", "the", "Ø (no article)"],
+      ["___ Moon orbits the Earth approximately once every twenty-seven days.", "The", "A", "An", "Ø (no article)"],
+      ["She has been learning to play ___ piano since she was six.", "the", "a", "an", "Ø (no article)"],
+      ["Do you want to play ___ badminton with us this afternoon?", "Ø (no article)", "the", "a", "an"],
+      ["We usually have ___ lunch at the campus cafeteria at noon.", "Ø (no article)", "a", "the", "an"],
+      ["___ United States of America has fifty states.", "The", "A", "An", "Ø (no article)"],
+      ["My uncle went to ___ Japan on a business trip last month.", "Ø (no article)", "the", "a", "an"],
+      ["In which of the following phrases is 'the' pronounced as /ðiː/?", "the elephant", "the giraffe", "the monkey", "the tiger"],
+      ["In which of the following phrases is 'the' pronounced as /ðə/?", "the university", "the umbrella", "the uncle", "the hour"],
+      ["I bought a shirt and a tie yesterday. ___ shirt was on sale, but the tie was pricey.", "The", "A", "An", "Ø (no article)"],
+      ["Russia is ___ country in the world by land area.", "the largest", "larger", "the most large", "largest"],
+      ["Travelling by train is much ___ than driving a car in heavy rain.", "safer", "more safe", "safest", "the safest"],
+      ["This is ___ novel I have read all year.", "the most interesting", "more interesting", "the interestingest", "most interesting"],
+      ["His exam results were much ___ than he had expected.", "better", "gooder", "more good", "the best"],
+      ["Traffic in the city center is ___ at 5 PM than at 10 AM.", "worse", "badder", "more bad", "the worst"],
+      ["Which is ___ river in the world: the Nile or the Amazon?", "the longest", "longer", "the most long", "longest"],
+      ["She dances ___ than anyone else in the club.", "more gracefully", "gracefullyer", "most gracefully", "the most gracefully"],
+      ["My new phone isn't ___ as my old one, even though it was cheaper.", "as heavy", "heavier", "heaviest", "more heavy"],
+      ["The box was ___ heavy for the postman to carry alone.", "too", "enough", "as", "more"],
+      ["Is the water ___ for the baby to take a bath?", "warm enough", "enough warm", "too warm", "as warm"],
+      ["We didn't have ___ to visit the castle before it closed.", "enough time", "time enough", "too time", "many time"],
+      ["'The shelf is too high for her to reach.' means:", "She isn't tall enough to reach the shelf.", "She is tall enough to reach the shelf.", "The shelf isn't high enough for her to reach.", "She is too tall to reach the shelf."],
+      ["'This puzzle isn't easy enough for children to do.' means:", "This puzzle is too difficult for children to do.", "This puzzle is easy enough for children to do.", "This puzzle isn't difficult enough for children to do.", "Children are clever enough to do this puzzle."],
+      ["Where is Anna? — She ___ to the supermarket; she'll be back in half an hour.", "has gone", "has been", "went", "goes"],
+      ["Have you ever ___ to Ha Long Bay in winter?", "been", "gone", "went", "go"],
+      ["Mr. Smith has taught physics at our high school ___ fifteen years.", "for", "since", "in", "ago"],
+      ["We haven't had a vacation together ___ we graduated from college.", "since", "for", "when", "ago"],
+      ["I ___ my keys! Can you help me look for them?", "have lost", "lost", "lose", "was losing"],
+      ["My grandfather ___ this wooden clock when he was in Switzerland in 1985.", "bought", "has bought", "buys", "was buying"],
+      ["'He started working for this bank six years ago.' means:", "He has worked for this bank for six years.", "He has worked for this bank since six years.", "He worked for this bank for six years.", "The last time he worked for this bank was six years ago."],
+      ["'I haven't eaten crab for two years.' means:", "It is two years since I last ate crab.", "I started eating crab two years ago.", "It is two years since I haven't eaten crab.", "I last ate crab for two years."],
+      ["'This is the first time she has ever flown in a helicopter.' means:", "She has never flown in a helicopter before.", "She didn't fly in a helicopter before.", "She last flew in a helicopter a long time ago.", "She hasn't flown in a helicopter for a long time."],
+
+      // --- SET 12 ---
+      ["'I'm really cold.' — 'Wait a second, I ___ close the window for you.'", "will", "am going to", "closed", "close"],
+      ["Look at the scoreboard! Our team is leading 5–0 with one minute left; we ___ win!", "are going to", "will", "won", "win"],
+      ["Perhaps people ___ live on the Moon one day in the future.", "will", "are going to", "go to", "lived"],
+      ["They have already rented a van because they ___ move to their new house this Sunday.", "are going to", "will", "would", "moved"],
+      ["If you leave butter out in the hot sun, it ___.", "melts", "will melt", "melted", "would melt"],
+      ["When water reaches 0 degrees Celsius, it ___ into ice.", "freezes", "will freeze", "froze", "would freeze"],
+      ["If you don't know the meaning of a word, ___ it up in the dictionary.", "look", "will look", "looked", "looking"],
+      ["I'm not sure where my umbrella is; I ___ have left it on the bus, or maybe it's at the office.", "might", "mustn't", "needn't", "won't"],
+      ["Don't buy that sweater for Tom; he ___ like the color green.", "might not", "couldn't", "could not", "mustn't"],
+      ["She ___ come to the picnic tomorrow because she has a slight fever today.", "may not", "couldn't", "could not", "needn't"],
+      ["That man over there ___ be Mr. Davis; Mr. Davis is much taller and wears glasses.", "couldn't", "might not", "may not", "needn't"],
+      ["You ___ bring your passport when travelling to another country.", "must", "needn't", "mustn't", "may not"],
+      ["Students ___ cheat during examinations under any circumstances.", "mustn't", "needn't", "don't have to", "might not"],
+      ["The museum is free on Sundays, so we ___ pay for admission today.", "needn't", "mustn't", "must", "have to"],
+      ["If we ___ hurry, we will miss the beginning of the concert.", "don't", "won't", "didn't", "weren't"],
+      ["She will lend you the book if you ___ to return it by Friday.", "promise", "will promise", "promised", "would promise"],
+      ["Unless it ___ raining soon, the river will flood the village.", "stops", "doesn't stop", "will stop", "stopped"],
+      ["___ you see Michael at the library, please tell him to call me.", "Should", "Were", "Had", "Unless"],
+      ["If I ___ how to fix this computer bug, I would help you immediately.", "knew", "know", "will know", "had known"],
+      ["If my parents lived in the same city as me, I ___ visit them every weekend.", "would", "will", "can", "shall"],
+      ["If I ___ in your position, I would talk to the professor directly.", "were", "am", "will be", "have been"],
+      ["Were he ___ harder, he would easily get promoted.", "to work", "worked", "works", "working"],
+      ["I don't know how to play the guitar. I wish I ___ play it well.", "could", "would", "can", "will"],
+      ["I ate too much cake at the party last night. I wish I ___ so much!", "hadn't eaten", "didn't eat", "wouldn't eat", "don't eat"],
+      ["My brother always leaves his wet towel on the bed. I wish he ___ doing that!", "would stop", "stops", "will stop", "has stopped"],
+      ["We have to attend a boring seminar tomorrow afternoon. We wish we ___ have to go.", "didn't", "wouldn't", "don't", "won't"],
+      ["It's so hot today! If only there ___ a cool breeze right now.", "were", "is", "will be", "has been"],
+      ["By the time I got to the cinema, my friends ___ already bought the tickets.", "had", "have", "were", "did"],
+      ["After she ___ the letter carefully, she locked it in her drawer.", "had read", "reads", "has read", "was reading"],
+      ["Before we went to sleep, we ___ locked all the doors and windows.", "had", "have", "were", "did"],
+      ["If they had checked the weather forecast, they ___ gone sailing in the storm.", "wouldn't have", "won't have", "wouldn't", "hadn't"],
+      ["Had you arrived ten minutes earlier, you ___ met the famous author.", "would have", "will have", "would", "had"],
+      ["'I am working on a very important project now,' said John. -> John said he ___ on a very important project then.", "was working", "is working", "has been working", "worked"],
+      ["Sarah ___ her mother that she had passed the driving test.", "told", "said", "spoke", "talked"],
+      ["'I will send you the report tomorrow,' he said. -> He said he would send me the report ___.", "the next day", "tomorrow", "the day before", "yesterday"],
+      ["'We saw a shooting star last night,' the children said. -> The children said they ___ a shooting star the night before.", "had seen", "saw", "have seen", "were seeing"],
+      ["This ancient temple ___ built more than eight hundred years ago.", "was", "is", "has been", "had"],
+      ["The new highway ___ completed by the end of next year.", "will be", "is", "was", "has been"],
+      ["I had my watch ___ at the jewelry shop yesterday afternoon.", "repaired", "repair", "to repair", "repairing"],
+      ["The athlete ran ___ fast and broke the national record.", "incredibly", "incredible", "more incredible", "incredibleness"],
+
+      // --- SET 13 ---
+      ["My train ___ at 6:30 tomorrow morning, so I need to set my alarm early.", "leaves", "is leaving", "left", "has left"],
+      ["Why ___ at me like that? Have I got smudge on my face?", "are you looking", "do you look", "did you look", "have you looked"],
+      ["This backpack ___ a lot; what have you put inside it?", "weighs", "is weighing", "weighed", "has weighed"],
+      ["The butcher ___ the beef on the scale right now to calculate the price.", "is weighing", "weighs", "weighed", "has weighed"],
+      ["I ___ any difference between these two shades of blue.", "don't see", "am not seeing", "didn't see", "haven't seen"],
+      ["The manager ___ the new applicants in his office tomorrow morning.", "is seeing", "sees", "saw", "has seen"],
+      ["She ___ to understand how the new coffee machine works.", "seems", "is seeming", "was seeming", "seemed to be"],
+      ["Nobody ___ who left this umbrella in the hallway.", "knows", "is knowing", "knew", "has known"],
+      ["He delayed ___ his decision until he had all the necessary facts.", "making", "to make", "make", "made"],
+      ["My parents didn't allow me ___ out past 10 PM when I was in high school.", "to stay", "staying", "stay", "stayed"],
+      ["I regret ___ you that your application has not been successful this time.", "to inform", "informing", "inform", "informed"],
+      ["She regrets ___ her old apartment because property prices have doubled since then.", "selling", "to sell", "sell", "sold"],
+      ["They managed ___ the fire before it spread to the neighboring houses.", "to extinguish", "extinguishing", "extinguish", "extinguished"],
+      ["Do you mind ___ a few minutes in the reception area?", "waiting", "to wait", "wait", "waited"],
+      ["He pretended ___ asleep when his mother walked into the bedroom.", "to be", "being", "be", "been"],
+      ["We spent the whole weekend ___ for our upcoming presentation.", "preparing", "to prepare", "prepare", "prepared"],
+      ["When I was a child, my family ___ to the seaside every summer.", "went", "was going", "has gone", "goes"],
+      ["While I was searching for my keys, I ___ an old photo album under the bed.", "found", "was finding", "have found", "find"],
+      ["At this time last Friday, we ___ on a plane to Singapore.", "were sitting", "sat", "have sat", "sit"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "painted", "provided", "protected", "finished"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "passed", "watched", "played", "washed"],
+      ["Choose the word whose ending '-ed' is pronounced differently from the others:", "cried", "smiled", "agreed", "baked"],
+      ["There isn't ___ space left in the wardrobe for your winter coats.", "much", "many", "a few", "few"],
+      ["How ___ times have I told you not to leave your shoes in the hallway?", "many", "much", "little", "a little"],
+      ["She put ___ honey into her herbal tea to soothe her sore throat.", "a little", "a few", "many", "few"],
+      ["He made very ___ mistakes in his final English composition.", "few", "little", "much", "a little"],
+      ["Can you lend me ___ envelopes? I need to mail these invitations.", "some", "any", "much", "a little"],
+      ["He is ___ MP (Member of Parliament) in the British government.", "an", "a", "the", "Ø (no article)"],
+      ["She bought ___ one-way ticket to Melbourne.", "a", "an", "the", "Ø (no article)"],
+      ["___ Sahara is the largest hot desert in the world.", "The", "A", "An", "Ø (no article)"],
+      ["My sister plays ___ violin in the city youth orchestra.", "the", "a", "an", "Ø (no article)"],
+      ["They usually play ___ chess together after dinner.", "Ø (no article)", "the", "a", "an"],
+      ["The children are having ___ dinner in the kitchen right now.", "Ø (no article)", "a", "the", "an"],
+      ["Today's lecture was much ___ than last week's.", "more informative", "informativer", "most informative", "the most informative"],
+      ["Jupiter is ___ planet in our solar system.", "the biggest", "bigger", "the most big", "biggest"],
+      ["The patient's condition is getting ___ day by day after the surgery.", "better", "gooder", "more good", "the best"],
+      ["This alley is ___ than the main street, so big trucks cannot enter.", "narrower", "more narrow", "narrowest", "the narrowest"],
+      ["The exam wasn't ___ as we had feared.", "as hard", "harder", "hardest", "more hard"],
+      ["He spoke ___ fast for me to catch his phone number.", "too", "enough", "as", "more"],
+      ["Is this rope ___ to pull the car out of the ditch?", "strong enough", "enough strong", "too strong", "as strong"],
+
+      // --- SET 14 ---
+      ["'The coffee is too bitter for me to drink.' means:", "The coffee isn't sweet enough for me to drink.", "The coffee is sweet enough for me to drink.", "The coffee isn't bitter enough for me to drink.", "The coffee is so sweet that I can drink it."],
+      ["My sister isn't at home; she ___ to the library to borrow some books.", "has gone", "has been", "went", "was going"],
+      ["I ___ to Da Lat several times, and I love its cool climate.", "have been", "have gone", "went", "was"],
+      ["We have lived in this neighborhood ___ ten years.", "for", "since", "in", "ago"],
+      ["He hasn't eaten anything ___ yesterday evening.", "since", "for", "from", "ago"],
+      ["'She last wore that dress at her sister's wedding.' means:", "She hasn't worn that dress since her sister's wedding.", "She didn't wear that dress since her sister's wedding.", "She has worn that dress at her sister's wedding.", "It is her sister's wedding since she wore that dress."],
+      ["'It is five years since we last met each other.' means:", "We haven't met each other for five years.", "We didn't meet each other for five years.", "We have met each other five years ago.", "We started meeting each other five years ago."],
+      ["'I have never tasted such delicious mango sticky rice before.' means:", "This is the first time I have ever tasted such delicious mango sticky rice.", "I last tasted such delicious mango sticky rice before.", "I haven't tasted mango sticky rice for a long time.", "I started tasting mango sticky rice before."],
+      ["'Your bag looks very heavy.' — 'Don't worry, I ___ carry it for you.'", "will", "am going to", "carried", "carry"],
+      ["Careful! That glass is right on the edge of the table; it ___ fall off!", "is going to", "will", "fell", "falls"],
+      ["If you heat metal, it ___.", "expands", "will expand", "expanded", "would expand"],
+      ["I'm not sure what to do this evening; I ___ watch a movie at home.", "might", "mustn't", "couldn't", "needn't"],
+      ["Don't count on him; he ___ be able to help us move the furniture tomorrow.", "might not", "couldn't", "could not", "mustn't"],
+      ["You ___ forget to lock the laboratory door when you leave tonight.", "mustn't", "needn't", "don't have to", "might not"],
+      ["We have plenty of time before the train departs, so we ___ rush.", "needn't", "mustn't", "must", "have to"],
+      ["If you ___ regular exercise, you will feel much healthier and more energetic.", "take", "will take", "took", "would take"],
+      ["Unless she ___ her passport soon, she won't be able to fly tomorrow.", "finds", "doesn't find", "will find", "found"],
+      ["___ there be any changes to the schedule, we will notify you by email.", "Should", "Were", "Had", "Unless"],
+      ["If I had a wingsuit, I ___ fly across the canyon.", "would", "will", "can", "may"],
+      ["If she ___ so shy, she would make friends much more easily.", "weren't", "isn't", "won't be", "hasn't been"],
+      ["___ I in your shoes, I would apologize to her immediately.", "Were", "Should", "Had", "If"],
+      ["I don't know how to drive a car. I wish I ___ how to drive.", "knew", "know", "will know", "would know"],
+      ["He forgot to set his alarm last night and missed the train. He wishes he ___ his alarm.", "had set", "set", "would set", "sets"],
+      ["It rains almost every day here. I wish it ___ raining so often!", "would stop", "stops", "will stop", "has stopped"],
+      ["I have to work on Saturday morning. I wish I ___ have to work on Saturday.", "didn't", "wouldn't", "don't", "won't"],
+      ["By the time the ambulance arrived, the paramedics saw that a doctor ___ already given first aid.", "had", "has", "was", "did"],
+      ["After the students ___ the experiment, they wrote a detailed lab report.", "had completed", "complete", "have completed", "were completing"],
+      ["If I ___ seen your message earlier, I would have replied right away.", "had", "have", "were", "did"],
+      ["'I will call you tomorrow,' Mark told me. -> Mark told me that he would call me ___.", "the following day", "tomorrow", "the day before", "yesterday"],
+      ["'I lost my notebook yesterday,' she said. -> She said that she ___ her notebook the previous day.", "had lost", "lost", "has lost", "was losing"],
+      ["The teacher ___ the students that water freezes at zero degrees Celsius.", "told", "said", "spoke", "talked"],
+      ["'We are waiting for the bus here,' they said. -> They said they were waiting for the bus ___.", "there", "here", "then", "that"],
+      ["All the injured passengers ___ taken to the nearest hospital immediately after the crash.", "were", "are", "have", "had"],
+      ["The new library ___ opened by the mayor next Monday morning.", "will be", "is", "was", "has been"],
+      ["Our kitchen ___ being renovated at the moment, so we are eating out.", "is", "was", "has", "will"],
+      ["I need to get my eyes ___ because my vision has been blurry lately.", "tested", "test", "to test", "testing"],
+      ["She is believed ___ the richest businesswoman in the province.", "to be", "being", "be", "been"],
+      ["The weather turned ___ cold after the sun went down.", "bitterly", "bitter", "bitterness", "more bitter"],
+      ["He solved the complex coding issue ___ fast.", "surprisingly", "surprising", "surprised", "surprise"],
+      ["The documentary about space exploration was ___ interesting.", "deeply", "deep", "depth", "deeper"]
+    ];
+
+    // App State
+    let currentMode = 'practice'; // 'practice' | 'exam'
+    let sessionQuestions = [];
+    let userAnswers = {}; // { questionIndex: chosenOptionIndex }
+    let isExamSubmitted = false;
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let currentFilter = 'all';
+
+    // Utility: Fisher-Yates Shuffle
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Switch between Practice and Exam modes
+    function switchMode(mode) {
+      if (currentMode === mode) return;
+      currentMode = mode;
+
+      document.getElementById('tabPractice').classList.toggle('active', mode === 'practice');
+      document.getElementById('tabExam').classList.toggle('active', mode === 'exam');
+
+      document.getElementById('practiceStats').classList.toggle('hidden', mode !== 'practice');
+      document.getElementById('examStats').classList.toggle('hidden', mode !== 'exam');
+
+      initSession();
+    }
+
+    // Initialize or Reset a Session
+    function initSession() {
+      stopTimer();
+      isExamSubmitted = false;
+      userAnswers = {};
+      currentFilter = 'all';
+
+      const countSelect = document.getElementById('questionCountSelect');
+      const requestedCount = parseInt(countSelect.value, 10) || 40;
+      const actualCount = Math.min(requestedCount, RAW_QUESTIONS.length);
+
+      // Pick random questions and shuffle their 4 options
+      const pickedRaw = shuffleArray(RAW_QUESTIONS).slice(0, actualCount);
+      sessionQuestions = pickedRaw.map((item, idx) => {
+        const qText = item[0];
+        const correctStr = item[1];
+        const allOptions = shuffleArray([item[1], item[2], item[3], item[4]]);
+        const correctIndex = allOptions.indexOf(correctStr);
+        return {
+          id: idx,
+          text: qText,
+          options: allOptions,
+          correctIndex: correctIndex
+        };
+      });
+
+      // Reset UI visibility
+      document.getElementById('statsSection').classList.add('hidden');
+      document.getElementById('topSubmitBtn').classList.remove('hidden');
+      document.getElementById('examFooter').classList.toggle('hidden', currentMode !== 'exam');
+
+      renderQuestions();
+      updateStatusCounters();
+
+      if (currentMode === 'exam') {
+        startTimer();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Timer for Exam Mode
+    function startTimer() {
+      secondsElapsed = 0;
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, '0');
+      const s = (sec % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function updateTimerDisplay() {
+      document.getElementById('examTimer').textContent = `⏱ ${formatTime(secondsElapsed)}`;
+    }
+
+    // Render Question Cards
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      container.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      sessionQuestions.forEach((q, qIdx) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${qIdx}`;
+
+        const header = document.createElement('div');
+        header.className = 'q-header';
+        header.innerHTML = `
+          <span class="q-number">Câu ${qIdx + 1}</span>
+          <span id="q-badge-${qIdx}" class="q-badge hidden"></span>
+        `;
+
+        const textEl = document.createElement('div');
+        textEl.className = 'q-text';
+        textEl.textContent = q.text;
+
+        const grid = document.createElement('div');
+        grid.className = 'options-grid';
+
+        q.options.forEach((optText, optIdx) => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+          btn.id = `opt-${qIdx}-${optIdx}`;
+          btn.onclick = () => handleOptionClick(qIdx, optIdx);
+
+          const letterSpan = document.createElement('span');
+          letterSpan.className = 'opt-letter';
+          letterSpan.textContent = letters[optIdx];
+
+          const contentSpan = document.createElement('span');
+          contentSpan.textContent = optText;
+
+          btn.appendChild(letterSpan);
+          btn.appendChild(contentSpan);
+          grid.appendChild(btn);
+        });
+
+        card.appendChild(header);
+        card.appendChild(textEl);
+        card.appendChild(grid);
+        container.appendChild(card);
+      });
+    }
+
+    // Handle clicking an option
+    function handleOptionClick(qIdx, optIdx) {
+      if (currentMode === 'practice') {
+        // In Practice mode: once answered, lock and show immediate feedback
+        if (userAnswers[qIdx] !== undefined) return;
+        userAnswers[qIdx] = optIdx;
+
+        const q = sessionQuestions[qIdx];
+        const isCorrect = (optIdx === q.correctIndex);
+        const card = document.getElementById(`q-card-${qIdx}`);
+        const badge = document.getElementById(`q-badge-${qIdx}`);
+
+        card.classList.add(isCorrect ? 'card-correct' : 'card-wrong');
+        badge.classList.remove('hidden');
+        if (isCorrect) {
+          badge.className = 'q-badge correct';
+          badge.textContent = '✓ Chính xác';
+        } else {
+          badge.className = 'q-badge wrong';
+          badge.textContent = '✗ Sai rồi';
+        }
+
+        // Highlight options & disable buttons for this question
+        for (let i = 0; i < 4; i++) {
+          const btn = document.getElementById(`opt-${qIdx}-${i}`);
+          btn.disabled = true;
+          if (i === q.correctIndex) {
+            btn.classList.add('is-correct');
+          } else if (i === optIdx && !isCorrect) {
+            btn.classList.add('is-wrong');
+          }
+        }
+
+        updateStatusCounters();
+      } else if (currentMode === 'exam') {
+        // In Exam mode: allow changing choice freely before submitting, NO right/wrong hint
+        if (isExamSubmitted) return;
+        userAnswers[qIdx] = optIdx;
+
+        for (let i = 0; i < 4; i++) {
+          const btn = document.getElementById(`opt-${qIdx}-${i}`);
+          btn.classList.toggle('selected', i === optIdx);
+        }
+
+        updateStatusCounters();
+      }
+    }
+
+    // Update top counters
+    function updateStatusCounters() {
+      const total = sessionQuestions.length;
+      const answeredKeys = Object.keys(userAnswers);
+      const answeredCount = answeredKeys.length;
+
+      if (currentMode === 'practice') {
+        let correct = 0;
+        let wrong = 0;
+        answeredKeys.forEach(k => {
+          const qIdx = parseInt(k, 10);
+          if (userAnswers[qIdx] === sessionQuestions[qIdx].correctIndex) {
+            correct++;
+          } else {
+            wrong++;
+          }
+        });
+        document.getElementById('pracProgress').textContent = `Đã làm: ${answeredCount}/${total}`;
+        document.getElementById('pracCorrect').textContent = `Đúng: ${correct}`;
+        document.getElementById('pracWrong').textContent = `Sai: ${wrong}`;
+      } else {
+        document.getElementById('examProgress').textContent = `Đã chọn: ${answeredCount}/${total}`;
+      }
+    }
+
+    // Submit Exam & Show Statistics
+    function submitExam() {
+      if (isExamSubmitted) return;
+
+      const total = sessionQuestions.length;
+      const answeredCount = Object.keys(userAnswers).length;
+      const unansweredCount = total - answeredCount;
+
+      if (unansweredCount > 0) {
+        const confirmSubmit = confirm(`Bạn còn ${unansweredCount} câu chưa chọn đáp án. Bạn có chắc chắn muốn nộp bài ngay không?`);
+        if (!confirmSubmit) return;
+      }
+
+      stopTimer();
+      isExamSubmitted = true;
+
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      // Grade and highlight every question
+      sessionQuestions.forEach((q, qIdx) => {
+        const chosen = userAnswers[qIdx];
+        const card = document.getElementById(`q-card-${qIdx}`);
+        const badge = document.getElementById(`q-badge-${qIdx}`);
+        badge.classList.remove('hidden');
+
+        const isCorrect = (chosen === q.correctIndex);
+        if (chosen === undefined) {
+          card.classList.add('card-wrong');
+          badge.className = 'q-badge unanswered';
+          badge.textContent = '! Chưa chọn đáp án';
+        } else if (isCorrect) {
+          correctCount++;
+          card.classList.add('card-correct');
+          badge.className = 'q-badge correct';
+          badge.textContent = '✓ Làm đúng';
+        } else {
+          wrongCount++;
+          card.classList.add('card-wrong');
+          badge.className = 'q-badge wrong';
+          badge.textContent = '✗ Làm sai';
+        }
+
+        for (let i = 0; i < 4; i++) {
+          const btn = document.getElementById(`opt-${qIdx}-${i}`);
+          btn.disabled = true;
+          btn.classList.remove('selected');
+          if (i === q.correctIndex) {
+            btn.classList.add('is-correct');
+          } else if (chosen === i && !isCorrect) {
+            btn.classList.add('is-wrong');
+          }
+        }
+      });
+
+      // Populate Statistics Box
+      const score10 = ((correctCount / total) * 10).toFixed(2);
+      const percent = Math.round((correctCount / total) * 100);
+
+      document.getElementById('finalScore10').textContent = score10;
+      document.getElementById('resultHeadline').textContent = `Bạn đạt ${correctCount}/${total} câu đúng (${percent}%)`;
+      document.getElementById('resultSubtext').textContent = `Thời gian hoàn thành: ${formatTime(secondsElapsed)} • Xem lại chi tiết các câu đúng và sai bên dưới.`;
+
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statCorrect').textContent = correctCount;
+      document.getElementById('statWrong').textContent = wrongCount;
+      document.getElementById('statUnanswered').textContent = unansweredCount;
+
+      document.getElementById('statsSection').classList.remove('hidden');
+      document.getElementById('examFooter').classList.add('hidden');
+      document.getElementById('topSubmitBtn').classList.add('hidden');
+
+      // Reset review filter buttons
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach((b, idx) => b.classList.toggle('active', idx === 0));
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Filter questions in post-exam review
+    function filterReview(type, btnEl) {
+      currentFilter = type;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      sessionQuestions.forEach((q, qIdx) => {
+        const card = document.getElementById(`q-card-${qIdx}`);
+        const chosen = userAnswers[qIdx];
+        const isCorrect = (chosen === q.correctIndex);
+
+        if (type === 'all') {
+          card.classList.remove('hidden');
+        } else if (type === 'correct') {
+          card.classList.toggle('hidden', !isCorrect);
+        } else if (type === 'wrong') {
+          card.classList.toggle('hidden', isCorrect);
+        }
+      });
+    }
+
+    // Start initial session on load
+    window.addEventListener('DOMContentLoaded', initSession);
+  </script>
+</body>
+</html>
