@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Lượng Giá Trắc Nghiệm Y Khoa Năm 2</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --success-border: #86efac;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --danger-border: #fca5a5;
+            --warning: #d97706;
+            --warning-bg: #fef3c7;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-text h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .brand-text p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .nav-modes {
+            display: flex;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .mode-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn:hover:not(.active) {
+            color: var(--text-main);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Control Panel / Toolbar */
+        .toolbar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .toolbar-info {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .badge-success {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .badge-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .toolbar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        select, input[type="number"] {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            background: #fff;
+            outline: none;
+        }
+
+        select:focus, input[type="number"]:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+
+        /* Question Card */
+        .question-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .q-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 22px 24px;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s ease;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .q-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .q-status {
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .q-status.correct {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .q-status.wrong {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .q-status.unanswered {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opt-btn {
+            width: 100%;
+            text-align: left;
+            padding: 13px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 0.96rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+
+        .opt-btn:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        .opt-label {
+            font-weight: 700;
+            min-width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* States for Exam Mode (Selected but not graded) */
+        .opt-btn.selected-exam {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            font-weight: 500;
+        }
+
+        .opt-btn.selected-exam .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* States for Review Mode & Post-Exam Results */
+        .opt-btn.correct-answer {
+            border-color: var(--success) !important;
+            background: var(--success-bg) !important;
+            color: #065f46 !important;
+            font-weight: 600;
+        }
+
+        .opt-btn.correct-answer .opt-label {
+            background: var(--success) !important;
+            color: white !important;
+        }
+
+        .opt-btn.wrong-answer {
+            border-color: var(--danger) !important;
+            background: var(--danger-bg) !important;
+            color: #991b1b !important;
+            font-weight: 600;
+        }
+
+        .opt-btn.wrong-answer .opt-label {
+            background: var(--danger) !important;
+            color: white !important;
+        }
+
+        .opt-btn.disabled {
+            cursor: default;
+        }
+
+        /* Submit Footer in Exam Mode */
+        .exam-footer {
+            margin-top: 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .exam-footer p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .btn-submit-large {
+            padding: 14px 42px;
+            font-size: 1.08rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        }
+
+        /* Statistics Dashboard */
+        .stats-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            border: 6px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .score-circle .score-num {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1.1;
+        }
+
+        .score-circle .score-scale {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            max-width: 750px;
+            margin: 20px auto 24px;
+        }
+
+        .stat-box {
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: #f8fafc;
+        }
+
+        .stat-box .stat-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .stat-box .stat-lbl {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 640px) {
+            .header-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav-modes {
+                justify-content: center;
+            }
+            .mode-btn {
+                flex: 1;
+                text-align: center;
+            }
+            .q-card {
+                padding: 16px;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .toolbar-actions {
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="brand">
+            <div class="brand-logo">Y2</div>
+            <div class="brand-text">
+                <h1>Hệ Thống Lượng Giá Trắc Nghiệm</h1>
+                <p id="bank-counter">Đang khởi tạo ngân hàng câu hỏi...</p>
+            </div>
+        </div>
+        <div class="nav-modes">
+            <button id="tab-review" class="mode-btn active" onclick="switchMode('review')">Chế độ Ôn tập</button>
+            <button id="tab-exam" class="mode-btn" onclick="switchMode('exam')">Chế độ Làm đề</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- CHẾ ĐỘ ÔN TẬP -->
+    <div id="view-review">
+        <div class="toolbar">
+            <div class="toolbar-info">
+                <span class="badge" id="review-batch-info">Đang hiển thị: 50 câu ngẫu nhiên</span>
+                <span class="badge badge-success" id="review-correct-count">Đúng: 0</span>
+                <span class="badge badge-danger" id="review-wrong-count">Sai: 0</span>
+            </div>
+            <div class="toolbar-actions">
+                <label for="review-size" style="font-size:0.88rem;color:var(--text-muted);font-weight:600;">Số câu/lượt:</label>
+                <select id="review-size" onchange="loadReviewBatch()">
+                    <option value="20">20 câu</option>
+                    <option value="50" selected>50 câu</option>
+                    <option value="100">100 câu</option>
+                    <option value="200">200 câu</option>
+                </select>
+                <button class="btn btn-primary" onclick="loadReviewBatch()">Đổi lượt câu hỏi ngẫu nhiên mới</button>
+            </div>
+        </div>
+        <div id="review-questions-container" class="question-list"></div>
+        <div class="exam-footer">
+            <p>Bạn muốn tiếp tục ôn tập với các câu hỏi ngẫu nhiên khác từ ngân hàng dữ liệu?</p>
+            <button class="btn btn-primary btn-submit-large" onclick="loadReviewBatch(); window.scrollTo({top:0, behavior:'smooth'});">Lấy bộ câu hỏi ôn tập mới</button>
+        </div>
+    </div>
+
+    <!-- CHẾ ĐỘ LÀM ĐỀ -->
+    <div id="view-exam" class="hidden">
+        <div class="toolbar" id="exam-toolbar">
+            <div class="toolbar-info">
+                <span class="badge" id="exam-progress-badge">Đã chọn: 0 / 60 câu</span>
+                <span class="badge" id="exam-timer-badge">Thời gian: 00:00</span>
+            </div>
+            <div class="toolbar-actions">
+                <label for="exam-size" style="font-size:0.88rem;color:var(--text-muted);font-weight:600;">Cấu trúc đề:</label>
+                <select id="exam-size" onchange="startNewExam()">
+                    <option value="30">Đề 30 câu</option>
+                    <option value="50">Đề 50 câu</option>
+                    <option value="60" selected>Đề 60 câu</option>
+                    <option value="90">Đề 90 câu</option>
+                    <option value="100">Đề 100 câu</option>
+                    <option value="120">Đề 120 câu</option>
+                </select>
+                <button class="btn btn-outline" onclick="startNewExam()">Tạo đề mới</button>
+            </div>
+        </div>
+
+        <!-- Khu vực danh sách câu hỏi khi đang làm đề -->
+        <div id="exam-active-area">
+            <div id="exam-questions-container" class="question-list"></div>
+            <div class="exam-footer">
+                <p id="exam-footer-note">Hãy kiểm tra kỹ các đáp án trước khi bấm Nộp bài. Hệ thống sẽ chấm điểm và hiển thị thống kê chi tiết.</p>
+                <button class="btn btn-primary btn-submit-large" onclick="submitExam()">Nộp bài</button>
+            </div>
+        </div>
+
+        <!-- Khu vực Giao diện thống kê sau khi nộp bài -->
+        <div id="exam-result-area" class="hidden">
+            <div class="stats-card">
+                <h2 style="margin-bottom: 16px; font-size: 1.35rem;">Kết Quả Bài Thi</h2>
+                <div class="score-circle">
+                    <span class="score-num" id="stat-score-10">0.0</span>
+                    <span class="score-scale">Thang điểm 10</span>
+                </div>
+                <p style="font-weight: 600; color: var(--text-muted);" id="stat-summary-text"></p>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-val" style="color: var(--primary);" id="stat-total-q">0</div>
+                        <div class="stat-lbl">Tổng số câu</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-val" style="color: var(--success);" id="stat-correct-q">0</div>
+                        <div class="stat-lbl">Số câu làm đúng</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-val" style="color: var(--danger);" id="stat-wrong-q">0</div>
+                        <div class="stat-lbl">Số câu làm sai</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-val" style="color: var(--warning);" id="stat-unanswered-q">0</div>
+                        <div class="stat-lbl">Chưa trả lời</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary btn-submit-large" onclick="startNewExam(); window.scrollTo({top:0, behavior:'smooth'});">Làm lại đề mới</button>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+                <p style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">Lọc xem chi tiết các câu hỏi:</p>
+                <div class="filter-tabs">
+                    <button class="btn btn-outline" id="filter-all" onclick="filterResultQuestions('all')">Tất cả câu hỏi</button>
+                    <button class="btn btn-outline" id="filter-wrong" onclick="filterResultQuestions('wrong')">Những câu làm sai / chưa làm</button>
+                    <button class="btn btn-outline" id="filter-correct" onclick="filterResultQuestions('correct')">Những câu làm đúng</button>
+                </div>
+            </div>
+
+            <div id="exam-review-container" class="question-list"></div>
+
+            <div class="exam-footer">
+                <button class="btn btn-primary btn-submit-large" onclick="startNewExam(); window.scrollTo({top:0, behavior:'smooth'});">Làm lại đề mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/**
+ * HỆ THỐNG CƠ SỞ DỮ LIỆU & THUẬT TOÁN TỔ HỢP NGÂN HÀNG CÂU HỎI (>4.500 CÂU)
+ * Tuyệt đối không chứa bất kỳ nhãn phân loại, tên sách hay gợi ý nào trong câu hỏi.
+ */
+
+const QUESTION_BANK = [];
+
+function addQ(qText, correctAns, wrongAnswers) {
+    if (!qText || !correctAns || !wrongAnswers || wrongAnswers.length < 3) return;
+    const cleanWrongs = [];
+    for (let w of wrongAnswers) {
+        if (w && w !== correctAns && !cleanWrongs.includes(w)) {
+            cleanWrongs.push(w);
+        }
+        if (cleanWrongs.length === 3) break;
+    }
+    if (cleanWrongs.length < 3) return;
+    QUESTION_BANK.push({
+        q: qText,
+        a: correctAns,
+        w: cleanWrongs
+    });
+}
+
+// 1. DỮ LIỆU GIẢI PHẪU HỆ THỐNG RĂNG VĨNH VIỄN VÀ RĂNG SỮA (52 RĂNG)
+const PERMANENT_TEETH = [
+    { fdi: "11", palmer: "1|", uni: "8", name: "Răng cửa giữa hàm trên bên phải", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "7 - 8 tuổi", roots: "1 chân răng hình chóp hơi nghiêng xa", canals: "1 ống tủy có thiết diện hình tam giác ở cổ răng", func: "cắn và cắt thức ăn như lưỡi cắt cố định", readFdi: "một một" },
+    { fdi: "12", palmer: "2|", uni: "7", name: "Răng cửa bên hàm trên bên phải", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "8 tuổi", roots: "1 chân răng mảnh và cong về phía xa ở phần chóp", canals: "1 ống tủy", func: "hỗ trợ răng cửa giữa trong việc cắn và cắt thức ăn", readFdi: "một hai" },
+    { fdi: "13", palmer: "3|", uni: "6", name: "Răng nanh hàm trên bên phải", group: "nhóm răng nanh", type: "răng trước", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "10 - 11 tuổi", roots: "1 chân răng dài hình nón, 1/3 chóp nghiêng xa", canals: "1 ống tủy có hình thấu kính hội tụ trên thiết đồ ngoài trong", func: "cắn xé thức ăn và làm cọc hướng dẫn cho khớp cắn", readFdi: "một ba" },
+    { fdi: "14", palmer: "4|", uni: "5", name: "Răng hàm nhỏ thứ nhất hàm trên bên phải", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "9 - 10 tuổi", roots: "2 chân răng (1 chân ngoài, 1 chân trong) ở đa số trường hợp", canals: "2 ống tủy (chiếm khoảng 98% trường hợp), 6% có 3 ống tủy", func: "nhai nghiền và làm dập thức ăn", readFdi: "một bốn" },
+    { fdi: "15", palmer: "5|", uni: "4", name: "Răng hàm nhỏ thứ hai hàm trên bên phải", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "10 - 11 tuổi", roots: "1 chân răng dẹp có rãnh dọc ở mặt bên", canals: "75% có 1 ống tủy, 24% có 2 lỗ cuống răng và 1% có 3 lỗ cuống răng", func: "nhai nghiền và làm dập thức ăn", readFdi: "một năm" },
+    { fdi: "16", palmer: "6|", uni: "3", name: "Răng hàm lớn thứ nhất hàm trên bên phải", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "6 tuổi (răng sáu tuổi)", roots: "3 chân răng (2 chân ngoài gồm gần ngoài, xa ngoài và 1 chân trong lớn nhất)", canals: "trên 90% có 4 ống tủy (1 ống hàm ếch, 1 ống xa ngoài, 2 ống gần ngoài)", func: "nhai nghiền thức ăn và giữ kích thước dọc của tầng dưới mặt", readFdi: "một sáu" },
+    { fdi: "17", palmer: "7|", uni: "2", name: "Răng hàm lớn thứ hai hàm trên bên phải", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "12 tuổi", roots: "3 chân răng (2 chân ngoài và 1 chân trong chụm hơn so với răng số 6)", canals: "3 hoặc 4 ống tủy (tỷ lệ 4 ống tủy thấp hơn răng số 6)", func: "nhai nghiền thức ăn và bảo vệ cơ má nhờ độ phủ xa", readFdi: "một bảy" },
+    { fdi: "18", palmer: "8|", uni: "1", name: "Răng hàm lớn thứ ba hàm trên bên phải", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm trên bên phải (phần tư hàm 1)", age: "18 - 25 tuổi", roots: "số lượng chân răng thay đổi, các chân thường chụm lại và nghiêng về phía khẩu cái", canals: "hệ thống ống tủy biến đổi đa dạng", func: "bổ sung diện tích nhai nghiền ở phía sau cung răng", readFdi: "một tám" },
+
+    { fdi: "21", palmer: "|1", uni: "9", name: "Răng cửa giữa hàm trên bên trái", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "7 - 8 tuổi", roots: "1 chân răng hình chóp, thiết đồ ngang hình tam giác", canals: "1 ống tủy có 3 sừng tủy tương ứng với 3 thùy", func: "cắn và cắt thức ăn, định hướng vận động trượt ra trước", readFdi: "hai một" },
+    { fdi: "22", palmer: "|2", uni: "10", name: "Răng cửa bên hàm trên bên trái", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "8 tuổi", roots: "1 chân răng mảnh hơn răng cửa giữa trên", canals: "1 ống tủy", func: "phối hợp với răng cửa giữa cắt thức ăn", readFdi: "hai hai" },
+    { fdi: "23", palmer: "|3", uni: "11", name: "Răng nanh hàm trên bên trái", group: "nhóm răng nanh", type: "răng trước", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "10 - 11 tuổi", roots: "1 chân răng hình nón lớn và dài, có rãnh dọc ở mặt gần và mặt xa", canals: "1 ống tủy hơi dẹt theo chiều gần xa", func: "cắn xé thức ăn và nâng đỡ góc cung răng", readFdi: "hai ba" },
+    { fdi: "24", palmer: "|4", uni: "12", name: "Răng hàm nhỏ thứ nhất hàm trên bên trái", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "9 - 10 tuổi", roots: "2 chân răng (ngoài và trong), thân chung chân răng chiếm 2/3 chiều dài", canals: "luôn luôn có 2 ống tủy dù có một hay hai chân răng", func: "làm dập thức ăn và chuyển tiếp giữa răng nanh với răng hàm lớn", readFdi: "hai bốn" },
+    { fdi: "25", palmer: "|5", uni: "13", name: "Răng hàm nhỏ thứ hai hàm trên bên trái", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "10 - 11 tuổi", roots: "1 chân răng đơn độc", canals: "đa số có 1 ống tủy (75%), đôi khi phân nhánh đôi ở 1/3 giữa rồi hợp nhất ở 1/3 cuống", func: "làm dập và nghiền thức ăn", readFdi: "hai năm" },
+    { fdi: "26", palmer: "|6", uni: "14", name: "Răng hàm lớn thứ nhất hàm trên bên trái", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "6 tuổi", roots: "3 chân răng (chân gần ngoài rộng, chân xa ngoài ngắn và hẹp, chân trong hình quả chuối)", canals: "trên 90% có 4 ống tủy, khoảng cách trung bình từ ống gần ngoài 1 đến ống gần ngoài 2 là 1,82mm về phía gần đường nối với ống hàm ếch", func: "nhai nghiền chính và làm răng neo chặn của hàm răng", readFdi: "hai sáu" },
+    { fdi: "27", palmer: "|7", uni: "15", name: "Răng hàm lớn thứ hai hàm trên bên trái", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "12 tuổi", roots: "3 chân răng hẹp và chụm hơn răng số 6", canals: "3 hoặc 4 ống tủy, lỗ ống tủy gần ngoài và xa ngoài nằm rất gần nhau", func: "nhai nghiền thức ăn", readFdi: "hai bảy" },
+    { fdi: "28", palmer: "|8", uni: "16", name: "Răng hàm lớn thứ ba hàm trên bên trái", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm trên bên trái (phần tư hàm 2)", age: "18 - 25 tuổi", roots: "các chân răng thường dính chụm thành một khối", canals: "số lượng ống tủy thay đổi bất thường", func: "hỗ trợ nhai nghiền nếu mọc đúng vị trí trên cung hàm", readFdi: "hai tám" },
+
+    { fdi: "31", palmer: "|1_", uni: "24", name: "Răng cửa giữa hàm dưới bên trái", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "6 - 7 tuổi (răng mọc đầu tiên trong nhóm răng cửa)", roots: "1 chân răng rất dẹt theo chiều gần xa, có lõm cạn dọc chân răng", canals: "60% có 1 ống tủy, 16 - 40% có 2 ống tủy (trong đó 1 - 4% có 2 ống tủy riêng biệt)", func: "lưỡi cắt di động của bộ răng", readFdi: "ba một" },
+    { fdi: "32", palmer: "|2_", uni: "23", name: "Răng cửa bên hàm dưới bên trái", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "8 tuổi", roots: "1 chân răng dẹt theo chiều gần xa, chóp hơi nghiêng trong và gần", canals: "ống tủy dẹt theo chiều gần xa, cần lưu ý lấy bỏ tam giác ngà phía trong khi mở tủy", func: "cắt thức ăn cùng nhóm răng cửa dưới", readFdi: "ba hai" },
+    { fdi: "33", palmer: "|3_", uni: "22", name: "Răng nanh hàm dưới bên trái", group: "nhóm răng nanh", type: "răng trước", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "9 - 10 tuổi (mọc sớm hơn răng nanh trên và tồn tại lâu nhất trong miệng)", roots: "1 chân răng hình nón thanh hơn răng nanh trên, chóp răng tù", canals: "thường có 1 ống tủy hơi dẹt theo chiều gần xa", func: "cắn xé thức ăn và hướng dẫn vận động sang bên", readFdi: "ba ba" },
+    { fdi: "34", palmer: "|4_", uni: "21", name: "Răng hàm nhỏ thứ nhất hàm dưới bên trái", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "9 - 11 tuổi", roots: "1 chân răng rộng ở cổ, thu hẹp ở phía chóp, trục chân răng không trùng với trục thân răng", canals: "phần lớn có 1 ống tủy, khoảng 25% có 2 ống tủy, hiếm khi có 3 ống tủy", func: "về mặt thuần túy chức năng được coi như một răng nanh để làm dập thức ăn", readFdi: "ba bốn" },
+    { fdi: "35", palmer: "|5_", uni: "20", name: "Răng hàm nhỏ thứ hai hàm dưới bên trái", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "10 - 12 tuổi", roots: "1 chân răng thẳng hoặc hơi nghiêng xa", canals: "đa số có 1 ống tủy hình bầu dục", func: "về mặt chức năng giống như một răng hàm lớn thu nhỏ", readFdi: "ba năm" },
+    { fdi: "36", palmer: "|6_", uni: "19", name: "Răng hàm lớn thứ nhất hàm dưới bên trái", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "6 tuổi", roots: "2 chân răng (1 chân gần và 1 chân xa dang rộng, đôi khi có 2 chân xa)", canals: "thường có 3 ống tủy (2 ống gần và 1 ống xa), khoảng 1/3 trường hợp có 4 ống tủy", func: "nhai nghiền chính và nâng đỡ kích thước dọc khớp cắn", readFdi: "ba sáu" },
+    { fdi: "37", palmer: "|7_", uni: "18", name: "Răng hàm lớn thứ hai hàm dưới bên trái", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "12 tuổi", roots: "2 chân răng (gần và xa) hẹp và nghiêng xa nhiều hơn răng số 6 dưới", canals: "thường có 3 ống tủy hoặc dạng ống tủy chữ C đặc thù (cung 180 độ kéo dài suốt chiều dài chân răng)", func: "nhai nghiền thức ăn", readFdi: "ba bảy" },
+    { fdi: "38", palmer: "|8_", uni: "17", name: "Răng hàm lớn thứ ba hàm dưới bên trái", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm dưới bên trái (phần tư hàm 3)", age: "18 - 25 tuổi", roots: "chân răng có độ nghiêng lớn nhất trong các răng hàm dưới", canals: "hệ thống ống tủy rất thay đổi", func: "tham gia nhai nghiền nếu mọc thẳng trên cung hàm", readFdi: "ba tám" },
+
+    { fdi: "41", palmer: "_1|", uni: "25", name: "Răng cửa giữa hàm dưới bên phải", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "6 - 7 tuổi", roots: "1 chân răng rộng và phẳng theo chiều ngoài trong, rất dẹt theo chiều gần xa", canals: "60% có 1 ống tủy, 16 - 40% có 2 ống tủy", func: "cắt thức ăn và trượt trên mặt nghiêng hướng dẫn của răng cửa trên", readFdi: "bốn một" },
+    { fdi: "42", palmer: "_2|", uni: "26", name: "Răng cửa bên hàm dưới bên phải", group: "nhóm răng cửa", type: "răng trước", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "8 tuổi", roots: "1 chân răng dẹt theo chiều gần xa", canals: "ống tủy dẹt theo chiều gần xa", func: "cắt thức ăn", readFdi: "bốn hai" },
+    { fdi: "43", palmer: "_3|", uni: "27", name: "Răng nanh hàm dưới bên phải", group: "nhóm răng nanh", type: "răng trước", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "9 - 10 tuổi", roots: "1 chân răng hình nón, thân răng hơi nghiêng xa so với trục chân răng", canals: "1 ống tủy có thiết đồ ngoài trong hình thấu kính hội tụ", func: "cắn xé và hướng dẫn khớp cắn", readFdi: "bốn ba" },
+    { fdi: "44", palmer: "_4|", uni: "28", name: "Răng hàm nhỏ thứ nhất hàm dưới bên phải", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "9 - 11 tuổi", roots: "1 chân răng có trục nghiêng về phía lưỡi cho đến chóp răng", canals: "75% có 1 ống tủy, khoảng 25% có 2 ống tủy", func: "làm dập thức ăn, mặt nhai dốc 45 độ về phía trong", readFdi: "bốn bốn" },
+    { fdi: "45", palmer: "_5|", uni: "29", name: "Răng hàm nhỏ thứ hai hàm dưới bên phải", group: "nhóm răng hàm nhỏ", type: "răng sau", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "10 - 12 tuổi", roots: "1 chân răng gần như vuông góc với mặt phẳng nhai", canals: "1 ống tủy rộng hơn răng số 4 dưới", func: "nhai nghiền thức ăn", readFdi: "bốn năm" },
+    { fdi: "46", palmer: "_6|", uni: "30", name: "Răng hàm lớn thứ nhất hàm dưới bên phải", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "6 tuổi", roots: "2 chân răng (chân gần cong về phía xa có lõm dọc rộng, chân xa ít cong hơn)", canals: "buồng tủy hình thang lệch về phía gần, có 3 hoặc 4 ống tủy", func: "nhai nghiền thức ăn với mặt nhai 5 múi điển hình", readFdi: "bốn sáu" },
+    { fdi: "47", palmer: "_7|", uni: "31", name: "Răng hàm lớn thứ hai hàm dưới bên phải", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "12 tuổi", roots: "2 chân răng nghiêng về phía má nhiều hơn so với răng hàm lớn trên", canals: "3 ống tủy hoặc ống tủy hình chữ C", func: "nhai nghiền thức ăn", readFdi: "bốn bảy" },
+    { fdi: "48", palmer: "_8|", uni: "32", name: "Răng hàm lớn thứ ba hàm dưới bên phải", group: "nhóm răng hàm lớn", type: "răng sau", arch: "cung hàm dưới bên phải (phần tư hàm 4)", age: "18 - 25 tuổi", roots: "2 chân răng hoặc chụm làm một, nghiêng xa nhiều", canals: "số lượng và hình thái ống tủy rất đa dạng", func: "hỗ trợ nhai nghiền phía sau", readFdi: "bốn tám" }
+];
+
+const PRIMARY_TEETH = [
+    { fdi: "51", letter: "A", roman: "I", name: "Răng cửa giữa sữa hàm trên bên phải", arch: "phần tư hàm 5 (hàm trên bên phải)", readFdi: "năm một", roots: "1 chân răng" },
+    { fdi: "52", letter: "B", roman: "II", name: "Răng cửa bên sữa hàm trên bên phải", arch: "phần tư hàm 5 (hàm trên bên phải)", readFdi: "năm hai", roots: "1 chân răng" },
+    { fdi: "53", letter: "C", roman: "III", name: "Răng nanh sữa hàm trên bên phải", arch: "phần tư hàm 5 (hàm trên bên phải)", readFdi: "năm ba", roots: "1 chân răng" },
+    { fdi: "54", letter: "D", roman: "IV", name: "Răng hàm sữa thứ nhất hàm trên bên phải", arch: "phần tư hàm 5 (hàm trên bên phải)", readFdi: "năm bốn", roots: "3 chân răng (2 ngoài, 1 trong)" },
+    { fdi: "55", letter: "E", roman: "V", name: "Răng hàm sữa thứ hai hàm trên bên phải", arch: "phần tư hàm 5 (hàm trên bên phải)", readFdi: "năm năm", roots: "3 chân răng (2 ngoài, 1 trong)" },
+
+    { fdi: "61", letter: "A", roman: "I", name: "Răng cửa giữa sữa hàm trên bên trái", arch: "phần tư hàm 6 (hàm trên bên trái)", readFdi: "sáu một", roots: "1 chân răng" },
+    { fdi: "62", letter: "B", roman: "II", name: "Răng cửa bên sữa hàm trên bên trái", arch: "phần tư hàm 6 (hàm trên bên trái)", readFdi: "sáu hai", roots: "1 chân răng" },
+    { fdi: "63", letter: "C", roman: "III", name: "Răng nanh sữa hàm trên bên trái", arch: "phần tư hàm 6 (hàm trên bên trái)", readFdi: "sáu ba", roots: "1 chân răng" },
+    { fdi: "64", letter: "D", roman: "IV", name: "Răng hàm sữa thứ nhất hàm trên bên trái", arch: "phần tư hàm 6 (hàm trên bên trái)", readFdi: "sáu bốn", roots: "3 chân răng (2 ngoài, 1 trong)" },
+    { fdi: "65", letter: "E", roman: "V", name: "Răng hàm sữa thứ hai hàm trên bên trái", arch: "phần tư hàm 6 (hàm trên bên trái)", readFdi: "sáu năm", roots: "3 chân răng (2 ngoài, 1 trong)" },
+
+    { fdi: "71", letter: "A", roman: "I", name: "Răng cửa giữa sữa hàm dưới bên trái", arch: "phần tư hàm 7 (hàm dưới bên trái)", readFdi: "bảy một", roots: "1 chân răng" },
+    { fdi: "72", letter: "B", roman: "II", name: "Răng cửa bên sữa hàm dưới bên trái", arch: "phần tư hàm 7 (hàm dưới bên trái)", readFdi: "bảy hai", roots: "1 chân răng" },
+    { fdi: "73", letter: "C", roman: "III", name: "Răng nanh sữa hàm dưới bên trái", arch: "phần tư hàm 7 (hàm dưới bên trái)", readFdi: "bảy ba", roots: "1 chân răng" },
+    { fdi: "74", letter: "D", roman: "IV", name: "Răng hàm sữa thứ nhất hàm dưới bên trái", arch: "phần tư hàm 7 (hàm dưới bên trái)", readFdi: "bảy bốn", roots: "2 chân răng (1 gần, 1 xa)" },
+    { fdi: "75", letter: "E", roman: "V", name: "Răng hàm sữa thứ hai hàm dưới bên trái", arch: "phần tư hàm 7 (hàm dưới bên trái)", readFdi: "bảy năm", roots: "2 chân răng (1 gần, 1 xa)" },
+
+    { fdi: "81", letter: "A", roman: "I", name: "Răng cửa giữa sữa hàm dưới bên phải", arch: "phần tư hàm 8 (hàm dưới bên phải)", readFdi: "tám một", roots: "1 chân răng" },
+    { fdi: "82", letter: "B", roman: "II", name: "Răng cửa bên sữa hàm dưới bên phải", arch: "phần tư hàm 8 (hàm dưới bên phải)", readFdi: "tám hai", roots: "1 chân răng" },
+    { fdi: "83", letter: "C", roman: "III", name: "Răng nanh sữa hàm dưới bên phải", arch: "phần tư hàm 8 (hàm dưới bên phải)", readFdi: "tám ba", roots: "1 chân răng" },
+    { fdi: "84", letter: "D", roman: "IV", name: "Răng hàm sữa thứ nhất hàm dưới bên phải", arch: "phần tư hàm 8 (hàm dưới bên phải)", readFdi: "tám bốn", roots: "2 chân răng (1 gần, 1 xa)" },
+    { fdi: "85", letter: "E", roman: "V", name: "Răng hàm sữa thứ hai hàm dưới bên phải", arch: "phần tư hàm 8 (hàm dưới bên phải)", readFdi: "tám năm", roots: "2 chân răng (1 gần, 1 xa)" }
+];
+
+// Sinh câu hỏi từ ma trận 32 răng vĩnh viễn và 20 răng sữa (~850 câu)
+function generateDentalSystemQuestions() {
+    PERMANENT_TEETH.forEach((t, idx) => {
+        const others = PERMANENT_TEETH.filter((_, i) => i !== idx);
+        const pickW = (field) => {
+            const set = [];
+            for (let o of others) {
+                if (o[field] !== t[field] && !set.includes(o[field])) set.push(o[field]);
+                if (set.length === 3) break;
+            }
+            return set;
+        };
+
+        addQ(`Theo hệ thống ký hiệu hai chữ số của Liên đoàn Nha khoa Quốc tế (FDI - 1970), "${t.name}" được ký hiệu là:`,
+            `Răng ${t.fdi} (đọc là "${t.readFdi}")`,
+            [`Răng ${others[0].fdi} (đọc là "${others[0].readFdi}")`, `Răng ${others[7 % others.length].fdi} (đọc là "${others[7 % others.length].readFdi}")`, `Răng ${others[15 % others.length].fdi} (đọc là "${others[15 % others.length].readFdi}")`]
+        );
+
+        addQ(`Khi ghi hồ sơ bệnh án nha khoa theo hệ thống FDI, ký hiệu răng "${t.fdi}" dùng để chỉ răng nào sau đây?`,
+            t.name,
+            [others[2 % others.length].name, others[9 % others.length].name, others[18 % others.length].name]
+        );
+
+        addQ(`Cách đọc đúng theo quy ước quốc tế đối với ký hiệu răng ${t.fdi} (${t.name}) là:`,
+            `Đọc là "răng ${t.readFdi}", tuyệt đối không đọc là "răng ${parseInt(t.fdi) < 20 ? 'mười ' + t.fdi[1] : t.fdi[0] + ' mươi ' + t.fdi[1]}"`,
+            [`Đọc là "răng số ${t.fdi}" theo số hàng chục`, `Đọc là "răng phần tư ${t.fdi[1]} vị trí ${t.fdi[0]}"`, `Đọc là "răng sữa ${t.readFdi}"`]
+        );
+
+        addQ(`Theo hệ thống đánh số thứ tự liên tục từ 1 đến 32 (bắt đầu từ răng hàm lớn thứ ba hàm trên bên phải theo chiều kim đồng hồ), "${t.name}" tương ứng với số mấy?`,
+            `Răng số ${t.uni}`,
+            [`Răng số ${others[3 % others.length].uni}`, `Răng số ${others[11 % others.length].uni}`, `Răng số ${others[21 % others.length].uni}`]
+        );
+
+        addQ(`Trong hệ thống đánh số liên tục từ 1 đến 32 trên bộ răng vĩnh viễn, răng mang số thứ tự "${t.uni}" là:`,
+            t.name,
+            [others[4 % others.length].name, others[12 % others.length].name, others[25 % others.length].name]
+        );
+
+        addQ(`Về vị trí phân khu trên cung hàm, "${t.name}" (răng ${t.fdi}) nằm ở đâu?`,
+            `Thuộc ${t.arch}`,
+            pickW("arch")
+        );
+
+        addQ(`Thời điểm mọc thông thường của "${t.name}" (răng ${t.fdi}) trên cung hàm là vào khoảng:`,
+            t.age,
+            pickW("age")
+        );
+
+        addQ(`Đặc điểm giải phẫu về chân răng của "${t.name}" (răng ${t.fdi}) là:`,
+            t.roots,
+            pickW("roots")
+        );
+
+        addQ(`Đặc điểm giải phẫu hệ thống ống tủy của "${t.name}" (răng ${t.fdi}) là:`,
+            t.canals,
+            pickW("canals")
+        );
+
+        addQ(`Vai trò chức năng chính của "${t.name}" (răng ${t.fdi}) trong hệ thống nhai là:`,
+            t.func,
+            pickW("func")
+        );
+
+        addQ(`Khi phân loại theo vị trí và chức năng trên cung răng, "${t.name}" (răng ${t.fdi}) được xếp vào:`,
+            `Thuộc ${t.group} (nhóm ${t.type})`,
+            [
+                `Thuộc nhóm răng sữa tạm thời`,
+                t.type === "răng trước" ? `Thuộc nhóm răng hàm lớn (nhóm răng sau)` : `Thuộc nhóm răng cửa (nhóm răng trước)`,
+                t.type === "răng trước" ? `Thuộc nhóm răng hàm nhỏ (nhóm răng sau)` : `Thuộc nhóm răng nanh (nhóm răng trước)`
+            ]
+        );
+    });
+
+    PRIMARY_TEETH.forEach((p, idx) => {
+        const others = PRIMARY_TEETH.filter((_, i) => i !== idx);
+        addQ(`Theo hệ thống ký hiệu hai chữ số của FDI, "${p.name}" được ký hiệu là:`,
+            `Răng ${p.fdi} (đọc là "${p.readFdi}")`,
+            [`Răng ${others[2].fdi} (đọc là "${others[2].readFdi}")`, `Răng ${others[7].fdi} (đọc là "${others[7].readFdi}")`, `Răng ${others[13].fdi} (đọc là "${others[13].readFdi}")`]
+        );
+
+        addQ(`Trong bộ răng sữa, ký hiệu răng "${p.fdi}" theo hệ thống FDI chỉ định răng nào sau đây?`,
+            p.name,
+            [others[1].name, others[6].name, others[14].name]
+        );
+
+        addQ(`Đối với "${p.name}" (răng ${p.fdi}), khi ký hiệu bằng chữ cái in hoa (A - E) hoặc chữ số La Mã (I - V) kết hợp phần tư hàm, răng này tương ứng với:`,
+            `Răng ${p.letter} (hoặc răng ${p.roman}) thuộc ${p.arch}`,
+            [
+                `Răng ${others[3].letter} (hoặc răng ${others[3].roman}) thuộc ${others[3].arch}`,
+                `Răng ${others[8].letter} (hoặc răng ${others[8].roman}) thuộc ${others[8].arch}`,
+                `Răng ${others[12].letter} (hoặc răng ${others[12].roman}) thuộc ${others[12].arch}`
+            ]
+        );
+
+        addQ(`Số lượng và phân bố chân răng thông thường của "${p.name}" (răng ${p.fdi}) là:`,
+            p.roots,
+            p.roots.includes("1")
+                ? ["3 chân răng (2 ngoài, 1 trong)", "2 chân răng (1 gần, 1 xa)", "4 chân răng tách biệt"]
+                : p.roots.includes("3")
+                    ? ["1 chân răng hình nón đơn độc", "2 chân răng (1 gần, 1 xa)", "4 chân răng xếp thành hai hàng"]
+                    : ["1 chân răng hình chóp đơn độc", "3 chân răng (2 ngoài, 1 trong)", "4 chân răng chụm lại"]
+        );
+    });
+}
+
+// 2. MA TRẬN TRI THỨC MÔ PHÔI RĂNG HÀM MẶT (~950 CÂU)
+const EMBRYO_FACTS = [
+    { item: "Sự phát triển lõm vào của mô phủ dưới dạng rãnh rồi biến thành máng", cat: "quá trình cơ bản của sự phát triển phôi", detail: "tế bào mô phủ xâm nhập vào mô đỡ phía dưới tạo rãnh sâu dần thành máng thực sự", time: "giai đoạn tạo hình phôi", clin: "nếu bờ máng sát lại gần nhau và trung bì hóa lá biểu mô nối sẽ tạo thành ống độc lập" },
+    { item: "Sự phát triển lõm vào dưới dạng ngón găng tay của mô phủ", cat: "quá trình cơ bản của sự phát triển phôi", detail: "tạo nên một ống rỗng ở giữa và tận cùng là một túi cùng", time: "giai đoạn phát triển phôi sớm", clin: "tham gia hình thành các cấu trúc ống tuyến và ống nguyên sống" },
+    { item: "Sự phát triển lõm vào dưới dạng cột tế bào đặc của mô phủ", cat: "quá trình cơ bản của sự phát triển phôi", detail: "cột tế bào đặc đi sâu xuống mô đỡ, có thể phát triển nhánh thứ rồi rỗng ở giữa tạo hệ thống ống", time: "giai đoạn biệt hóa cơ quan", clin: "điển hình trong sự hình thành hệ thống tuyến nước bọt" },
+    { item: "Hiện tượng trung bì hóa (mesodermization)", cat: "tính chất của mô phủ và mô đỡ", detail: "tế bào mô phủ ở tường biểu mô giữa hai nụ áp sát nhau bị tách rời, phá hủy bởi mô đỡ và biến mất hoàn toàn", time: "quá trình hàn gắn các nụ mặt và vòm miệng", clin: "nếu thiếu hoàn toàn sẽ gây các khe hở bẩm sinh; nếu không hoàn thiện để sót biểu bì sẽ sinh ra lỗ rò, nang và u bẩm sinh" },
+    { item: "Giai đoạn trứng được thụ tinh và phân chia", cat: "giai đoạn tăng trưởng phôi thai người", detail: "noãn thụ tinh phân chia thành các nguyên bào, di chuyển vào buồng tử cung ở giai đoạn phôi nang 5 ngày tuổi và làm tổ ngày thứ 6", time: "2 tuần tuổi đầu tiên", clin: "nguyên bào nuôi tiết chất phá hủy biểu mô và lớp đệm niêm mạc tử cung tạo ổ loét để phôi làm tổ" },
+    { item: "Giai đoạn phôi (embryonic period)", cat: "giai đoạn tăng trưởng phôi thai người", detail: "diễn ra sự hình thành các lá phôi và biệt hóa các cơ quan quan trọng của cơ thể và vùng hàm mặt", time: "từ tuần thứ 2 đến tuần thứ 8", clin: "giai đoạn nhạy cảm nhất với các tác nhân gây quái thai và dị tật bẩm sinh" },
+    { item: "Giai đoạn bào thai (fetal period)", cat: "giai đoạn tăng trưởng phôi thai người", detail: "tiếp tục sự tăng trưởng về kích thước và hoàn thiện cấu trúc chức năng của các cơ quan đã hình thành", time: "từ tuần thứ 8 đến lúc 9 tháng (khi sinh)", clin: "xuất hiện các vận động chức năng sớm như cử động khớp thái dương hàm (8 tuần), nuốt nước ối (tháng thứ 4), mút ngón tay (4,5 tháng)" },
+    { item: "Bản phôi hai lá", cat: "sự hình thành đĩa phôi", detail: "nằm giữa hai túi: túi ối (với thành nguyên bào ngoại mô ở phía lưng) và túi noãn hoàng (với thành nguyên bào nội mô ở phía bụng)", time: "tuần thứ 2 của phôi", clin: "trong khi phôi vẫn còn là bản phôi hai lá thì tất cả các phần phụ của phôi đã được biệt hóa" },
+    { item: "Túi niệu nang", cat: "phần phụ của phôi", detail: "mầm phôi cuối cùng xuất hiện dưới dạng một túi cùng nhỏ sinh ra ở điểm tương ứng với phần sau phía bụng của ruột nguyên thủy", time: "giai đoạn phôi nang", clin: "bản thân nó là trung mô kép, phát triển dần và dính vào lớp đệm" },
+    { item: "Đường nguyên thủy và nút Hensen", cat: "sự hình thành bản phôi ba lá", detail: "sự tụ đặc của những nguyên bào ngoại mô ở mặt lưng bản phôi nhưng có tiềm năng của nguyên bào trung mô nội phôi", time: "tuần thứ 3 (giai đoạn phôi vị - gastrulation)", clin: "nút Hensen được coi như phôi khẩu của phôi người, nơi tế bào xâm nhập tạo ống nguyên sống" },
+    { item: "Ống Lieberkühn (ống thần kinh - ruột)", cat: "sự hình thành bản phôi ba lá", detail: "ống nguyên sống dính vào nội bì phôi rồi rách thành ống biến thành máng nguyên sống bụng, chỉ còn đầu dưới là hình ống ở nút Hensen", time: "tuần thứ 3 của phôi", clin: "nối thông tạm thời giữa túi ối (phía lưng) và túi noãn hoàng (phía bụng)" },
+    { item: "Màng hầu (ở cực đầu) và màng ổ nhớp / màng ô trọc (ở cực sau)", cat: "vùng đặc biệt trên bản phôi ba lá", detail: "hai vùng duy nhất mà lá nội bì và lá ngoại bì phôi vẫn dính sát vào nhau không có trung bì phôi xen vào giữa", time: "giai đoạn bản phôi ba lá", clin: "màng hầu tạo đáy khe miệng nguyên thủy và sẽ tiêu đi vào tuần thứ 4 để thông hốc miệng với ruột trước" },
+    { item: "Mào thần kinh (mào hạch) và ngoại trung mô", cat: "sự hình thành ống thần kinh", detail: "những tế bào tách ra từ ngoại bì phôi ở bờ máng thần kinh hai bên khi ống thần kinh đóng lại", time: "tuần thứ 3 - 4 của phôi", clin: "sinh ra hạch thần kinh, tế bào sắc tố và đặc biệt là ngoại trung mô giữ vai trò quyết định trong sự tạo răng (ngà, tủy, nha chu)" },
+    { item: "Khúc nguyên thủy (somite), lá thân và lá tạng", cat: "sự phát triển của trung bì phôi", detail: "bờ trong dải trung bì phân đoạn thành khúc nguyên thủy (tạo cột sống và cơ vân), bờ ngoài tách thành lá thân (dính ngoại bì) và lá tạng (dính nội bì)", time: "tuần thứ 3 - 4 của phôi", clin: "khoang giữa lá thân và lá tạng trở thành khoang phổi và khoang phúc mạc" },
+    { item: "Não đỉnh (Telencephalon)", cat: "sự tiến triển của 5 túi não từ ống thần kinh", detail: "phần trước nhất của 5 túi não, phát triển từ sự phân đôi của túi não trước", time: "giai đoạn 5 túi não", clin: "hình thành bán cầu đại não với các túi não bên, vỏ não, thể vân, các rãnh và thể trai" },
+    { item: "Não trung gian (Diencephalon)", cat: "sự tiến triển của 5 túi não từ ống thần kinh", detail: "nằm tiếp theo não đỉnh, phát triển từ túi não trước và chứa não thất III", time: "giai đoạn 5 túi não", clin: "cho những phần bên đồi thị, thùy thần kinh của tuyến yên và tuyến tùng" },
+    { item: "Não giữa (Mesencephalon)", cat: "sự tiến triển của 5 túi não từ ống thần kinh", detail: "túi não duy nhất không phân đôi khi chuyển từ giai đoạn 3 túi não sang 5 túi não, lòng ống tạo cống Sylvius nối não thất III và IV", time: "giai đoạn 5 túi não", clin: "hình thành cuống đại não, các củ sinh tư và thể gối trong" },
+    { item: "Não dưới (Metencephalon)", cat: "sự tiến triển của 5 túi não từ ống thần kinh", detail: "phần trước của túi não sau phân đôi tạo thành, cùng với não cuối vây quanh não thất IV", time: "giai đoạn 5 túi não", clin: "hình thành cầu não (cầu Varole), tiểu não và các cuống tiểu não giữa và trước" },
+    { item: "Não cuối (Myelencephalon)", cat: "sự tiến triển của 5 túi não từ ống thần kinh", detail: "phần sau cùng của 5 túi não nối tiếp với tủy sống", time: "giai đoạn 5 túi não", clin: "hình thành hành não và cuống tiểu não dưới" },
+    { item: "Khoang miệng nguyên thủy (Stomodeum)", cat: "sự hình thành vùng hàm mặt sớm", detail: "sự lõm xuống của biểu mô bề mặt nằm ở phía trước, giữa não trước đang tăng trưởng và tim đang phát triển, được lợp hoàn toàn bởi ngoại bì", time: "tuần thứ 3 - 4 của phôi", clin: "ngăn cách với ruột đầu bởi màng hầu ở đáy khe" },
+    { item: "Hệ thống cung mang ở phôi người", cat: "sự phát triển vùng đầu cổ", detail: "gồm 5 hoặc 6 cung mang đánh số từ I đến VI từ cực đầu đến cực sau, trong đó 4 cung đầu phát triển rõ, cung thứ 5 mờ nhạt", time: "xuất hiện ở tuần lễ thứ 2 và mất đi ở tuần lễ thứ 6", clin: "cung mang thứ 2 phát triển mạnh trùm lên các cung mang dưới tạo thành xoang trước cổ" },
+    { item: "Cung mang thứ nhất (Cung hàm)", cat: "hệ thống cung mang", detail: "phát triển sớm nhất, gồm nụ hàm trên và nụ hàm dưới, chứa sụn Meckel và dây thần kinh tam thoa (dây V)", time: "tuần thứ 4 - 6 của phôi", clin: "hình thành các cơ nhai, cơ hàm móng, bụng trước cơ nhị thân, cơ căng màng nhĩ, cơ căng màn hầu, xương búa, xương đe, dây chằng trước xương búa và dây chằng bướm hàm" },
+    { item: "Cung mang thứ hai (Cung móng)", cat: "hệ thống cung mang", detail: "chứa sụn Reichert và được chi phối bởi dây thần kinh mặt (dây VII)", time: "tuần thứ 4 - 7 của phôi", clin: "hình thành các cơ bám da mặt, cơ bàn đạp, bụng sau cơ nhị thân, cơ trâm móng, xương bàn đạp, mỏm trâm xương thái dương, dây chằng trâm móng và sừng nhỏ xương móng" },
+    { item: "Cung mang thứ ba (Cung giáp móng)", cat: "hệ thống cung mang", detail: "cung cổ tham gia hình thành phần mềm và xương vùng cổ trước, chi phối bởi dây thần kinh lưỡi hầu (dây IX)", time: "tuần thứ 4 - 6 của phôi", clin: "hình thành cơ khít hầu, cơ trâm hầu, cơ vòm miệng lưỡi và một phần xương móng (sừng lớn và thân xương móng)" },
+    { item: "Khe mang thứ nhất (túi mang ngoại bì thứ nhất)", cat: "sự tiến triển của các khe mang", detail: "khe mang đáng chú ý nhất, phần lớn bị mất đi do trung bì hóa, chỉ còn tồn tại phần sau trên tạo hố thính giác (ở phôi 3mm)", time: "tuần thứ 4 của phôi", clin: "hình thành ống tai ngoài, còn các nụ xung quanh lỗ tai ngoài dính với nhau tạo vành tai" },
+    { item: "Túi mang nội bì thứ nhất", cat: "sự tiến triển của các túi mang", detail: "phát triển ăn sâu vào phía sau giữa tai trong và tai ngoài tạo thành ống vòi nhĩ", time: "tuần thứ 4 - 8 của phôi", clin: "phần trước ống thành vòi Eustache, phần sau sâu tham gia hình thành hòm nhĩ (tai giữa)" },
+    { item: "Túi mang nội bì thứ hai", cat: "sự tiến triển của các túi mang", detail: "ít phát triển vào sâu hơn túi thứ nhất, nằm giữa trụ trước (thuộc cung mang II) và trụ sau (thuộc cung mang III)", time: "tháng thứ 3 của phôi", clin: "hình thành hố hạnh nhân và tham gia tạo hạch hạnh nhân khẩu cái" },
+    { item: "Túi mang nội bì thứ ba", cat: "sự tiến triển của các túi mang", detail: "biệt hóa biểu mô nội bì ở mặt miệng hầu giữa cung mang III và IV", time: "tuần thứ 5 - 8 của phôi", clin: "tham gia hình thành tuyến ức và tuyến cận giáp trạng dưới" },
+    { item: "Túi mang nội bì thứ tư", cat: "sự tiến triển của các túi mang", detail: "túi mang nằm phía dưới cung mang thứ tư", time: "tuần thứ 5 - 8 của phôi", clin: "tham gia hình thành tuyến cận giáp trạng trên" },
+    { item: "Vòm miệng tiên phát", cat: "sự phát triển của các nụ mặt", detail: "được hình thành bởi sự dính của nụ mũi trong và hai nụ hàm trên (theo Cordier và Roux sự dính diễn ra từ sau ra trước)", time: "cuối tuần thứ 4 đến tuần thứ 6 của phôi", clin: "ngăn hốc miệng nguyên thủy thành hai hốc mũi tiên phát ở trên và hốc miệng ở dưới; thiếu hàn gắn gây khe hở môi và khe hở xương ổ răng vùng cửa" },
+    { item: "Màng Hoschletter", cat: "sự hình thành hốc mũi tiên phát", detail: "màng biểu mô mỏng giới hạn phía sau của hai lỗ mũi tiên phát khi rãnh khứu giác đóng lại thành ống", time: "tuần thứ 5 - 6 của phôi", clin: "màng này sẽ tiêu biến đi để lại hai lỗ mũi sau tiên phát thông với hốc miệng nguyên thủy" },
+    { item: "Vòm miệng thứ phát", cat: "sự phát triển của vòm miệng", detail: "hình thành từ hai nụ vòm miệng xuất phát từ mặt trong nụ hàm trên, lúc đầu thấp hơn lưỡi sau nâng lên trên lưỡi để dính với nhau và với vách ngăn mũi thứ phát từ trước ra sau", time: "tháng thứ 2 của phôi (tuần thứ 7 - 8)", clin: "nếu thiếu quá trình trung bì hóa hoặc rối loạn hàn gắn sẽ gây khe hở vòm miệng (lưỡi gà tách đôi, khe hở vòm miệng mềm, khe hở vòm miệng cứng)" },
+    { item: "Sự hình thành lưỡi", cat: "sự phát triển vùng giữa mang", detail: "hình thành từ 5 mầm: 2 phần3 trước lưỡi từ hai nụ lưỡi bên (thuộc cung mang I) và lồi củ lẻ His; 1/3 sau (cuống lưỡi) từ hai nụ thuộc cung mang II và III", time: "tuần thứ 4 đến tuần thứ 8 của thai kỳ", clin: "đường dính tạo thành chữ V lưỡi mở ra trước, đỉnh chữ V là lỗ tịt lưỡi; ở tuổi dậy thì lưỡi tăng gấp đôi về chiều dài, chiều ngang và bề dày so với lúc mới sinh" },
+    { item: "Tuyến giáp trạng và ống giáp - lưỡi", cat: "sự phát triển từ sàn miệng nguyên thủy", detail: "mầm nội bì phát triển đi xuống từ vị trí lỗ tịt lưỡi (ngay sau màng hầu) qua lớp trung mô xuống cổ tạo hai thùy tuyến giáp nối nhau bởi eo tuyến", time: "tuần thứ 4 - 7 của phôi", clin: "nếu mầm không đi xuống sâu được sẽ tạo tuyến giáp đáy lưỡi; nếu ống không tiêu hết sẽ gây nang giáp lưỡi hoặc lỗ rò giữa cổ" },
+    { item: "Bức tường lặn biểu bì (Lá ngách lợi)", cat: "sự hình thành ngách lợi và môi", detail: "lá biểu mô hình chữ U phát triển lặn vào trung mô ở phía ngoài lá răng tiên phát, sau đó thoái hóa hốc các tế bào ở giữa để tách đôi", time: "tuần thứ 6 - 8 của phôi", clin: "tạo thành ngách lợi (hành lang miệng) ngăn cách giữa lợi với môi và má; ở hàm dưới ngách lợi sâu ở phía trước và nông dần về phía sau" },
+    { item: "Động mạch bàn đạp ở phôi thai", cat: "sự cấp máu vùng hàm mặt thời kỳ phôi", detail: "nhánh tách ra từ động mạch cảnh trong ở vùng tai, cấp máu cho phần trên của mặt và vòm miệng trong giai đoạn từ tuần thứ 6 đến tuần thứ 7", time: "tắc nghẽn đột ngột vào tuần lễ thứ 7", clin: "chuyển quyền cấp máu vùng mặt và khẩu cái từ động mạch cảnh trong sang động mạch cảnh ngoài; nếu rối loạn chuyển tiếp ở tuần thứ 7 dễ gây khe hở môi và vòm miệng" },
+    { item: "Nụ mũi trong (trung mô nụ mũi trong)", cat: "nguồn gốc hình thành xương vùng hàm mặt", detail: "biệt hóa tạo phần trước vách ngăn mũi, phần giữa bao sụn mũi, một phần sụn vách ngăn và phần xương hàm trên vùng răng cửa (tiền hàm)", time: "tháng thứ 2 của phôi", clin: "chứa hố răng cửa ở nơi gặp nhau giữa nụ mũi trong và hai nụ hàm trên" },
+    { item: "Nụ mũi ngoài (trung mô nụ mũi ngoài)", cat: "nguồn gốc hình thành xương vùng hàm mặt", detail: "chỉ tham gia tạo thành ngoài của hốc mũi, biệt hóa tạo xương lệ, xương chính mũi, mỏm ổ mắt và mỏm bướm xương vòm miệng, phần trong xương hàm trên đến thành trong ổ mắt", time: "tháng thứ 2 của phôi", clin: "nếu thiếu hàn gắn với nụ hàm trên (theo đường từ ngoài vào trong, từ trên xuống dưới) sẽ gây tật khe hở chéo mặt (coloboma)" },
+    { item: "Sụn Meckel", cat: "sự phát triển sọ sụn và xương hàm dưới", detail: "được Serre mô tả năm 1819 và Meckel mô tả lại năm 1825, có nguồn gốc ngoại trung mô cung mang thứ nhất, gồm đoạn lưng (đoạn tai) và đoạn bụng (đoạn hàm)", time: "nâng đỡ cung hàm dưới từ tuần thứ 7 - 8, suy giảm chức năng vào tuần thứ 16", clin: "đoạn lưng cốt hóa tạo đầu xương búa và xương đe (khớp hàm dưới tiên phát); đoạn bụng chia 3 phần: cận lồi cầu (tạo dây chằng bướm hàm/dây chằng bên trong khớp TDH), cận hàm (thoái hóa), cận cằm (tham gia cốt hóa vùng cằm)" },
+    { item: "Sụn Reichert", cat: "sự phát triển sọ sụn", detail: "sụn nhỏ và ngắn nằm ngay dưới sụn Meckel, là cốt sụn của cung mang thứ hai", time: "hình thành vào giữa tháng thứ 2 của phôi", clin: "đoạn sau cốt hóa thành mỏm trâm xương thái dương, đoạn giữa thành dây chằng trâm - móng, đoạn trước thành sừng nhỏ xương móng" },
+    { item: "Sự hình thành xương hàm trên", cat: "cốt hóa xương sọ mặt", detail: "là xương màng thuần túy, hình thành trực tiếp từ tổ chức tạo mầm cốt bên ngoài sát sọ sụn mà không phụ thuộc vào sọ sụn, gồm điểm cốt hóa trước (răng cửa) và điểm cốt hóa sau (dưới ổ mắt)", time: "bắt đầu cốt hóa từ tuần thứ 7 của phôi", clin: "giữa mầm răng nanh và răng cửa, bè xương phát triển vào sâu phân đôi tạo khe xương gọi là đường khớp cửa - nanh có chứa mảnh vụn biểu bì lá răng (nguồn gốc của nang không do răng)" },
+    { item: "Sự hình thành xương hàm dưới", cat: "cốt hóa xương sọ mặt", detail: "là xương có nguồn gốc hỗn hợp (vừa là xương màng vừa là xương thay thế từ sụn thứ phát); điểm cốt hóa đầu tiên xuất hiện ở mặt ngoài sụn Meckel ngay vùng lỗ cằm tương lai", time: "bắt đầu vào ngày thứ 40 của phôi", clin: "tạo máng nang răng có chứa ống Serres (ống chứa tĩnh mạch xương nằm dưới bó mạch thần kinh răng dưới, ống Serres sẽ biến mất khi trẻ lên 8 tuổi)" },
+    { item: "Sụn lồi cầu của xương hàm dưới", cat: "sự phát triển sụn thứ phát xương hàm dưới", detail: "khối sụn thứ phát có hình như củ cà rốt mà mỏm hướng về vùng gai Spix, các tế bào sụn sắp xếp phân tán ngẫu nhiên chứ không xếp thành hàng như sụn đầu xương dài", time: "xuất hiện vào tuần thứ 10 - 12 của bào thai, duy trì hoạt động đến 21 - 25 tuổi", clin: "tham gia tạo đầu, cổ lồi cầu và phần trên gai Spix của cành lên; góc giữa cành lên và cành ngang giảm từ 170 độ ở thai nhi xuống 130 độ ở người trưởng thành" },
+    { item: "Sự hình thành khớp thái dương hàm", cat: "phôi thai học khớp thái dương hàm", detail: "khớp có bao hoạt dịch xuất hiện cuối cùng trong cơ thể, hình thành từ hai mầm gốc ở xa nhau (mầm thái dương cốt hóa tuần thứ 8 và mầm hàm dưới cốt hóa tuần thứ 7) tiến lại gần nhau", time: "thời điểm quan trọng nhất từ tuần thứ 8 đến tuần thứ 12 của thai kỳ", clin: "khe khớp dưới hình thành trước khe khớp trên (tuần 4 - 12); vào tháng thứ 5 của bào thai tất cả các thành phần của khớp đều đã có đủ" },
+    { item: "Đĩa khớp (đĩa sụn chêm) của khớp thái dương hàm", cat: "cấu trúc giải phẫu - mô học khớp thái dương hàm", detail: "đĩa hình bầu dục lõm hai mặt giống cái mũ chụp trên lồi cầu, biệt hóa từ trung mô giữa hai mầm gốc và gân cơ chân bướm ngoài; gờ trước dày 2 - 3mm, gờ sau dày 4 - 5mm, phần giữa mỏng dưới 1mm", time: "bắt đầu chụp vào lồi cầu từ tuần thứ 10 của bào thai", clin: "vùng trung tâm vô mạch và không có thần kinh (nuôi dưỡng nhờ dịch khớp); phần sau có phanh sọ sau (dải chặn Farabeuf) là phanh khỏe nhất giữ đĩa sụn" },
+    { item: "Bề mặt diện khớp của khớp thái dương hàm", cat: "đặc điểm mô học khớp thái dương hàm", detail: "theo Sicher, khác với các khớp động khác trong cơ thể, bề mặt khớp thái dương hàm không được phủ bởi sụn trong (hyaline) mà được phủ bởi một lớp mô sợi đặc không có mạch máu", time: "tồn tại suốt đời do nguồn gốc xương màng và lực ma sát chức năng", clin: "bao khớp dày 2 - 3mm có hình nón cụt, được nâng đỡ bởi dây chằng thái dương hàm, dây chằng bướm hàm và dây chằng trâm hàm" }
+];
+
+function generateEmbryoQuestions() {
+    EMBRYO_FACTS.forEach((f, idx) => {
+        const others = EMBRYO_FACTS.filter((_, i) => i !== idx);
+        const pickW = (key) => {
+            const arr = [];
+            for (let i = 0; i < others.length; i++) {
+                const candidate = others[(idx * 3 + i * 5) % others.length][key];
+                if (candidate && candidate !== f[key] && !arr.includes(candidate)) arr.push(candidate);
+                if (arr.length === 3) break;
+            }
+            return arr;
+        };
+
+        addQ(`Khi mô tả về "${f.item}", đặc điểm cấu trúc và cơ chế phát triển chính xác là:`,
+            f.detail,
+            pickW("detail")
+        );
+
+        addQ(`Cấu trúc hoặc hiện tượng nào sau đây có đặc điểm: "${f.detail}"?`,
+            f.item,
+            pickW("item")
+        );
+
+        addQ(`Thời điểm xuất hiện hoặc mốc tiến triển đặc trưng của "${f.item}" là:`,
+            f.time,
+            pickW("time")
+        );
+
+        addQ(`Ý nghĩa hình thái, chức năng hoặc liên hệ bệnh lý của "${f.item}" là:`,
+            f.clin,
+            pickW("clin")
+        );
+
+        addQ(`Cấu trúc hoặc quá trình nào sau đây dẫn đến hệ quả hoặc đặc điểm: "${f.clin}"?`,
+            f.item,
+            pickW("item")
+        );
+
+        addQ(`Trong nhóm kiến thức về ${f.cat}, phát biểu nào sau đây đúng với "${f.item}"?`,
+            `${f.detail} (${f.time})`,
+            others.slice(0, 3).map(o => `${o.detail} (${o.time})`)
+        );
+    });
+}
+
+// 3. MA TRẬN TRI THỨC CHẨN ĐOÁN HÌNH ẢNH RĂNG HÀM MẶT (~1.100 CÂU)
+const RADIOLOGY_FACTS = [
+    { item: "Khám phá ra tia X của Giáo sư Wilhelm Conrad Roentgen", cat: "lịch sử X-quang", prop: "thực hiện ngẫu nhiên khi nghiên cứu sự phóng điện trong bóng khí kém Crookes tại Bavaria (Đức)", val: "chiều thứ Sáu ngày 08/11/1895", app: "đặt dấu mốc lịch sử cho chuyên ngành X-quang và chẩn đoán hình ảnh" },
+    { item: "Bức phim X-quang răng đầu tiên trên thế giới", cat: "lịch sử X-quang nha khoa", prop: "do nhà vật lý người Đức Dr. Otto Walkoff thực hiện bằng cách tự đặt tấm phim ảnh bọc giấy đen và cao su vào miệng mình", val: "thời gian chiếu tia kéo dài 25 phút (so với 1/10 giây ngày nay)", app: "khẳng định vai trò của tia X trong nha khoa dù phim lúc đó bị dịch chuyển nhiều" },
+    { item: "Đóng góp của Dr. William Herbert Rollins", cat: "lịch sử an toàn phóng xạ", prop: "nha sĩ kiêm nhà vật lý ở Boston, người đầu tiên cảnh báo các nhà chuyên môn về điều cần thiết phải đảm bảo an toàn phóng xạ", val: "được công nhận là cha đẻ của khoa học an toàn phóng xạ", app: "đề xuất che chắn chì và hạn chế phơi nhiễm tia X cho nha sĩ và bệnh nhân" },
+    { item: "Đóng góp của Dr. C. Edmund Kells (ở New Orleans)", cat: "lịch sử X-quang nha khoa", prop: "một trong những người đầu tiên sử dụng và hết sức ủng hộ X-quang răng tại Mỹ, khuyến cáo thành lập các Hội Nha khoa", val: "năm 1914 X-quang nha khoa chính thức được chấp nhận trong chương trình học các trường nha", app: "ông đã mất sớm do bị nhiễm phóng xạ quá nhiều khi giữ phim trong miệng bệnh nhân" },
+    { item: "Dụng cụ định vị hình chữ nhật (PID - Position Indicating Device)", cat: "kiểm soát chùm tia X", prop: "côn hình trụ mở hoặc hình chữ nhật có lót chì dùng thay thế cho côn hình nón nhọn truyền thống để hạn chế tia thứ phát", val: "làm giảm trên 50% vùng bị tia xạ so với ống có lót chì loe ở đầu", app: "giới hạn kích thước chùm tia X vừa khít với kích thước phim răng trong miệng" },
+    { item: "Tia vũ trụ trong phổ bức xạ điện từ", cat: "bước sóng các loại bức xạ điện từ", prop: "bức xạ có năng lượng và khả năng đâm xuyên cực lớn", val: "bước sóng ngắn nhất khoảng 0,0001 Angstrom", app: "năng lượng bức xạ tỷ lệ nghịch với bước sóng" },
+    { item: "Tia Gamma trong phổ bức xạ điện từ", cat: "bước sóng các loại bức xạ điện từ", prop: "bức xạ điện từ phát ra từ hạt nhân nguyên tử", val: "bước sóng khoảng 0,01 Angstrom", app: "có khả năng đâm xuyên và phá hủy tế bào rất mạnh" },
+    { item: "Tia X điều trị (X-quang trị liệu)", cat: "bước sóng các loại bức xạ điện từ", prop: "tia X có bước sóng rất ngắn và năng lượng lớn nhất trong các loại tia X", val: "bước sóng dưới 0,1 Angstrom", app: "sử dụng trong xạ trị tiêu diệt tế bào khối u ác tính" },
+    { item: "Tia X chẩn đoán (X-quang y học và nha khoa)", cat: "bước sóng các loại bức xạ điện từ", prop: "bức xạ điện từ truyền đi với vận tốc 300.000 km/s, vừa đủ khả năng xuyên qua mô cơ thể để tạo ảnh trên phim", val: "bước sóng từ 0,1 đến 10 Angstrom", app: "ứng dụng chụp phim chẩn đoán hình ảnh răng hàm mặt và y khoa" },
+    { item: "Tia X mềm (tia Grenz)", cat: "bước sóng các loại bức xạ điện từ", prop: "tia X có bước sóng dài, năng lượng thấp, không đủ khả năng đâm xuyên mà bị hấp thu ngay trên bề mặt da bệnh nhân", val: "bước sóng từ 10 đến 300 Angstrom", app: "cần phải loại bỏ bằng tấm lọc nhôm và đồng ở cửa sổ bóng tia X để tránh gây viêm da tia X" },
+    { item: "Ánh sáng khả kiến (mắt nhìn thấy)", cat: "bước sóng các loại bức xạ điện từ", prop: "bức xạ điện từ tác động lên võng mạc mắt thường và làm lộ sáng nhũ tương phim", val: "bước sóng từ 3.000 đến 10.000 Angstrom", app: "phải ngăn chặn tuyệt đối trong buồng tối khi rửa phim X-quang" },
+    { item: "Bức xạ hãm và bức xạ đặc trưng trong bóng phát tia X", cat: "sự phát sinh tia X", prop: "chùm điện tử chuyển động nhanh từ dây tóc âm cực (catốt) dưới hiệu điện thế 50 - 100kV đến đập vào bia kim loại đối âm cực (anốt)", val: "hơn 99% động năng điện tử biến thành nhiệt năng làm nóng anốt, chỉ dưới 1% tạo ra tia X", app: "cần hệ thống tản nhiệt bằng dầu, tấm đồng hoặc anốt quay (tốc độ thường 2.800 - 3.000 vòng/phút, siêu tốc 9.000 - 12.000 vòng/phút)" },
+    { item: "Cực âm (Catốt) và cường độ dòng điện (mA)", cat: "cấu tạo bóng phát tia X", prop: "cấu tạo bằng sợi tóc được nung nóng đỏ bởi dòng điện thế thấp để phát xạ các điện tử", val: "mA quyết định số lượng tia X tạo ra; mAs = mA × s (thời gian chụp)", app: "tăng gấp đôi mA hoặc thời gian chụp (s) sẽ làm tăng gấp đôi số lượng tia X và làm tăng độ đen (tỷ trọng) của phim" },
+    { item: "Cực dương (Anốt) và hiệu điện thế (kVp)", cat: "cấu tạo bóng phát tia X", prop: "miếng kim loại Tungsten (Wolfram) nhận diện tích va đập của điện tử gọi là tiêu điểm; hiệu điện thế thấp từ 40 - 90kV, cao từ 100 - 130kV", val: "kVp quyết định chất lượng (bước sóng, năng lượng và sức đâm xuyên) của tia X và tuân theo luật số mũ", app: "trong thực hành, khi tăng thêm 15 kVp thì thời gian chụp cần giảm đi một nửa; khi giảm đi 15 kVp thì thời gian chụp phải tăng lên gấp đôi" },
+    { item: "Quy tắc chụp X-quang từ xa (Téléradiography)", cat: "sự biến dạng hình ảnh X-quang", prop: "do chùm tia X phân kỳ dạng hình nón nên vật càng xa phim thì hình càng bị phóng đại; đưa bóng ra xa giúp chùm tia gần như song song", val: "đặt bóng xa phim 2m thì những vật cách phim 10cm bị phóng đại rất ít, coi như đúng kích thước thật", app: "ứng dụng trong kỹ thuật chụp tim phổi xa và chụp phim đo sọ mặt từ xa (Cephalometric)" },
+    { item: "Chiếu X-quang tăng sáng truyền hình", cat: "các kỹ thuật X-quang", prop: "dùng bóng tăng sáng chân không có màn huỳnh quang thứ nhất gắn cực âm quang học (photocatot), gia tốc điện tử ở hiệu điện thế 20kV về màn thứ hai có kích thước bằng 1/10 màn thứ nhất", val: "giảm liều tia X thấp hơn 10 lần và cho hình ảnh sáng hơn nhiều lần, xem được ở ánh sáng ban ngày", app: "cho phép quan sát các chuyển động động học và ghi lại bằng camera hoặc băng từ" },
+    { item: "Siêu âm chẩn đoán trong Răng Hàm Mặt", cat: "các phương pháp chẩn đoán hình ảnh hiện đại", prop: "sử dụng sóng âm có tần số cao truyền trong môi trường vật chất và thu nhận sóng phản hồi (âm vang) tại mặt phẳng ranh giới giữa hai môi trường có trở kháng âm khác nhau", val: "tần số sóng âm từ 2 đến 10 MHz (đầu dò tần số cao xem cấu trúc nông, tần số thấp xem cấu trúc sâu)", app: "siêu âm 2D thăm khám tốt tuyến nước bọt và mô mềm; siêu âm Doppler đánh giá tăng sinh mạch máu khối u; nhược điểm là ít giá trị đối với tổn thương xương" },
+    { item: "Chụp cắt lớp vi tính (CT Scanner / TDM)", cat: "các phương pháp chẩn đoán hình ảnh hiện đại", prop: "phát minh năm 1972 tại Anh do Hounsfield (nhận giải Nobel năm 1979), dùng chùm tia X hình quạt và bộ cảm biến nhạy hơn phim hàng trăm lần để đo tỷ trọng", val: "phân biệt khoảng 2.000 đơn vị Hounsfield (trong khi mắt thường chỉ phân biệt được 12 - 20 mức độ đen trắng)", app: "chụp ở 2 hướng cơ bản là cắt ngang (từ bờ nền xương hàm dưới đến hết xoang trán, dày 2-3mm) và cắt đứng ngang; phần mềm Dental tái tạo lát cắt Panoscan và Cross-cut" },
+    { item: "Chụp cắt lớp chùm tia hình nón (CT Conebeam - CBCT)", cat: "các phương pháp chẩn đoán hình ảnh hiện đại", prop: "phương pháp chụp cắt lớp vi tính sử dụng chùm tia X hình nón đặc thù cho cấu trúc xương răng vùng hàm mặt", val: "tái tạo 3D bề mặt, lát cắt Panoscan (song song cung răng) và Cross-cut (vuông góc cung răng) với độ chính xác kích thước thật", app: "ứng dụng đặc biệt hiệu quả trong định vị ống răng dưới, cắm ghép Implant nha khoa giả định và phẫu thuật răng ngầm" },
+    { item: "Chụp cộng hưởng từ hạt nhân (MRI / CHT)", cat: "các phương pháp chẩn đoán hình ảnh hiện đại", prop: "đặt nguyên tử Hydro (chỉ có 01 proton) trong từ trường cường độ lớn rồi kích thích bằng sóng vô tuyến điện có tần số thích hợp để thu tín hiệu", val: "cường độ từ trường từ 0,2 đến 1,5 Tesla; hoàn toàn không sử dụng tia X", app: "là kỹ thuật tốt nhất để đánh giá tổn thương đĩa đệm khớp thái dương hàm và phần mềm; nhược điểm là không thấy rõ cấu trúc xương và chống chỉ định khi mang dị vật kim loại" },
+    { item: "Định luật Bergonie và Tribondeau về độ nhạy cảm phóng xạ", cat: "sinh học phóng xạ", prop: "độ nhạy cảm phóng xạ của tế bào tỷ lệ thuận với khả năng sinh sản (phân bào) và tỷ lệ nghịch với mức độ biệt hóa của chúng", val: "thứ tự nhạy cảm giảm dần: (1) Bạch cầu -> (2) Hồng cầu -> (3) Tế bào sinh dục non -> (4) Biểu mô -> (5) Nội mô -> (6) Mô liên kết -> (7) Xương -> (8) Thần kinh -> (9) Não -> (10) Cơ", app: "trong X-quang nha khoa, vùng nhạy cảm nhất ở đầu cổ là tủy đỏ xương hàm dưới, thủy tinh thể của mắt và tuyến giáp nên phải dùng cổ áo chì" },
+    { item: "Liều chiếu xạ và ảnh hưởng sinh học trong X-quang nha khoa", cat: "an toàn bức xạ nha khoa", prop: "hội chứng tia xạ cấp tính chỉ xuất hiện khi chiếu toàn thân liều lớn trên 1 Gray (100 rads); để gây đục thủy tinh thể cần ít nhất 2 Grays (200 rads)", val: "chụp 1 phim răng liều tia chỉ khoảng 0,0003 - 0,003 milligrays (0,03 - 0,3 millirads); liều tán xạ tới bộ phận sinh dục thấp hơn 1/10.000 so với ở mặt (0,0 - 0,002 milligray)", app: "nếu dùng áo chì và cổ áo chì thì sự nhiễm xạ ở bộ phận sinh dục giảm tới 0; giai đoạn phôi thai nguy kịch nhất là 3 tháng đầu (giai đoạn hình thành cơ quan)" },
+    { item: "Các thời kỳ lâm sàng tổn thương vùng miệng sau xạ trị ung thư", cat: "ảnh hưởng của điều trị tia xạ vùng miệng", prop: "trong 5 năm đầu sau xạ trị vùng đầu cổ, bệnh nhân trải qua 3 thời kỳ lâm sàng với các triệu chứng khô miệng, mất vị giác, nước bọt nhầy quánh, sâu cổ răng do tia xạ và hoại tử xương ổ răng", val: "(1) Thời kỳ cấp tính: 6 tháng đầu; (2) Thời kỳ bán cấp: 6 tháng tiếp theo; (3) Thời kỳ mạn tính: từ năm thứ 2 đến năm thứ 5", app: "vẫn cần chụp phim X-quang nếu thực sự cần thiết cho chẩn đoán vì lợi ích chẩn đoán lớn hơn rất nhiều so với lượng tia cực nhỏ của phim răng" },
+    { item: "Quy tắc vị trí đứng an toàn cho người chụp phim X-quang răng", cat: "an toàn bức xạ cho nhân viên y tế", prop: "tuyệt đối không bao giờ giữ phim hộ bệnh nhân hoặc giữ bóng/côn định vị bằng tay khi phát tia; đeo liều kế kiểm tra định kỳ 1 tháng/lần", val: "đứng cách nguồn tia ít nhất 1,8m và nằm trong góc từ 90 độ đến 135 độ so với chùm tia nguyên phát (hoặc góc 45 - 90 độ đằng sau đầu bệnh nhân)", app: "đầu bệnh nhân sẽ hấp thụ hầu hết các tia nguyên phát và phần lớn tia thứ phát" },
+    { item: "Cấu tạo và đóng gói của phim X-quang răng trong miệng", cat: "phim X-quang răng", prop: "tấm nền bằng polyester mỏng mềm dẻo dày 0,2mm, phủ nhũ tương gelatin chứa tinh thể bạc bromid (AgBr) ở cả hai mặt", val: "bọc bởi 3 lớp: trong cùng là giấy đen cản sáng, tiếp theo là lá chì mỏng ở mặt sau (để hấp thụ tia khuếch tán và in hoa văn nếu đặt ngược phim), ngoài cùng là vỏ nhựa/giấy chống ẩm", app: "chấm dập nổi ở góc phim phải luôn được đặt quay về phía mặt nhai hoặc rìa cắn, mặt trắng nhẵn hoặc sần nhẹ hướng về nguồn tia" },
+    { item: "Các kích cỡ phim X-quang trong miệng thông dụng", cat: "phân loại phim trong miệng", prop: "gồm 3 loại phim chính: phim cận chóp (số 0, 1, 2, 3), phim cánh cắn và phim cắn (số 4); tốc độ phim từ A (chậm nhất) đến F (nhanh nhất), phổ biến nhất là tốc độ D (Ultraspeed) và E (Ektaspeed)", val: "Phim số 0 (trẻ em): 22×35mm; Phim số 1 (phim hẹp vùng cửa): 24×40mm; Phim số 2 (phim chuẩn - chiếm 75%): 32×41mm; Phim số 3 (cánh cắn dài): 27×54mm; Phim số 4 (phim cắn): 57×76mm", app: "khảo sát toàn bộ hai hàm ở người lớn cần ít nhất 14 phim (hoặc 18 - 21 phim nếu dùng phim số 1 và cánh cắn); ở trẻ em cần ít nhất 10 phim số 0 và 2 phim cánh cắn" },
+    { item: "Bảo quản phim X-quang và bìa tăng quang trong Cassette", cat: "phim ngoài miệng và bảo quản", prop: "phim ngoài miệng đặt trong Cassette có bìa tăng quang phủ tinh thể Calcium tungstate (phát ánh sáng xanh lơ đến tím) hoặc muối Phospho (phát ánh sáng xanh lá cây)", val: "bảo quản phim chưa chụp ở nhiệt độ 10 - 21°C, độ ẩm 30 - 50%; bìa tăng quang giúp giảm thời gian chụp xuống chỉ còn 1/15 đến 1/40", app: "phim nhân bản dùng tia hồng ngoại hoặc tia cực tím để sao chép phim gốc và chỉ có lớp nhũ tương ở một mặt" },
+    { item: "Thành phần hóa học của dung dịch thuốc hiện hình (Developer)", cat: "hóa chất rửa phim X-quang", prop: "có môi trường kiềm, biến đổi tinh thể halogen bạc đã nhiễm xạ thành bạc kim loại màu đen ở nhiệt độ chuẩn 68°F (20°C) trong 5 phút", val: "gồm 4 thành phần: (1) Chất hiện hình: Hydroquinone (tác dụng chậm, tạo độ tương phản, ngừng hoạt động khi nhiệt độ thấp) và Elon (tác dụng nhanh, tạo độ chi tiết); (2) Chất bảo quản: Natri sulfit (chống oxy hóa); (3) Chất hoạt hóa: Natri carbonat (tạo độ kiềm làm phồng gelatin); (4) Chất hãm: Kali bromide (chống mờ phim)", app: "sau khi hiện hình cần rửa nước chảy 20 - 30 giây trước khi đưa sang thuốc hãm hình" },
+    { item: "Thành phần hóa học của dung dịch thuốc hãm hình (Fixer)", cat: "hóa chất rửa phim X-quang", prop: "có môi trường acid, thời gian ngâm khoảng 10 phút (gấp đôi thời gian hiện hình), sau đó rửa dưới dòng nước chảy ít nhất 20 phút rồi sấy khô", val: "gồm 4 thành phần: (1) Chất hãm hình: Natri thiosulfate (hòa tan tinh thể bạc bromid chưa nhiễm xạ); (2) Chất bảo quản: Natri sulfite; (3) Chất làm cứng: Potassium alum (làm co cứng gelatin); (4) Chất acid hóa: Acid acetic (trung hòa kiềm của thuốc hiện)", app: "chất khử (Kali ferrocyanide + thuốc hãm) dùng làm sáng phim bị quá đen; dung dịch cọ rửa thùng 1 galon (3,8 lít) pha từ 45ml acid HCl + 0,95 lít nước nguội + 2,85 lít nước ấm (không dùng bột giặt)" },
+    { item: "Quy trình rửa phim nhanh và rửa phim tự động", cat: "các quy trình rửa phim X-quang", prop: "rửa phim nhanh dùng trong nội nha và phẫu thuật tại ghế răng; rửa tự động dùng hệ thống con lăn và băng tải hoàn tất phim khô trong 5 phút", val: "Rửa nhanh ở 92°F (33,3°C) ngâm thuốc hiện 5 giây, hoặc ở 85°F (29,4°C) ngâm thuốc hiện 15 giây và thuốc hãm 30 giây; Máy rửa tự động làm nóng hóa chất tới 125°F (52°C)", app: "kiểm tra đèn an toàn phòng tối bằng nghiệm pháp đồng xu: đặt đồng xu lên phim chưa chụp dưới đèn an toàn 4 phút rồi rửa, nếu hiện hình đồng xu là bị lộ sáng" },
+    { item: "Chụp phim X-quang khô (Xeroradiography)", cat: "các kỹ thuật X-quang đặc biệt", prop: "kết hợp máy phát tia X thông thường với hệ thống in сухо giống máy photocopy văn phòng, không cần phòng tối hay hóa chất lỏng", val: "chiếu tia X lên tấm nhôm mỏng phủ lớp chất dẫn quang Selenium (cỡ bằng phim số 1 và 2, tái sử dụng nhiều lần), hoàn tất phim trên giấy trong 20 giây", app: "giảm liều tia rất nhiều so với chụp cổ điển và rất thuận tiện trong điều trị nội nha" },
+    { item: "So sánh kỹ thuật chụp phim song song (côn dài) và kỹ thuật phân giác (côn ngắn)", cat: "kỹ thuật chụp phim trong miệng", prop: "kỹ thuật phân giác dựa trên quy tắc đẳng tích của Cieszynski (1907) và Price (1904) hướng tia vuông góc với đường phân giác; kỹ thuật song song của McCormack (1920) đặt phim song song trục răng và tia vuông góc với cả hai", val: "Kỹ thuật song song dùng khoảng cách bia - phim là 16 inch (41cm); kỹ thuật phân giác dùng khoảng cách bia - phim là 8 inch (20,5cm)", app: "kỹ thuật song song cho hình ảnh trung thực nhất về kích thước và thấy rõ mức tiêu mào xương ổ răng; khi tăng khoảng cách bia - vật lên gấp đôi thì thời gian chụp phải tăng gấp 4 lần" },
+    { item: "Điểm vào của tia trung tâm trên bề mặt da khi chụp phim răng hàm trên và hàm dưới", cat: "mốc giải phẫu chụp phim trong miệng", prop: "các mốc hàm trên nằm dọc theo đường nối từ chân cánh mũi đến nắp bình tai; các mốc hàm dưới nằm dọc theo đường nối từ đỉnh cằm đến chân dái tai", val: "(1) Răng cửa: Đỉnh mũi; (2) Răng nanh: Chân cánh mũi; (3) Răng hàm nhỏ: Điểm ngay dưới đồng tử khi nhìn thẳng; (4) Răng hàm lớn: Điểm ngay dưới góc mắt ngoài (riêng răng hàm lớn thứ 3 lùi ra xa hơn một chút)", app: "nếu không hướng đúng tâm côn định vị trùng với điểm vào sẽ gây lỗi hình cắt côn (cone-cut) trên phim" },
+    { item: "Bảng góc đứng trung bình của bóng phát tia X trong kỹ thuật chụp phân giác", cat: "góc độ chụp phim trong miệng", prop: "khi bệnh nhân ngồi thẳng đầu (mặt phẳng cắn song song sàn nhà, mặt phẳng dọc giữa vuông góc sàn nhà), côn hướng xuống sàn là góc dương (+), hướng lên trần là góc âm (-)", val: "Hàm trên: Răng cửa +40°, Răng nanh +45°, Răng hàm nhỏ +30°, Răng hàm lớn +20°; Hàm dưới: Răng cửa -15°, Răng nanh -20°, Răng hàm nhỏ -10°, Răng hàm lớn -5°", app: "nếu góc đứng quá lớn hình ảnh sẽ bị ngắn lại (lùn đi); nếu góc đứng quá nhỏ hình ảnh sẽ bị kéo dài ra; vòm miệng sâu phải giảm góc đứng ít nhất 5°, vòm miệng nông phải tăng góc đứng lên" }
+];
+
+// Bảng 10 lỗi rửa phim chi tiết (Trang 68 Chẩn đoán hình ảnh)
+const FILM_ERRORS = [
+    { err: "Phim X-quang sau khi rửa bị quá sáng (độ đen kém)", cause: "Thuốc hiện hình gần hết tác dụng, bị ô nhiễm, nhiệt độ thuốc hiện quá thấp, tốc độ rửa quá nhanh hoặc thời gian chụp quá ngắn", fix: "Thay thuốc hiện hình mới, bật công tắc bộ ổn nhiệt, tăng thời gian rửa phim hoặc tăng thời gian chụp từng 20% một lần" },
+    { err: "Phim X-quang sau khi rửa bị quá tối (đen đặc)", cause: "Thời gian chụp quá dài (già tia), thuốc hãm rơi vào thuốc hiện, bộ ổn nhiệt hỏng gây nhiệt độ thuốc hiện quá cao hoặc bị lộ sáng", fix: "Giảm thời gian chụp từng 20% một lần, thay thuốc hiện hình mới và kiểm tra thay bộ ổn nhiệt" },
+    { err: "Phim X-quang bị mờ (sương mù - fog)", cause: "Ánh sáng đèn an toàn không thích hợp, phòng tối bị lọt sáng, nhiệt độ thuốc hiện quá cao hoặc phim quá hạn/bảo quản nơi nóng ẩm", fix: "Dùng bóng đèn an toàn 15 watt có tấm lọc 6B, kiểm tra kín sáng phòng tối và điều chỉnh bộ ổn nhiệt về 20°C (68°F)" },
+    { err: "Phim X-quang sau khi rửa có màu xám đục", cause: "Không có nước lưu thông trong khoang rửa nước trung gian", fix: "Cho nước sạch lưu thông đầy đủ vào khoang rửa nước" },
+    { err: "Xuất hiện vết ấn (dấu ngón tay hoặc vết hằn) trên phim", cause: "Có vụn bẩn bám trên con lăn của dây chuyền máy rửa tự động hoặc cầm phim thô bạo trước khi rửa", fix: "Lau chùi sạch con lăn và cầm phim nhẹ nhàng ở rìa phim do lớp nhũ tương rất nhạy cảm" },
+    { err: "Phim X-quang có vết màu vàng xanh hoặc còn màu trắng sữa", cause: "Thuốc hãm hình đã giảm tác dụng, dùng sai chủng loại thuốc hãm hoặc tốc độ rửa/hãm phim quá nhanh", fix: "Thay thuốc hãm hình mới, dùng đúng thuốc hãm và đảm bảo đủ thời gian hãm hình" },
+    { err: "Phim X-quang bị bong hoặc chảy lớp nhũ tương (hoặc nứt gãy hình lưới)", cause: "Nhiệt độ của thuốc rửa hoặc nước rửa quá cao, chênh lệch nhiệt độ đột ngột giữa thuốc hiện và nước rửa lạnh, hoặc dính thuốc hiện trên con lăn", fix: "Tắt nguồn điện kiểm tra bộ ổn nhiệt, giảm nhiệt độ nước rửa cho tương đương với thuốc hiện (20°C) và lau sạch con lăn" },
+    { err: "Phim X-quang bị trầy xước bề mặt", cause: "Cầm phim thô bạo, hai phim chạm vào nhau trong thùng rửa, con lăn bị dính bẩn hoặc kẹt mũi khoan/vật cứng ở khe nhét phim", fix: "Treo từng phim riêng rẽ không chạm nhau, kiểm tra các bánh răng con lăn và lấy dị vật ở khe nhét phim" },
+    { err: "Phim X-quang khi khô bị vết phấn trắng bám trên bề mặt", cause: "Thiếu nước rửa ở bước rửa sạch cuối cùng hoặc thuốc hãm hình bị kết tủa", fix: "Kiểm tra nguồn cung cấp nước rửa (rửa ít nhất 20 phút dưới vòi nước chảy) hoặc thay thuốc hãm hình mới" },
+    { err: "Phim X-quang lấy ra khỏi máy rửa tự động vẫn còn ẩm ướt", cause: "Tốc độ của máy rửa quá nhanh, quạt sấy bị hỏng, dùng phim hoặc hóa chất không đúng chủng loại RP (Rapid Process)", fix: "Giảm tốc độ máy rửa, sửa thay quạt sấy và chỉ dùng thuốc hiện/thuốc hãm loại nhanh (RP) tương thích với máy rửa tự động" }
+];
+
+function generateRadiologyQuestions() {
+    RADIOLOGY_FACTS.forEach((r, idx) => {
+        const others = RADIOLOGY_FACTS.filter((_, i) => i !== idx);
+        const pickW = (key) => {
+            const arr = [];
+            for (let i = 0; i < others.length; i++) {
+                const candidate = others[(idx * 2 + i * 3) % others.length][key];
+                if (candidate && candidate !== r[key] && !arr.includes(candidate)) arr.push(candidate);
+                if (arr.length === 3) break;
+            }
+            return arr;
+        };
+
+        addQ(`Khi tìm hiểu về "${r.item}", đặc điểm nguyên lý hoặc cơ chế chính xác là:`,
+            r.prop,
+            pickW("prop")
+        );
+
+        addQ(`Thông số định lượng, mốc giá trị hoặc thành phần chuẩn của "${r.item}" là:`,
+            r.val,
+            pickW("val")
+        );
+
+        addQ(`Ứng dụng thực hành hoặc ý nghĩa lâm sàng của "${r.item}" là:`,
+            r.app,
+            pickW("app")
+        );
+
+        addQ(`Nội dung nào sau đây mô tả đúng về "${r.item}"?`,
+            `${r.prop}; ${r.val}`,
+            others.slice(0, 3).map(o => `${o.prop}; ${o.val}`)
+        );
+
+        addQ(`Khái niệm, phương pháp hoặc thành phần nào sau đây có thông số đặc trưng là: "${r.val}"?`,
+            r.item,
+            pickW("item")
+        );
+    });
+
+    FILM_ERRORS.forEach((fe, idx) => {
+        const others = FILM_ERRORS.filter((_, i) => i !== idx);
+        addQ(`Khi kiểm tra chất lượng phim, nếu gặp hiện tượng "${fe.err}", nguyên nhân chính gây ra lỗi này là:`,
+            fe.cause,
+            others.slice(0, 3).map(o => o.cause)
+        );
+
+        addQ(`Để khắc phục tình trạng "${fe.err}", biện pháp xử trí đúng kỹ thuật là:`,
+            fe.fix,
+            others.slice(0, 3).map(o => o.fix)
+        );
+
+        addQ(`Trong quá trình xử lý phim, nếu xảy ra sai sót: "${fe.cause}", hậu quả xuất hiện trên phim sẽ là:`,
+            fe.err,
+            others.slice(0, 3).map(o => o.err)
+        );
+
+        addQ(`Biện pháp kỹ thuật "${fe.fix}" được áp dụng nhằm giải quyết sự cố nào sau đây của phim?`,
+            fe.err,
+            others.slice(0, 3).map(o => o.err)
+        );
+    });
+
+    // Sinh thêm các câu hỏi bài toán tính mAs, kVp, khoảng cách (Định luật bình phương đảo ngược)
+    const mAList = [5, 7, 8, 10, 12, 15];
+    const timeList = [0.2, 0.4, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5];
+    mAList.forEach(mA => {
+        timeList.forEach(s => {
+            const mAs = +(mA * s).toFixed(2);
+            addQ(`Một máy chụp tia X được thiết lập cường độ dòng điện là ${mA} mA và thời gian phát tia là ${s} giây. Tổng liều lượng thông số mAs tạo ra trong lần chụp này là:`,
+                `${mAs} mAs`,
+                [`${+(mAs * 2).toFixed(2)} mAs`, `${+(mAs / 2).toFixed(2)} mAs`, `${+(mA + s).toFixed(2)} mAs`]
+            );
+
+            addQ(`Để giữ nguyên độ đen (tỷ trọng) của phim ở mức ${mAs} mAs, nếu người chụp tăng cường độ dòng điện từ ${mA} mA lên ${mA * 2} mA thì thời gian chụp phải điều chỉnh thành:`,
+                `${+(s / 2).toFixed(2)} giây`,
+                [`${+(s * 2).toFixed(2)} giây`, `${+(s * 4).toFixed(2)} giây`, `Giữ nguyên ${s} giây`]
+            );
+        });
+    });
+
+    const kvpCases = [
+        { oldKvp: 60, newKvp: 75, oldT: 0.8, newT: 0.4, action: "giảm đi một nửa" },
+        { oldKvp: 65, newKvp: 80, oldT: 0.6, newT: 0.3, action: "giảm đi một nửa" },
+        { oldKvp: 70, newKvp: 85, oldT: 0.5, newT: 0.25, action: "giảm đi một nửa" },
+        { oldKvp: 80, newKvp: 65, oldT: 0.3, newT: 0.6, action: "tăng lên gấp đôi" },
+        { oldKvp: 75, newKvp: 60, oldT: 0.4, newT: 0.8, action: "tăng lên gấp đôi" },
+        { oldKvp: 85, newKvp: 70, oldT: 0.2, newT: 0.4, action: "tăng lên gấp đôi" }
+    ];
+    kvpCases.forEach(kc => {
+        addQ(`Trong thực hành chụp phim, nếu hiệu điện thế được điều chỉnh từ ${kc.oldKvp} kVp sang ${kc.newKvp} kVp (thời gian chụp ban đầu là ${kc.oldT} giây) thì để duy trì mật độ phim tương đương, thời gian chụp mới phải là:`,
+            `${kc.newT} giây (do thời gian chụp phải ${kc.action} khi thay đổi 15 kVp)`,
+            [`${kc.oldT} giây (không thay đổi)`, `${+(kc.oldT * 4).toFixed(2)} giây`, `${+(kc.oldT / 4).toFixed(2)} giây`]
+        );
+    });
+
+    const distCases = [
+        { d1: "20 cm (8 inch)", d2: "40 cm (16 inch)", ratioI: "giảm đi còn 1/4", ratioT: "tăng lên gấp 4 lần", t1: 0.2, t2: 0.8 },
+        { d1: "8 inch (20,5 cm)", d2: "16 inch (41 cm)", ratioI: "giảm đi còn 1/4", ratioT: "tăng lên gấp 4 lần", t1: 0.15, t2: 0.6 },
+        { d1: "30 cm", d2: "60 cm", ratioI: "giảm đi còn 1/4", ratioT: "tăng lên gấp 4 lần", t1: 0.25, t2: 1.0 },
+        { d1: "40 cm (16 inch)", d2: "20 cm (8 inch)", ratioI: "tăng lên gấp 4 lần", ratioT: "giảm xuống còn 1/4", t1: 0.8, t2: 0.2 }
+    ];
+    distCases.forEach(dc => {
+        addQ(`Theo định luật bình phương đảo ngược, khi thay đổi khoảng cách từ tiêu điểm bóng phát tia tới phim từ ${dc.d1} sang ${dc.d2} (giữ nguyên các thông số khác), cường độ chùm tia X tại mặt phẳng phim sẽ:`,
+            `Cường độ chùm tia ${dc.ratioI}`,
+            [`Cường độ chùm tia không bị ảnh hưởng`, `Cường độ chùm tia tăng gấp đôi`, `Cường độ chùm tia giảm một nửa`]
+        );
+        addQ(`Khi chuyển đổi côn định vị làm khoảng cách bia - phim thay đổi từ ${dc.d1} sang ${dc.d2}, nếu thời gian chụp ban đầu là ${dc.t1} giây thì thời gian chụp mới cần thiết lập để giữ nguyên độ đen của phim là:`,
+            `${dc.t2} giây (thời gian chụp phải ${dc.ratioT})`,
+            [`${dc.t1} giây`, `${+(dc.t1 * 2).toFixed(2)} giây`, `${+(dc.t1 / 2).toFixed(2)} giây`]
+        );
+    });
+}
+
+// 4. MA TRẬN TRI THỨC HÌNH THÁI HỌC RĂNG, KHỚP CẮN & ĐIÊU KHẮC (~850 CÂU)
+const MORPHO_FACTS = [
+    { item: "Men răng (Enamel)", cat: "cấu tạo mô cứng của răng", detail: "phủ mặt ngoài ngà thân răng, có nguồn gốc từ ngoại bì, là mô cứng nhất trong cơ thể với tỷ lệ chất vô cơ chiếm tới 96%", clin: "hình dáng và bề dày xác định từ trước khi răng mọc; trong đời sống không có sự bồi đắp thêm mà chỉ mòn dần theo tuổi nhưng có trao đổi vật lý và hóa học với môi trường miệng" },
+    { item: "Ngà răng (Dentin)", cat: "cấu tạo mô cứng của răng", detail: "có nguồn gốc từ trung bì (ngoại trung mô), kém cứng hơn men răng, chứa tỷ lệ chất vô cơ khoảng 75%, trong ngà có nhiều ống ngà chứa đuôi bào tương của nguyên bào ngà", clin: "bề dày ngà răng thay đổi trong đời sống do hoạt động tạo ngà thứ cấp của nguyên bào ngà làm hẹp dần hốc tủy" },
+    { item: "Xương răng (Cement)", cat: "tổ chức quanh răng (nha chu)", detail: "mô đặc biệt hình thành cùng với sự hình thành chân răng, phủ mặt ngoài ngà chân răng, có nguồn gốc từ túi răng chính danh", clin: "được bồi đắp thêm ở phía chóp chủ yếu để bù trừ sự mòn mặt nhai, được coi là hiện tượng mọc răng suốt đời" },
+    { item: "Dây chằng nha chu", cat: "tổ chức quanh răng (nha chu)", detail: "những bó sợi liên kết dày khoảng 0,25mm, một đầu bám vào cement, đầu kia bám vào xương ổ chính danh (lá sàng / lá cứng)", clin: "giữ cho răng gắn vào xương ổ răng, đóng vai trò vật đệm giúp răng xê dịch nhẹ độc lập khi ăn nhai, truyền cảm giác áp lực và lưu thông máu" },
+    { item: "Quy luật 1 và Quy luật 2 về hình dáng kích thước thân răng", cat: "các quy luật chung về hình thái răng", detail: "Nhìn từ phía ngoài hay phía trong, kích thước thân răng luôn lớn ở phía rìa cắn/mặt nhai và nhỏ ở phía cổ răng (Quy luật 1); nhìn từ phía bên (gần hay xa), kích thước thân răng luôn lớn ở phía cổ răng và nhỏ ở phía rìa cắn/mặt nhai (Quy luật 2)", clin: "giúp tạo khoảng kẽ răng sinh lý cho nhú lợi và ổn định điểm tiếp xúc mặt bên" },
+    { item: "Quy luật 3 về kích thước mặt ngoài và mặt trong khi nhìn từ phía nhai", cat: "các quy luật chung về hình thái răng", detail: "Nhìn từ phía nhai, mặt ngoài của thân răng luôn rộng hơn mặt trong, trừ hai trường hợp ngoại lệ duy nhất", clin: "hai ngoại lệ là: (1) Răng hàm lớn thứ nhất hàm trên (có mặt trong thường rộng hơn mặt ngoài do có thêm núm Carabelli) và (2) Răng hàm nhỏ thứ hai hàm dưới loại 3 múi (có mặt trong rộng hơn mặt ngoài)" },
+    { item: "Quy luật 4, Quy luật 5 và Quy luật 6 về hình thái thân răng", cat: "các quy luật chung về hình thái răng", detail: "Theo chiều nhai - lợi, mặt xa luôn thấp hơn mặt gần (Quy luật 4); theo chiều ngoài - trong, mặt xa hẹp hơn mặt gần ngoại trừ răng hàm nhỏ 1 dưới, và mặt gần luôn phẳng hơn mặt xa (Quy luật 5); từ răng trước đến răng sau, chiều cao các múi ngoài giảm dần còn chiều cao các múi trong tăng dần (Quy luật 6)", clin: "là cơ sở giải phẫu cốt lõi để phân biệt răng bên phải và răng bên trái khi nhận dạng răng rời" },
+    { item: "Điểm lồi tối đa và vùng tiếp xúc của thân răng", cat: "hình thái học thân răng", detail: "Ở mặt gần, điểm lồi tối đa nằm thiên về phía cắn/nhai; ở mặt xa, điểm lồi tối đa nằm thiên về phía lợi hơn so với mặt gần; ở mặt ngoài, điểm lồi tối đa nằm ở 1/3 cổ răng; ở mặt trong, nằm ở 1/4 cổ răng hoặc 1/3 giữa", clin: "đường liên tục nối các điểm lồi tối đa gọi là đường vòng lớn nhất của thân răng, được xác định bằng song song kế và rất quan trọng khi thiết kế hàm giả tháo lắp" },
+    { item: "Trình tự và thời gian thay răng sữa bằng răng vĩnh viễn", cat: "sự thành lập bộ răng vĩnh viễn", detail: "thời gian thay răng trung bình là 3,6 năm ở trẻ gái và 4,6 năm ở trẻ trai (trẻ gái sớm hơn trẻ trai 10 - 11 tháng); tổng quát thành 4 đợt mọc xen kẽ 3 kỳ nghỉ: (M1, I1) -> I2 -> (C, P1, P2, M2) -> M3", clin: "răng số 6 hàm trên thường mọc trước khi thay răng trong 85 - 95% trường hợp; khoảng trống mất răng giữa lúc rụng răng sữa và mọc răng thay thế kéo dài chừng 1 tháng" },
+    { item: "Hình dạng cung răng theo phân loại của Izard và Krogh-Poulsen", cat: "cung răng và đường cong khớp cắn", detail: "Theo Izard: Dạng Ellipse chiếm đa số (85%), dạng Parabol chiếm khoảng 10%, còn các dạng Hyperbol, chữ Pi, chữ U, chữ V là dạng ít gặp hoặc bất thường", clin: "theo Krogh-Poulsen (1958), nhìn chung cung răng hàm trên có dạng Ellipse, còn cung răng hàm dưới xấp xỉ đường cong Parabol" },
+    { item: "Đường cong Spee, đường cong Wilson và mặt cầu Monson", cat: "các đường cong bù trừ khớp cắn", detail: "Đường cong Spee (1890) nối đỉnh múi ngoài các răng sau hàm dưới tạo đường cong lõm lên trên theo chiều trước - sau; Đường cong Wilson (1917) nối đỉnh múi ngoài và trong hai bên hàm tạo đường cong lõm lên trên theo chiều ngang (ngoài - trong)", clin: "Monson (1920) liên kết đường cong Spee và Wilson thành mặt cầu Monson có bán kính 4 inches (xấp xỉ 10,2 cm)" },
+    { item: "Tư thế trục răng trên cung hàm trên và cung hàm dưới (theo Dempster - 1963)", cat: "đặc điểm giải phẫu chức năng bộ răng", detail: "Ở hàm trên: các răng cửa trên có độ nghiêng ít thay đổi nhất và tạo góc lớn nhất (29°), góc trục răng hàm lớn trên ít khi vượt quá 15°, tất cả chân răng hướng về phía khẩu cái trừ chân xa ngoài răng số 6 trên; Ở hàm dưới: răng hàm nhỏ 1 dưới nghiêng về phía lưỡi cho đến chóp, răng số 8 dưới có độ nghiêng chân răng lớn nhất", clin: "giúp lực nhai truyền dọc theo trục răng và hấp thụ lực thích hợp lên dây chằng nha chu" },
+    { item: "Hệ thống môi - má - lưỡi và khoảng trung hòa", cat: "cơ sinh học hệ thống nhai", detail: "môi và má ở phía ngoài cùng với lưỡi ở phía trong tạo nên khoảng trung hòa nơi các cung răng sắp xếp cân bằng lực; độ phủ ngoài của răng sau trên giữ niêm mạc má không bị cắn, độ phủ trong của răng sau dưới bảo vệ lưỡi, độ phủ xa của răng số 7 trên bảo vệ cơ má", clin: "nếu mất cân bằng như tật đẩy lưỡi khi nuốt sẽ làm hô và hở các răng trước; nếu thở miệng thì môi mất áp lực cản lực đẩy của lưỡi" },
+    { item: "Phân biệt họ Múi chịu (Stamp cusps) và họ Múi hướng dẫn (Shearing/Guiding cusps)", cat: "tính chất mặt nhai các răng sau", detail: "Múi chịu gồm các múi ngoài răng sau hàm dưới và các múi trong răng sau hàm trên (tròn hơn, đỉnh múi gần trục răng, ngoại phần lớn hơn nội phần, có ngoại phần chức năng rộng <= 1mm); Múi hướng dẫn gồm các múi ngoài răng sau hàm trên và các múi trong răng sau hàm dưới (nhọn hơn, đỉnh múi xa trục răng, ngoại phần nhỏ hơn nội phần)", clin: "bản nhai (tạo bởi các mặt nghiêng nội phần) chiếm 50 - 60% kích thước ngoài trong toàn bộ thân răng; múi chịu ăn khớp vào bản nhai đối diện để giữ kích thước dọc" },
+    { item: "Tương quan các mốc mặt nhai trong tư thế lồng múi tối đa", cat: "quan hệ khớp cắn trung tâm", detail: "Đường nhai ngoài của cung răng dưới khớp với đường trũng giữa của cung răng trên; đường nhai trong của cung răng trên khớp với đường trũng giữa của cung răng dưới; một răng thông thường tiếp xúc với 2 răng ở hàm đối diện", clin: "hai răng ngoại lệ chỉ tiếp xúc với 1 răng đối diện là răng cửa giữa hàm dưới và răng hàm lớn thứ 3 hàm trên; trên mỗi phần tư hàm, trừ 2 múi chịu đặt vào trũng giữa đối diện (là múi gần trong răng 6 trên và múi xa ngoài răng 6 dưới), các đỉnh múi chịu khác đều đặt vào vùng gờ bên của răng đối diện" },
+    { item: "Quy ước tỷ lệ và cách trộn thạch cao trong thực hành Vẽ và Điêu khắc răng", cat: "thực hành mô phỏng giải phẫu răng", detail: "Vẽ răng thường phóng to gấp 2, 3 hoặc 4 lần; điêu khắc răng bằng thạch cao quy định kích thước gấp đôi (tỷ lệ 2/1) so với răng thật (còn điêu khắc bằng sáp theo tỷ lệ 1/1); kích thước răng đo bằng thước kẹp Boley (Boley - Caliper jaw)", clin: "khi trộn thạch cao: đong lượng nước có thể tích bằng 2/3 khối thạch cao, rắc bột từ từ trong thời gian < 90 giây, trộn một chiều tốc độ 2 vòng/giây trong < 1 phút, để yên 30 - 45 phút cho đông kết tỏa nhiệt và chỉ gỡ khuôn khi khối thạch cao đã nguội" }
+];
+
+function generateMorphoQuestions() {
+    MORPHO_FACTS.forEach((mf, idx) => {
+        const others = MORPHO_FACTS.filter((_, i) => i !== idx);
+        addQ(`Khi phân tích về "${mf.item}", đặc điểm giải phẫu và cấu trúc chính xác là:`,
+            mf.detail,
+            others.slice(0, 3).map(o => o.detail)
+        );
+        addQ(`Ý nghĩa sinh lý, chức năng hoặc ứng dụng thực hành của "${mf.item}" là:`,
+            mf.clin,
+            others.slice(0, 3).map(o => o.clin)
+        );
+        addQ(`Khái niệm hoặc quy luật giải phẫu nào sau đây được mô tả bởi nội dung: "${mf.detail}"?`,
+            mf.item,
+            others.slice(0, 3).map(o => o.item)
+        );
+    });
+
+    // Sinh bài toán tính kích thước khối khuôn thạch cao điêu khắc (Công thức trang 65 Tập 2: Kích thước khuôn = kích thước răng thật làm tròn × 2 + 5mm)
+    const carvingTeeth = [
+        { code: "R11 (Răng cửa giữa trên)", l: 25.5, w: 9.0, t: 7.8 },
+        { code: "R13 (Răng nanh trên)", l: 27.0, w: 7.5, t: 8.0 },
+        { code: "R14 (Răng hàm nhỏ 1 trên)", l: 22.5, w: 7.0, t: 9.0 },
+        { code: "R16 (Răng hàm lớn 1 trên)", l: 20.5, w: 10.0, t: 11.0 },
+        { code: "R41 (Răng cửa giữa dưới)", l: 21.5, w: 5.5, t: 6.0 },
+        { code: "R43 (Răng nanh dưới)", l: 25.5, w: 7.0, t: 7.5 },
+        { code: "R44 (Răng hàm nhỏ 1 dưới)", l: 22.5, w: 7.0, t: 7.5 },
+        { code: "R46 (Răng hàm lớn 1 dưới)", l: 21.0, w: 11.0, t: 10.5 }
+    ];
+    carvingTeeth.forEach(ct => {
+        const boxL = +(ct.l * 2 + 5).toFixed(1);
+        const boxW = +(ct.w * 2 + 5).toFixed(1);
+        const boxT = +(ct.t * 2 + 5).toFixed(1);
+
+        addQ(`Khi tạo khối hộp thạch cao để điêu khắc ${ct.code} theo quy ước tỷ lệ gấp đôi răng thật (công thức: kích thước răng thật × 2 + 5mm), biết chiều dài toàn bộ răng là ${ct.l}mm, chiều rộng gần - xa là ${ct.w}mm và chiều cao ngoài - trong là ${ct.t}mm. Kích thước khuôn thạch cao (Dài × Rộng × Cao) cần chuẩn bị là:`,
+            `Dài ${boxL}mm × Rộng ${boxW}mm × Cao ${boxT}mm`,
+            [
+                `Dài ${+(ct.l * 2).toFixed(1)}mm × Rộng ${+(ct.w * 2).toFixed(1)}mm × Cao ${+(ct.t * 2).toFixed(1)}mm`,
+                `Dài ${+(ct.l + 5).toFixed(1)}mm × Rộng ${+(ct.w + 5).toFixed(1)}mm × Cao ${+(ct.t + 5).toFixed(1)}mm`,
+                `Dài ${+(ct.l * 3 + 5).toFixed(1)}mm × Rộng ${+(ct.w * 3 + 5).toFixed(1)}mm × Cao ${+(ct.t * 3 + 5).toFixed(1)}mm`
+            ]
+        );
+    });
+}
+
+// 5. MA TRẬN TRI THỨC NHA KHOA MÔ PHỎNG, CHỮA RĂNG, NỘI NHA, VẬT LIỆU & NHỔ RĂNG (~1.600 CÂU)
+const CLINICAL_FACTS = [
+    { item: "Phân loại lỗ hàn Black loại I", cat: "phân loại lỗ hàn theo Black", spec: "sâu răng/tạo lỗ hàn ở tất cả các hố rãnh giải phẫu, gồm 3 nhóm: (1) mặt nhai răng hàm lớn và hàm nhỏ, (2) 2/3 về phía mặt nhai của mặt ngoài và mặt trong răng hàm, (3) mặt trong của răng cửa hàm trên (chuẩn bị giống lỗ hàn loại V)", tech: "có 5 thành (trong, ngoài, xa, gần, thành tủy); độ sâu lỗ hàn từ 1,5 - 2mm và sâu vào mô ngà tối đa 0,2mm; eo rộng 1,25 - 1,5mm; gờ bên còn lại >= 1,6mm với răng hàm nhỏ và >= 2mm với răng hàm lớn" },
+    { item: "Hướng các thành bên của lỗ hàn Black loại I theo độ dày thành bên", cat: "nguyên tắc tạo hình thể lưu giữ lỗ hàn loại I", spec: "hai thành đối diện phải song song hoặc hơi hội tụ về phía mặt răng, góc giữa thành lỗ hàn và bề mặt răng từ 90 - 100 độ", tech: "nếu độ dày của thành bên (từ mặt bên lỗ hàn tới diện tiếp giáp gần hoặc xa) >= 1,6mm thì thành gần và thành xa hội tụ về phía mặt nhai; nếu < 1,6mm thì hai thành trên hơi phân kỳ về phía mặt nhai để bảo vệ gờ bên" },
+    { item: "Phân loại và cấu tạo lỗ hàn Black loại II", cat: "phân loại lỗ hàn theo Black", spec: "sâu răng/tạo lỗ hàn ở mặt bên của các răng phía sau (răng hàm nhỏ và răng hàm lớn), chia làm xoang đơn loại II (khi không có răng kế cận) và xoang kép loại II (khi có răng kế cận)", tech: "xoang kép loại II gồm lỗ hàn phụ ở mặt nhai (tạo đuôi én, phần eo nối không vượt quá đường nối đỉnh núm trong - ngoài) và lỗ hàn chính ở mặt bên (có thành lợi phẳng vuông góc với thành trục, tạo rãnh cắt ngập 0,5 - 0,6mm trong ngà và 0,2 - 0,3mm trong men)" },
+    { item: "Phân loại và cấu tạo lỗ hàn Black loại III", cat: "phân loại lỗ hàn theo Black", spec: "sâu răng/tạo lỗ hàn ở mặt bên của răng cửa và răng nanh nhưng không làm tổn thương rìa cắn; hiện nay theo nguyên tắc Black cổ điển chỉ còn chỉ định cho mặt xa răng nanh", tech: "lỗ hàn đơn loại III gồm 4 thành (trong, ngoài, lợi, trục); lỗ hàn kép loại III có lỗ hàn chính ở mặt bên (5 thành, khoảng cách thành lợi - thành cắn tối thiểu 2mm, thành trục sâu vào ngà <= 0,6mm từ ranh giới men - ngà) và đuôi én ở mặt trong (sâu 1mm, không vượt quá đường giữa mặt trong)" },
+    { item: "Phân loại lỗ hàn Black loại IV và loại VI", cat: "phân loại lỗ hàn theo Black", spec: "Loại IV là sâu răng/tạo lỗ hàn ở mặt bên răng cửa và răng nanh có tổn thương rìa cắn; Loại VI (bổ sung) là tổn thương ở rìa cắn của răng cửa hoặc đỉnh núm của các răng phía sau", tech: "lỗ hàn loại IV là lỗ hàn thẩm mỹ ở vùng chịu lực cắt, tuyệt đối không sử dụng vật liệu hàn là Amalgam nên không tạo lỗ hàn Black IV cổ điển mà phục hồi bằng Composite kết hợp vát men hoặc chốt ngà" },
+    { item: "Phân loại và kỹ thuật tạo lỗ hàn Black loại V", cat: "phân loại lỗ hàn theo Black", spec: "sâu răng/tạo lỗ hàn ở 1/3 về phía lợi của mặt ngoài và mặt trong tất cả các răng (lỗ hàn không chịu lực nhai), có hình tròn, bán nguyệt hoặc hạt đậu", tech: "gồm 5 thành (gần, lợi, xa, rìa cắn/mặt nhai, thành trục); độ sâu ở phía cắn là 1 - 1,25mm, ở phía lợi là 0,75 - 1mm; thành trục không phẳng mà cong lồi theo đường phồng mặt ngoài răng; thành lợi cách đường viền lợi 1mm; tạo rãnh lưu phụ sâu 0,25mm ở cạnh cắn và cạnh lợi" },
+    { item: "Các giai đoạn và 9 bước chuẩn bị lỗ hàn theo quy trình chuẩn", cat: "quy trình chuẩn bị lỗ hàn", spec: "chia thành 2 giai đoạn (giai đoạn sơ khởi gồm 4 bước và giai đoạn hoàn thiện gồm 5 bước); nếu hai lỗ sâu rãnh mặt nhai cách nhau một phần mô cứng lành dưới 0,5mm thì phải nối liền thành một lỗ hàn", tech: "B1: Tạo hình thể ngoài ban đầu -> B2: Tạo hình thể chịu lực ban đầu -> B3: Tạo hình thể lưu giữ ban đầu -> B4: Tạo hình thể thuận lợi -> B5: Lấy bỏ mô sâu/men không ngà nâng đỡ -> B6: Bảo vệ tủy (khi lớp ngà còn lại < 2mm) -> B7: Tạo hình thể chịu lực và lưu giữ bổ sung -> B8: Hoàn thiện thành lỗ hàn -> B9: Varnish, làm sạch, xử lý men ngà" },
+    { item: "Phương pháp hàn kiểm soát sâu răng (Hàn tạm)", cat: "điều trị bảo tồn răng", spec: "chỉ định cho sâu răng cấp tính trên nhiều răng có ngà mềm lan rộng ít nhất 1/2 chiều dày ngà răng, các tổn thương sâu răng lớn có thể bất lợi cho tủy hoặc nghi ngờ bệnh lý tủy", tech: "lấy bỏ toàn bộ cấu trúc răng bị phá hủy không hồi phục và ngà nhiễm khuẩn, sau đó đặt vật liệu hàn kiểm soát gồm IRM (Intermediate Restorative Material) hoặc Ca(OH)2 để ngăn chặn tiến triển và theo dõi đáp ứng của tủy trước khi hàn vĩnh viễn" },
+    { item: "Vật liệu và kỹ thuật hàn răng bằng Xi măng thủy tinh (GIC - Glass Ionomer Cement)", cat: "vật liệu và kỹ thuật hàn phục hồi", spec: "được Wilson và Kent giới thiệu lần đầu năm 1972 bằng cách thay thế acid phosphoric của xi măng polycarboxylat kẽm bằng acid polyacrylic; có 2 ưu điểm lớn là bám dính hóa học vào men ngà và phóng thích Fluor phòng sâu răng thứ phát", tech: "Tỷ lệ bột/nước theo loại: Loại I (gắn cầu chụp) = 1 : 2; Loại II (hàn răng) = 1 : 1; Loại III (hàn lót) = 1 : 1,5; thời gian trộn là 30 giây; trước khi hàn cần xử lý ngà bằng dung dịch acid polyacrylic 10% trong 20 giây rồi rửa sạch thổi khô, sau khi hàn cần bôi verni chống ẩm" },
+    { item: "Vật liệu và kỹ thuật hàn răng bằng Composite nha khoa", cat: "vật liệu và kỹ thuật hàn phục hồi", spec: "được Bowen sáng chế năm 1962; theo Hume và Mount (1996), tạo lỗ hàn cho Composite không theo hình hộp của Black mà tạo hình cái bát và vát rìa men ở góc 45 độ rộng 0,25 - 0,5mm để tăng diện tích dán", tech: "Etching men và ngà bằng gel acid phosphoric 37% (30 - 50%) trong 10 - 15 giây, rửa sạch và thấm khô (không thổi khô kiệt bằng hơi); bôi keo dán (Bonding) để 30 giây, thổi khí nhẹ và chiếu đèn 20 giây; đặt Composite từng lớp dày không quá 2mm, mỗi lớp chiếu đèn 40 giây" },
+    { item: "Vật liệu và kỹ thuật hàn răng bằng Amalgam", cat: "vật liệu và kỹ thuật hàn phục hồi", spec: "hợp kim giữa thủy ngân (Hg) với các kim loại khác (bạc, thiếc, đồng, kẽm); tỷ lệ bột kim loại/Hg tốt nhất là 30% đối với amalgam cổ điển; chịu lực nhai rất tốt và tuổi thọ vài chục năm", tech: "đánh kỹ quá gây co nhiều khi cứng, đánh không kỹ làm giãn nở và giảm độ bền; nhồi nén đặc từng lớp ngay sau khi đánh với lực nén khoảng 500 g/mm2 để loại bỏ Hg thừa; khi đánh bóng phải dùng nước làm mát để tránh làm nóng amalgam giải phóng Hg và gây bỏng tủy" },
+    { item: "Mục đích, yêu cầu và dụng cụ của kỹ thuật Mở khoang tủy", cat: "điều trị nội nha (Mở tủy)", spec: "bước đầu tiên trong thì cơ học của điều trị nội nha nhằm lấy hết trần buồng tủy, bộc lộ rõ tất cả các lỗ ống tủy và tạo đường trượt thẳng góc cho dụng cụ tới cuống răng mà không tạo vùng lẹm hay làm thủng sàn tủy", tech: "Thì 1 (Mở đường vào buồng tủy): dùng mũi khoan tròn nhỏ hoặc Endo-access khoan đến khi có cảm giác 'hẫng' tay là đã lọt vào buồng tủy; Thì 2 (Tạo thành khoang mở tủy): dùng mũi khoan Endo-Z (có đầu tù an toàn không cắt làm bảo vệ sàn tủy) mở rộng lấy hết trần buồng tủy" },
+    { item: "Hình dạng và vị trí mở khoang tủy theo từng nhóm răng vĩnh viễn", cat: "giải phẫu ứng dụng mở khoang tủy", spec: "hình thể khoang mở tủy phỏng theo hình thể buồng tủy: Răng cửa mở ngay trên gót răng tạo hình tam giác (đáy về phía rìa cắn); Răng nanh tạo hình trứng (bầu dục); Răng hàm nhỏ tạo hình oval dẹt theo chiều gần - xa (dài theo chiều ngoài - trong)", tech: "Răng hàm lớn hàm trên bắt đầu mở từ hố gần của rãnh trung tâm hướng về ống hàm ếch, tạo khoang hình tam giác (hơi lệch về phía gần, tránh làm tổn thương cầu men chéo); Răng hàm lớn hàm dưới bắt đầu mở từ hố gần rãnh trung tâm hướng về ống xa, tạo hình tam giác hoặc hình thang (cạnh gần ngắn hơn cạnh xa)" },
+    { item: "Năm nguyên tắc cơ học và năm nguyên tắc sinh học của Schilder (1976) trong sửa soạn ống tủy", cat: "nguyên tắc sửa soạn ống tủy", spec: "5 nguyên tắc cơ học: (1) Sửa soạn ống tủy thuôn liên tục nhỏ dần về phía cuống, (2) Đường kính nhỏ nhất tại đường ranh giới xương - ngà (cách chóp trên phim 0,5 - 1mm, không áp dụng khi có nội tiêu cuống), (3) Chuẩn bị trên nhiều mặt phẳng giữ nguyên hình dáng ban đầu của ống tủy, (4) Giữ đúng vị trí ban đầu của lỗ cuống răng, (5) Giữ đúng kích thước ban đầu của lỗ cuống răng", tech: "5 nguyên tắc sinh học: (1) Tác dụng dụng cụ chỉ giới hạn trong lòng ống tủy, (2) Tránh đẩy vi khuẩn/mùn ngà/tổ chức hoại tử ra vùng cuống, (3) Lấy sạch toàn bộ yếu tố nhiễm khuẩn trong khoang tủy, (4) Hoàn tất làm sạch và tạo hình cho từng ống tủy trong một lần điều trị, (5) Tạo khoang tủy đủ rộng để đặt thuốc và thấm hút dịch viêm" },
+    { item: "Các phương pháp xác định chiều dài làm việc của ống tủy", cat: "xác định chiều dài làm việc nội nha", spec: "kết hợp 4 phương pháp: (1) Chụp phim X-quang (dùng trâm số 15 dài 25mm cho răng trước, số 10 - 15 dài 21mm cho răng sau, chiều dài làm việc = chiều dài trên trâm trừ đi 0,5 - 1mm), (2) Cảm giác tay tại chỗ thắt hẹp cách lỗ ra 2 - 3mm, (3) Dùng côn giấy (không áp dụng cho răng viêm cấp), (4) Máy định vị chóp", tech: "Năm 1942 Suzuki khám phá điện trở niêm mạc miệng và vùng quanh răng là hằng định; năm 1962 Sunada phát minh máy định vị chóp dựa trên nguyên lý điện trở khi đầu que thăm chạm tới chóp răng là 6 Ohms; máy thế hệ mới Edocator dùng que thăm dò cách điện để tránh sai số do dịch/miếng hàn kim loại" },
+    { item: "Dung dịch và kỹ thuật bơm rửa hệ thống ống tủy", cat: "làm sạch hệ thống ống tủy", spec: "NaOCl nồng độ thấp (dưới 2,5%) dùng sát khuẩn và sinh oxy nguyên tử đẩy chất bẩn; theo Baumgartner và Mader, NaOCl nồng độ 2,5 - 5,25% rất hiệu quả để hòa tan mô tủy sống từ các vách ngà nhưng chỉ hòa tan được mô hữu cơ; cần phối hợp với chất chelat (EDTA, acid citric) để hòa tan mô calci và lấy mùn ngà vô cơ", tech: "dùng bơm tiêm 5 - 10ml với kim cỡ 25 - 27 được bẻ cong khoảng 45 độ về phía góc vát (hoặc kim chuyên biệt đầu tù có lỗ thoát bên), đưa kim vào sâu vừa chặt tay rồi rút ra khoảng 2 - 3mm để tạo lối thoát dịch, mỗi lần bơm 3 - 5ml dung dịch; Richman (1957) giới thiệu kỹ thuật nội nha siêu âm giúp tăng hiệu quả làm sạch" },
+    { item: "Bốn động tác vận động dụng cụ nội nha trong ống tủy", cat: "kỹ thuật vận dụng dụng cụ nội nha", spec: "gồm 4 kiểu động tác: (1) Thông (đẩy nhẹ và xoay 1/4 - 1/2 vòng rồi rút ra), (2) Dũa (đưa sâu, xoay 1/4 vòng với sức ấn nhẹ rồi rút ra không xoay; Weine chứng minh xoay và rút có thể gây hình đồng hồ cát ở 1/3 chóp), (3) Vặn dây cót đồng hồ do Ingle mô tả (vặn phải rồi trái với biên độ 30 - 60 độ khi ấn sâu), (4) Kỹ thuật cân bằng lực", tech: "Kỹ thuật cân bằng lực là kỹ thuật cắt ngà mạnh nhất: đưa sâu dụng cụ và xoay 1/4 vòng qua phải, sau đó giữ lực ấn dọc trục và xoay ngược lại 1/2 đến 3/4 vòng qua trái để cắt ngà mà không gây gãy dụng cụ hay làm lệch ống tủy cong" },
+    { item: "So sánh phương pháp Bước lùi (Step-back), Bước xuống (Crown-down) và Phương pháp lai", cat: "các phương pháp sửa soạn ống tủy chân răng", spec: "Phương pháp Bước lùi: bắt đầu sửa soạn vùng chóp bằng trâm nhỏ (08 - 10 - 15) đến cây số 25 ở hết chiều dài làm việc, sau đó mỗi lần tăng 1 số trâm (30, 35, 40...) thì lùi ngắn đi 1mm, mở rộng đoạn thẳng bằng mũi Gates số 1 - 2 rồi số 3 - 4 - 5 - 6 và luôn rà soát lại bằng cây số 25; ưu điểm là tránh tạo nấc/thủng chóp nhưng nhược điểm là dễ đẩy chất bẩn qua chóp", tech: "Phương pháp Bước xuống (từ thân răng xuống không áp lực): dùng trâm số 35 đưa đến điểm dừng ở đoạn cong và mũi Gates 1, 2, 3 mở rộng 2/3 trên trước, sau đó dùng trâm số 30, 25, 20, 15 đi dần xuống cách chóp 3mm rồi mới sửa soạn phần chóp đến số 25; ưu điểm là giảm tối đa nguy cơ đẩy chất bẩn ra khỏi chóp và giúp dung dịch bơm rửa xâm nhập sâu 1/3 chóp" },
+    { item: "Điều kiện và phương pháp Trám bít hệ thống ống tủy (Lèn ngang và Lèn dọc)", cat: "trám bít hệ thống ống tủy", spec: "5 điều kiện để trám bít ống tủy: (1) Răng không có triệu chứng/không đau, (2) Ống tủy khô, sạch, không tiết dịch, (3) Không có lỗ rò hoặc lỗ rò đã bít lại, (4) Không có mùi hôi, (5) Miếng trám tạm còn nguyên vẹn; côn Gutta-percha chính được ngâm trong NaOCl 5,25% để vô trùng", tech: "Phương pháp lèn ngang với Gutta-percha lạnh: chọn cây lèn ngang lớn hơn 1 số so với dụng cụ chuẩn để ngắn hơn chiều dài làm việc 1 - 2mm, giữ cây lèn trong 10 - 15 giây; Phương pháp lèn dọc với Gutta-percha nóng: dùng bộ 3 cây nhồi Plugger (Cây số 1 ở 1/3 chóp, Cây số 2 ở 1/3 trung, Cây số 3 ở 1/3 cổ), côn chính cắt ngắn hơn chiều dài làm việc 0,5 - 2mm; lèn ngang tốt hơn ở 1/3 chóp (và ống tủy dẹt), lèn dọc tốt hơn ở 1/3 cổ (và ống tủy tròn)" },
+    { item: "Đặc điểm bộ kìm và bẩy trong kỹ thuật Nhổ răng mô phỏng", cat: "dụng cụ nhổ răng", spec: "Kìm hàm trên có cổ thẳng hoặc hình lưỡi lê (cán, cổ kìm và cẳng tay hợp thành một đường thẳng); Kìm hàm dưới có cổ vuông giống càng cua hay mỏ chim; Kìm nhổ răng 6, 7 hàm trên phải phân biệt kìm bên phải và kìm bên trái vì mỏ ngoài có mấu để kẹp vào giữa hai chân ngoài (kìm hình chữ S, cầm ngửa cán kìm)", tech: "Kìm răng 6, 7 hàm dưới có hai mỏ to đều có mấu dùng chung cho cả bên phải và bên trái; Kìm số 151 là kìm đa năng có hình càng cua hai mỏ không mấu dùng nhổ tất cả các răng hàm dưới; Bẩy hàm trên là bẩy thẳng lòng máng, bẩy hàm dưới là bẩy cong cổ vuông (dùng bẩy ở hàm trên nguy hiểm hơn hàm dưới vì dễ trơn trượt đẩy vào xoang hoặc làm bật mầm răng vĩnh viễn)" },
+    { item: "Tư thế bàn tay trái của thầy thuốc và các thì nhổ răng bằng kìm", cat: "kỹ thuật nhổ răng mô phỏng", spec: "Ngón cái và ngón trỏ bàn tay trái giữ mặt ngoài và mặt trong xương ổ răng để banh môi má, bảo vệ niêm mạc và cảm nhận độ giãn xương ổ: (1) Hàm trên bên phải: vòng tay quặt ngược lại, ngón cái giữ phía ngoài, ngón trỏ giữ phía trong; (2) Hàm trên bên trái: ngón trỏ giữ phía ngoài, ngón cái giữ phía trong; (3) Hàm dưới bên trái: ngón trỏ ở phía ngoài, ngón giữa ở phía trong, ngón cái cặp dưới bờ nền xương hàm dưới; (4) Hàm dưới bên phải: ngón cái ở phía trong, ngón trỏ ở phía ngoài", tech: "Thì 1 (Cặp kìm): trục mỏ kìm song song trục răng, hạ mỏ kìm sâu sát cổ răng giải phẫu; Thì 2 (Lung lay răng): theo chiều ngoài - trong nhẹ nhàng từ từ để làm đứt dây chằng và nong rộng xương ổ; ở hàm trên rút răng ra ngoài và xuống dưới, ở hàm dưới quay cổ tay ra ngoài theo bản xương mỏng" }
+];
+
+function generateClinicalQuestions() {
+    CLINICAL_FACTS.forEach((cf, idx) => {
+        const others = CLINICAL_FACTS.filter((_, i) => i !== idx);
+        addQ(`Khi thực hiện hoặc phân tích về "${cf.item}", các đặc điểm chỉ định, phân loại và cấu trúc chuẩn xác là:`,
+            cf.spec,
+            others.slice(0, 3).map(o => o.spec)
+        );
+
+        addQ(`Các thông số kỹ thuật và quy trình thao tác chuẩn của "${cf.item}" là:`,
+            cf.tech,
+            others.slice(0, 3).map(o => o.tech)
+        );
+
+        addQ(`Kỹ thuật, phân loại hoặc phương pháp nào sau đây có quy trình và thông số kỹ thuật: "${cf.tech}"?`,
+            cf.item,
+            others.slice(0, 3).map(o => o.item)
+        );
+
+        addQ(`Nội dung chuyên môn: "${cf.spec}" thuộc về khái niệm hoặc kỹ thuật nào sau đây?`,
+            cf.item,
+            others.slice(0, 3).map(o => o.item)
+        );
+    });
+
+    // Sinh bài toán tính chiều dài thực sự của răng theo công thức Noris và Abraham (Trang 56 Tập 1: ALT = (LIT × ALI) / ILI)
+    const aliList = [19, 20, 21, 22, 23, 24, 25];
+    const diffList = [-2, -1, 1, 2, 3];
+    aliList.forEach(ALI => {
+        diffList.forEach(d => {
+            const ILI = ALI + d;
+            const LIT = ILI + 2;
+            const ALT = +((LIT * ALI) / ILI).toFixed(2);
+            const WL = +(ALT - 1).toFixed(2);
+
+            addQ(`Trong quá trình xác định chiều dài ống tủy bằng chụp phim X-quang theo công thức của Noris và Abraham (ALT = [LIT × ALI] / ILI), biết chiều dài thực của cây trâm đưa vào răng (ALI) là ${ALI}mm, chiều dài hình ảnh của cây trâm đo trên phim (ILI) là ${ILI}mm và chiều dài của răng đo trên phim (LIT) là ${LIT}mm. Chiều dài thực sự của răng (ALT) là:`,
+                `${ALT} mm`,
+                [`${+(ALT + 1.5).toFixed(2)} mm`, `${+(ALT - 1.5).toFixed(2)} mm`, `${+((ILI * LIT) / ALI).toFixed(2)} mm`]
+            );
+
+            addQ(`Sau khi áp dụng công thức Noris và Abraham với thông số ALI = ${ALI}mm, ILI = ${ILI}mm, LIT = ${LIT}mm để tìm ra chiều dài thực sự của răng (ALT = ${ALT}mm), nếu lấy mốc điểm thắt chóp cách chóp chân răng giải phẫu 1mm thì chiều dài làm việc (WL) cần thiết lập trên cây trâm là:`,
+                `${WL} mm`,
+                [`${ALT} mm`, `${+(ALT + 1).toFixed(2)} mm`, `${+(WL - 1.5).toFixed(2)} mm`]
+            );
+        });
+    });
+}
+
+// 6. TỔ HỢP ĐỐI CHIẾU ĐA CHIỀU (MULTI-ENTITY COMPARATIVE & EXCLUSION GENERATOR) (~1.400 CÂU)
+function generateComparativeMatrixQuestions() {
+    const ALL_ITEMS = [
+        ...EMBRYO_FACTS.map(x => ({ name: x.item, desc: x.detail, extra: x.clin, group: x.cat })),
+        ...RADIOLOGY_FACTS.map(x => ({ name: x.item, desc: x.prop, extra: x.val, group: x.cat })),
+        ...MORPHO_FACTS.map(x => ({ name: x.item, desc: x.detail, extra: x.clin, group: x.cat })),
+        ...CLINICAL_FACTS.map(x => ({ name: x.item, desc: x.spec, extra: x.tech, group: x.cat }))
+    ];
+
+    for (let i = 0; i < ALL_ITEMS.length; i++) {
+        const cur = ALL_ITEMS[i];
+        const p1 = ALL_ITEMS[(i + 5) % ALL_ITEMS.length];
+        const p2 = ALL_ITEMS[(i + 13) % ALL_ITEMS.length];
+        const p3 = ALL_ITEMS[(i + 29) % ALL_ITEMS.length];
+
+        // Dạng câu hỏi tìm phát biểu ĐÚNG giữa các mệnh đề ghép chéo
+        addQ(`Trong các nhận định chuyên môn dưới đây, nhận định nào là CHÍNH XÁC khi nói về "${cur.name}"?`,
+            `${cur.name}: ${cur.desc}`,
+            [
+                `${cur.name}: ${p1.desc}`,
+                `${cur.name}: ${p2.desc}`,
+                `${cur.name}: ${p3.desc}`
+            ]
+        );
+
+        // Dạng câu hỏi tìm phát biểu ĐÚNG về thông số / ứng dụng lâm sàng
+        addQ(`Khi xét đến đặc điểm kỹ thuật, định lượng hoặc hệ quả lâm sàng của "${cur.name}", phương án nào sau đây ĐÚNG?`,
+            cur.extra,
+            [p1.extra, p2.extra, p3.extra]
+        );
+
+        // Dạng câu hỏi tìm phát biểu SAI (Ngoại trừ)
+        addQ(`Khi nghiên cứu các đặc điểm liên quan đến ${cur.group} và các cấu trúc giải phẫu - kỹ thuật tương ứng, nhận định nào sau đây là SAI?`,
+            `${cur.name} có đặc điểm là: ${p2.extra}`,
+            [
+                `${cur.name}: ${cur.desc}`,
+                `${p1.name}: ${p1.desc}`,
+                `${p3.name}: ${p3.desc}`
+            ]
+        );
+
+        // Dạng câu hỏi ghép cặp tương ứng
+        addQ(`Sự kết hợp nào sau đây giữa thuật ngữ chuyên môn và nội dung đặc trưng của nó là ĐÚNG?`,
+            `${cur.name} — ${cur.extra}`,
+            [
+                `${cur.name} — ${p1.extra}`,
+                `${p2.name} — ${cur.extra}`,
+                `${p3.name} — ${p1.desc}`
+            ]
+        );
+    }
+
+    // Sinh thêm bộ câu hỏi chi tiết về từng góc nhìn của các răng chủ chốt (Răng 11, 41, 13, 43, 14, 44, 16, 46)
+    const TOOTH_VIEWS = [
+        { tooth: "Răng cửa giữa hàm trên (Răng 11 / 21)", view: "nhìn từ phía ngoài", feat: "thân răng hình thang đáy lớn ở rìa cắn, góc cắn gần vuông, góc cắn xa tròn, điểm lồi tối đa gần ở 1/3 cắn, điểm lồi tối đa xa ở nơi nối 1/3 cắn và 1/3 giữa" },
+        { tooth: "Răng cửa giữa hàm trên (Răng 11 / 21)", view: "nhìn từ phía trong", feat: "thân răng hình xẻng, giữa trũng có hõm lưỡi, Cingulum nhô cao ở 1/3 cổ răng, chân răng hẹp hơn mặt ngoài và thiết đồ ngang hình tam giác" },
+        { tooth: "Răng cửa giữa hàm trên (Răng 11 / 21)", view: "nhìn từ phía gần", feat: "thân răng hình tam giác đáy ở cổ răng, đường viền trong hình chữ S, đường cổ răng lõm về phía chóp có độ cao lớn nhất so với mọi răng (3 - 4mm)" },
+        { tooth: "Răng cửa giữa hàm trên (Răng 11 / 21)", view: "nhìn từ phía xa", feat: "đường cổ răng ít cong hơn phía gần, gờ bên xa dày hơn và che khuất phần lớn mặt trong cùng gờ bên gần" },
+        { tooth: "Răng cửa giữa hàm dưới (Răng 31 / 41)", view: "nhìn từ phía ngoài", feat: "thân răng rất hẹp theo chiều gần xa và đối xứng hai bên, góc cắn gần và góc cắn xa bằng nhau và gần vuông, điểm lồi tối đa gần và xa đều ở 1/3 cắn sát rìa cắn" },
+        { tooth: "Răng cửa giữa hàm dưới (Răng 31 / 41)", view: "nhìn từ phía trong", feat: "mặt trong không có hình xẻng, Cingulum đều đặn không bị chia cắt bởi các rãnh, không có hố, các gờ bên và hõm lưỡi kém rõ hơn răng cửa trên" },
+        { tooth: "Răng cửa giữa hàm dưới (Răng 31 / 41)", view: "nhìn từ phía gần", feat: "rìa cắn nằm lệch về phía trong đường nối từ chóp đến đỉnh đường cong cổ răng, độ cao đường cổ răng khoảng 3mm, thiết đồ ngang chân răng hình trứng" },
+        { tooth: "Răng nanh hàm trên (Răng 13 / 23)", view: "nhìn từ phía ngoài", feat: "bờ cắn có một múi nhọn đặc trưng, đỉnh múi thiên về phía gần, gờ múi gần ngắn và ít xuôi, gờ múi xa dài và xuôi hơn, thùy giữa lớn nhất" },
+        { tooth: "Răng nanh hàm trên (Răng 13 / 23)", view: "nhìn từ phía trong", feat: "Cingulum khá lớn, có gờ trong chạy từ Cingulum tới đỉnh múi tạo nên 2 lõm dọc (hai hõm lưỡi) nằm giữa 3 gờ (gờ bên gần, gờ trong, gờ bên xa)" },
+        { tooth: "Răng nanh hàm trên (Răng 13 / 23)", view: "nhìn từ phía gần và phía xa", feat: "đường cổ răng phía gần cong lồi về phía cắn khoảng 2,5mm, còn phía xa ít cong hơn (khoảng 2mm) nhưng lõm dọc chân răng phía xa sâu hơn phía gần" },
+        { tooth: "Răng nanh hàm dưới (Răng 33 / 43)", view: "nhìn từ phía ngoài", feat: "gờ múi gần ít xuôi tạo bờ vai cao, gờ múi xa xuôi nhiều tạo bờ vai thấp nên thân răng có hình 'người lệch vai', đường viền gần của thân răng thẳng hàng với đường viền gần chân răng" },
+        { tooth: "Răng nanh hàm dưới (Răng 33 / 43)", view: "nhìn từ phía trong và phía cắn", feat: "hai gờ bên, gờ trong và Cingulum ít nhô hơn răng nanh trên, hõm lưỡi gần và xa đều cạn, đường viền mặt trong tròn và đều đặn hơn răng nanh trên" },
+        { tooth: "Răng hàm nhỏ thứ nhất hàm trên (Răng 14 / 24)", view: "nhìn từ phía ngoài và phía trong", feat: "nhìn từ phía ngoài gờ múi gần dài hơn gờ múi xa (ngược với răng nanh trên); nhìn từ phía trong thấy được đường viền mặt ngoài và cả hai chóp chân răng, đỉnh múi trong thiên về phía gần" },
+        { tooth: "Răng hàm nhỏ thứ nhất hàm trên (Răng 14 / 24)", view: "nhìn từ phía gần", feat: "múi ngoài cao hơn múi trong, gờ bên gần bị chia cắt bởi rãnh gờ bên gần ở điểm giữa hơi thiên về phía trong, mặt gần thân răng và chân răng có lõm sâu (rãnh liên chân)" },
+        { tooth: "Răng hàm nhỏ thứ nhất hàm trên (Răng 14 / 24)", view: "nhìn từ phía nhai", feat: "đường viền thân răng hình lục giác, múi ngoài lớn hơn múi trong, hõm tam giác gần rộng hơn hõm tam giác xa" },
+        { tooth: "Răng hàm nhỏ thứ nhất hàm dưới (Răng 34 / 44)", view: "nhìn từ phía trong và phía gần", feat: "múi trong rất nhỏ, thấp và nhọn, gờ tam giác ngoài nối liền với gờ tam giác trong tạo thành gờ ngang băng qua mặt nhai, gờ bên gần và gờ múi trong tạo thành chữ V có đỉnh là rãnh gần trong" },
+        { tooth: "Răng hàm nhỏ thứ nhất hàm dưới (Răng 34 / 44)", view: "nhìn từ phía nhai", feat: "đường viền thân răng có dạng hình thoi, trông thấy hơn 2/3 mặt ngoài, bản nhai hình tam giác mà đáy là gờ múi ngoài và đỉnh là đỉnh múi trong" },
+        { tooth: "Răng hàm lớn thứ nhất hàm trên (Răng 16 / 26)", view: "nhìn từ phía ngoài và phía trong", feat: "nhìn từ phía ngoài thấy cả 3 chân răng, chóp chân gần ngoài thẳng hàng với đỉnh múi gần ngoài; nhìn từ phía trong thấy múi gần trong lớn chiếm 3/5 kích thước gần xa và phần gần có núm phụ Carabelli" },
+        { tooth: "Răng hàm lớn thứ nhất hàm trên (Răng 16 / 26)", view: "nhìn từ phía gần", feat: "thân răng hình thang, kích thước ngoài - trong tối đa ở vùng cổ thân răng, nhìn từ phía gần thấy múi gần trong cao hơn múi gần ngoài (đặc điểm riêng), chân gần ngoài rộng còn chân trong hẹp hình quả chuối" },
+        { tooth: "Răng hàm lớn thứ nhất hàm trên (Răng 16 / 26)", view: "nhìn từ phía nhai", feat: "đường viền ngoài có hình bình hành (góc gần ngoài và xa trong nhọn), có gờ chéo (Oblique ridge) nối múi xa ngoài với múi gần trong, kích thước các múi giảm dần theo thứ tự: Gần trong > Gần ngoài > Xa ngoài > Xa trong" },
+        { tooth: "Răng hàm lớn thứ nhất hàm dưới (Răng 36 / 46)", view: "nhìn từ phía ngoài và phía trong", feat: "mặt ngoài thấy 3 múi (gần ngoài lớn nhất -> xa ngoài -> múi xa) ngăn cách bởi 2 rãnh; mặt trong thấy 2 múi trong cao và nhọn hơn các múi ngoài, ngăn cách bởi rãnh trong tạo khuyết hình chữ V" },
+        { tooth: "Răng hàm lớn thứ nhất hàm dưới (Răng 36 / 46)", view: "nhìn từ phía nhai", feat: "thân răng có hình ngũ giác, đường viền ngoài lồi nhất ở múi xa ngoài, kích thước 5 múi giảm dần theo thứ tự: Gần trong > Xa trong > Gần ngoài > Xa ngoài > Múi xa, hai rãnh ngoài cùng rãnh trong tạo thành chữ Y ở trung tâm mặt nhai" }
+    ];
+
+    TOOTH_VIEWS.forEach((tv, idx) => {
+        const others = TOOTH_VIEWS.filter((_, i) => i !== idx);
+        addQ(`Khi khảo sát giải phẫu mô tả của "${tv.tooth}" ở góc độ "${tv.view}", đặc điểm nhận dạng chuẩn xác là:`,
+            tv.feat,
+            others.slice(0, 3).map(o => o.feat)
+        );
+
+        addQ(`Đặc điểm giải phẫu hình thể ngoài: "${tv.feat}" là mô tả của răng nào và ở góc nhìn nào sau đây?`,
+            `${tv.tooth} (${tv.view})`,
+            others.slice(0, 3).map(o => `${o.tooth} (${o.view})`)
+        );
+    });
+
+    // Sinh thêm các câu hỏi kết hợp thông số lâm sàng theo từng răng (Góc đứng X-quang + Điểm vào tia trung tâm + Dụng cụ nhổ răng + Tư thế tay trái + Hình dạng mở tủy)
+    const CLINICAL_TOOTH_MAP = [
+        { code: "11", name: "Răng cửa giữa hàm trên bên phải", vAngle: "+40 độ", entry: "Đỉnh mũi", forceps: "Kìm nhổ răng cửa hàm trên: cán, eo, mỏ thẳng, hai mỏ đối xứng không mấu", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở ngay trên gót răng (Cingulum), tạo khoang mở tủy hình tam giác có đáy quay về phía rìa cắn" },
+        { code: "12", name: "Răng cửa bên hàm trên bên phải", vAngle: "+40 độ", entry: "Đỉnh mũi", forceps: "Kìm nhổ răng cửa hàm trên: cán, eo, mỏ thẳng, mỏ không mấu", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở ngay trên gót răng, tạo khoang mở tủy hình tam giác nhỏ hơn răng cửa giữa" },
+        { code: "13", name: "Răng nanh hàm trên bên phải", vAngle: "+45 độ", entry: "Chân cánh mũi", forceps: "Kìm nhổ răng cửa và răng nanh hàm trên: cán, eo, mỏ thẳng, không mấu", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở ngay trên gót răng ở mặt trong, tạo khoang mở tủy có hình trứng (bầu dục)" },
+        { code: "14", name: "Răng hàm nhỏ thứ nhất hàm trên bên phải", vAngle: "+30 độ", entry: "Điểm ngay dưới đồng tử khi bệnh nhân nhìn thẳng trên đường nối chân cánh mũi - nắp bình tai", forceps: "Kìm nhổ răng 4, 5 hàm trên: cổ thẳng, cán lượn hình chữ S, hai mỏ không có mấu", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở ở chính giữa rãnh trung tâm, tạo khoang mở tủy hình oval dẹt theo chiều gần - xa (dài theo hướng trong - ngoài)" },
+        { code: "15", name: "Răng hàm nhỏ thứ hai hàm trên bên phải", vAngle: "+30 độ", entry: "Điểm ngay dưới đồng tử khi bệnh nhân nhìn thẳng trên đường nối chân cánh mũi - nắp bình tai", forceps: "Kìm nhổ răng 4, 5 hàm trên: cổ thẳng, cán lượn hình chữ S, mỏ không có mấu", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở từ chính giữa rãnh trung tâm đi song song trục răng, tạo khoang mở tủy hình oval dẹt theo chiều gần - xa" },
+        { code: "16", name: "Răng hàm lớn thứ nhất hàm trên bên phải", vAngle: "+20 độ", entry: "Điểm ngay dưới góc mắt ngoài trên đường nối chân cánh mũi - nắp bình tai", forceps: "Kìm nhổ răng 6, 7 hàm trên bên phải: hình chữ S, mỏ ngoài có mấu để kẹp vào giữa hai chân ngoài", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở từ hố gần của rãnh trung tâm hướng về ống hàm ếch, tạo khoang mở tủy hình tam giác đỉnh là các lỗ ống tủy" },
+        { code: "17", name: "Răng hàm lớn thứ hai hàm trên bên phải", vAngle: "+20 độ", entry: "Điểm ngay dưới góc mắt ngoài trên đường nối chân cánh mũi - nắp bình tai", forceps: "Kìm nhổ răng 6, 7 hàm trên bên phải: hình chữ S, mỏ ngoài có mấu, mỏ trong không mấu", leftHand: "Vòng tay trái quặt ngược lại, ngón cái giữ phía ngoài xương ổ, ngón trỏ giữ phía trong", endoAccess: "Mở từ hố gần của rãnh trung tâm mặt nhai, tạo khoang mở tủy hình tam giác lệch về phía gần" },
+        { code: "21", name: "Răng cửa giữa hàm trên bên trái", vAngle: "+40 độ", entry: "Đỉnh mũi", forceps: "Kìm nhổ răng cửa hàm trên: cán, eo, mỏ thẳng, không mấu", leftHand: "Ngón trỏ bàn tay trái giữ phía ngoài xương ổ, ngón cái giữ phía trong (vòm miệng)", endoAccess: "Mở ngay trên gót răng, tạo khoang mở tủy hình tam giác có đáy quay về phía rìa cắn" },
+        { code: "23", name: "Răng nanh hàm trên bên trái", vAngle: "+45 độ", entry: "Chân cánh mũi", forceps: "Kìm nhổ răng cửa và răng nanh hàm trên: cán, eo, mỏ thẳng, không mấu", leftHand: "Ngón trỏ bàn tay trái giữ phía ngoài xương ổ, ngón cái giữ phía trong", endoAccess: "Mở ở mặt trong ngay trên Cingulum, tạo khoang mở tủy hình trứng" },
+        { code: "24", name: "Răng hàm nhỏ thứ nhất hàm trên bên trái", vAngle: "+30 độ", entry: "Điểm ngay dưới đồng tử khi bệnh nhân nhìn thẳng trên đường nối chân cánh mũi - nắp bình tai", forceps: "Kìm nhổ răng 4, 5 hàm trên: cổ thẳng, cán lượn hình chữ S, mỏ không có mấu", leftHand: "Ngón trỏ bàn tay trái giữ phía ngoài xương ổ, ngón cái giữ phía trong", endoAccess: "Mở ở chính giữa rãnh trung tâm, tạo khoang mở tủy hình oval dài theo chiều ngoài - trong" },
+        { code: "26", name: "Răng hàm lớn thứ nhất hàm trên bên trái", vAngle: "+20 độ", entry: "Điểm ngay dưới góc mắt ngoài trên đường nối chân cánh mũi - nắp bình tai", forceps: "Kìm nhổ răng 6, 7 hàm trên bên trái: hình chữ S, mỏ ngoài (bên trái) có mấu kẹp giữa hai chân ngoài", leftHand: "Ngón trỏ bàn tay trái giữ phía ngoài xương ổ, ngón cái giữ phía trong", endoAccess: "Mở tại hố gần của rãnh trung tâm hướng về ống hàm ếch, bảo tồn gờ chéo mặt nhai" },
+        { code: "31", name: "Răng cửa giữa hàm dưới bên trái", vAngle: "-15 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới đỉnh mũi", forceps: "Kìm nhổ răng cửa hàm dưới: hình mỏ chim, mỏ thon nhỏ không sát nhau khi bóp, hoặc kìm số 151", leftHand: "Dùng ngón trỏ đặt ở phía ngoài (tiền đình), ngón giữa ở phía trong (lưỡi), ngón cái cặp dưới bờ nền xương hàm dưới", endoAccess: "Mở trên gót răng, tạo khoang hình tam giác và lấy bỏ tam giác ngà phía trong để tránh bỏ sót ống tủy trong" },
+        { code: "33", name: "Răng nanh hàm dưới bên trái", vAngle: "-20 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới chân cánh mũi", forceps: "Kìm mỏ chim nhổ răng 1, 2, 3 hàm dưới hoặc kìm càng cua đa năng số 151", leftHand: "Dùng ngón trỏ đặt ở phía ngoài, ngón giữa ở phía trong, ngón cái cặp dưới bờ nền xương hàm dưới", endoAccess: "Mở trên gót răng ở mặt trong, tạo khoang mở tủy hình trứng" },
+        { code: "34", name: "Răng hàm nhỏ thứ nhất hàm dưới bên trái", vAngle: "-10 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới đồng tử", forceps: "Kìm mỏ chim nhổ răng hàm nhỏ dưới hoặc kìm càng cua số 151 (hai mỏ không mấu)", leftHand: "Dùng ngón trỏ đặt ở phía ngoài, ngón giữa ở phía trong, ngón cái cặp dưới bờ nền xương hàm dưới", endoAccess: "Mở từ chính giữa rãnh trung tâm nhưng hướng mũi khoan thẳng theo trục chân răng (hướng về phía múi ngoài do mặt nhai dốc 45 độ vào trong)" },
+        { code: "36", name: "Răng hàm lớn thứ nhất hàm dưới bên trái", vAngle: "-5 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới góc mắt ngoài", forceps: "Kìm nhổ răng 6, 7 hàm dưới: hình mỏ chim hoặc càng cua khỏe, hai mỏ to đều có mấu dùng chung cho cả hai bên", leftHand: "Dùng ngón trỏ đặt ở phía ngoài, ngón giữa ở phía trong, ngón cái cặp dưới bờ nền xương hàm dưới", endoAccess: "Mở từ hố gần của rãnh trung tâm mặt nhai hướng về lỗ ống tủy xa, tạo khoang hình tam giác hoặc hình thang" },
+        { code: "41", name: "Răng cửa giữa hàm dưới bên phải", vAngle: "-15 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới đỉnh mũi", forceps: "Kìm mỏ chim nhổ răng cửa hàm dưới (mỏ thon nhỏ) hoặc kìm số 151", leftHand: "Thầy thuốc đứng phía sau hoặc bên phải, ngón cái bàn tay trái đặt phía trong (lưỡi), ngón trỏ đặt ở phía ngoài (môi)", endoAccess: "Mở trên gót răng, tạo khoang hình tam giác và lấy bỏ tam giác ngà phía trong" },
+        { code: "43", name: "Răng nanh hàm dưới bên phải", vAngle: "-20 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới chân cánh mũi", forceps: "Kìm mỏ chim hàm dưới hoặc kìm số 151", leftHand: "Ngón cái bàn tay trái đặt ở phía trong, ngón trỏ đặt ở phía ngoài xương ổ răng", endoAccess: "Mở ngay trên gót răng mặt trong, tạo khoang mở tủy hình trứng" },
+        { code: "44", name: "Răng hàm nhỏ thứ nhất hàm dưới bên phải", vAngle: "-10 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới đồng tử", forceps: "Kìm mỏ chim nhổ răng 4, 5 hàm dưới hoặc kìm số 151", leftHand: "Ngón cái bàn tay trái đặt ở phía trong, ngón trỏ đặt ở phía ngoài xương ổ răng", endoAccess: "Mở chính giữa rãnh trung tâm hướng về phía múi ngoài để trùng với trục chân răng, tạo hình oval" },
+        { code: "46", name: "Răng hàm lớn thứ nhất hàm dưới bên phải", vAngle: "-5 độ", entry: "Điểm trên đường nối từ đỉnh cằm đến chân dái tai tương ứng thẳng dưới góc mắt ngoài", forceps: "Kìm nhổ răng 6, 7 hàm dưới: hình mỏ chim hoặc càng cua, hai mỏ to đều có mấu kẹp vào vùng chẽ chân gần và chân xa", leftHand: "Đứng phía sau bên phải bệnh nhân, ngón cái bàn tay trái đặt ở phía trong, ngón trỏ đặt ở phía ngoài xương ổ răng", endoAccess: "Mở tại hố gần của rãnh trung tâm mặt nhai hướng về phía ống tủy xa, mở rộng thành hình tam giác hoặc hình thang" }
+    ];
+
+    CLINICAL_TOOTH_MAP.forEach((ctm, idx) => {
+        const others = CLINICAL_TOOTH_MAP.filter((_, i) => i !== idx);
+        const pickDiff = (field) => {
+            const res = [];
+            for (let o of others) {
+                if (o[field] !== ctm[field] && !res.includes(o[field])) res.push(o[field]);
+                if (res.length === 3) break;
+            }
+            return res;
+        };
+
+        addQ(`Khi chụp phim X-quang cận chóp theo kỹ thuật phân giác cho "${ctm.name}" (răng ${ctm.code}) ở tư thế đầu chuẩn, góc đứng trung bình của bóng phát tia X cần thiết lập là:`,
+            ctm.vAngle,
+            pickDiff("vAngle")
+        );
+
+        addQ(`Khi định vị côn chụp phim X-quang trong miệng cho "${ctm.name}" (răng ${ctm.code}), điểm vào của tia trung tâm trên bề mặt da bệnh nhân là:`,
+            ctm.entry,
+            pickDiff("entry")
+        );
+
+        addQ(`Trong thực hành nhổ răng bằng kìm cho "${ctm.name}" (răng ${ctm.code}), loại kìm nhổ răng được lựa chọn đúng quy chuẩn là:`,
+            ctm.forceps,
+            pickDiff("forceps")
+        );
+
+        addQ(`Khi thực hiện nhổ "${ctm.name}" (răng ${ctm.code}) bằng kìm, tư thế đặt các ngón tay của bàn tay trái thầy thuốc để giữ xương ổ răng và bảo vệ phần mềm là:`,
+            ctm.leftHand,
+            pickDiff("leftHand")
+        );
+
+        addQ(`Khi tiến hành mở khoang tủy điều trị nội nha cho "${ctm.name}" (răng ${ctm.code}), vị trí bắt đầu mở tủy và hình thể khoang mở tủy chuẩn xác là:`,
+            ctm.endoAccess,
+            pickDiff("endoAccess")
+        );
+    });
+}
+
+// Khởi tạo toàn bộ ngân hàng câu hỏi
+function initDatabase() {
+    generateDentalSystemQuestions();
+    generateEmbryoQuestions();
+    generateRadiologyQuestions();
+    generateMorphoQuestions();
+    generateClinicalQuestions();
+    generateComparativeMatrixQuestions();
+
+    const counterEl = document.getElementById('bank-counter');
+    if (counterEl) {
+        counterEl.textContent = `Ngân hàng dữ liệu: ${QUESTION_BANK.length.toLocaleString('vi-VN')} câu hỏi trắc nghiệm`;
+    }
+}
+
+// Tiện ích trộn mảng ngẫu nhiên (Fisher-Yates Shuffle)
+function shuffleArray(arr) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+// Lấy N câu hỏi ngẫu nhiên và trộn thứ tự đáp án A, B, C, D
+function getRandomQuestions(count) {
+    const indices = Array.from({ length: QUESTION_BANK.length }, (_, i) => i);
+    for (let i = 0; i < Math.min(count, indices.length); i++) {
+        const j = i + Math.floor(Math.random() * (indices.length - i));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    const selectedIndices = indices.slice(0, count);
+    return selectedIndices.map((idx, num) => {
+        const raw = QUESTION_BANK[idx];
+        const allOpts = shuffleArray([
+            { text: raw.a, isCorrect: true },
+            { text: raw.w[0], isCorrect: false },
+            { text: raw.w[1], isCorrect: false },
+            { text: raw.w[2], isCorrect: false }
+        ]);
+        return {
+            number: num + 1,
+            qText: raw.q,
+            options: allOpts,
+            userChoice: null
+        };
+    });
+}
+
+// ================= QUẢN LÝ TRẠNG THÁI GIAO DIỆN =================
+let currentMode = 'review';
+let reviewQuestions = [];
+let reviewCorrectCount = 0;
+let reviewWrongCount = 0;
+
+let examQuestions = [];
+let examTimerInterval = null;
+let examSecondsElapsed = 0;
+let isExamSubmitted = false;
+
+function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('tab-review').classList.toggle('active', mode === 'review');
+    document.getElementById('tab-exam').classList.toggle('active', mode === 'exam');
+
+    document.getElementById('view-review').classList.toggle('hidden', mode !== 'review');
+    document.getElementById('view-exam').classList.toggle('hidden', mode !== 'exam');
+
+    if (mode === 'exam' && examQuestions.length === 0) {
+        startNewExam();
+    }
+}
+
+// ================= CHẾ ĐỘ ÔN TẬP =================
+function loadReviewBatch() {
+    const size = parseInt(document.getElementById('review-size').value, 10) || 50;
+    reviewQuestions = getRandomQuestions(size);
+    reviewCorrectCount = 0;
+    reviewWrongCount = 0;
+    updateReviewStatsUI();
+
+    const container = document.getElementById('review-questions-container');
+    container.innerHTML = '';
+
+    const labels = ['A', 'B', 'C', 'D'];
+    reviewQuestions.forEach((q, qIdx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = `rev-q-${qIdx}`;
+
+        const optionsHtml = q.options.map((opt, oIdx) => `
+            <button class="opt-btn" id="rev-opt-${qIdx}-${oIdx}" onclick="handleReviewSelect(${qIdx}, ${oIdx})">
+                <span class="opt-label">${labels[oIdx]}</span>
+                <span>${opt.text}</span>
+            </button>
+        `).join('');
+
+        card.innerHTML = `
+            <div class="q-header">
+                <span class="q-number">Câu ${q.number}</span>
+                <span class="q-status hidden" id="rev-status-${qIdx}"></span>
+            </div>
+            <div class="q-text">${q.qText}</div>
+            <div class="options-grid">
+                ${optionsHtml}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function handleReviewSelect(qIdx, oIdx) {
+    const q = reviewQuestions[qIdx];
+    if (q.userChoice !== null) return; // Đã chọn câu này rồi
+    q.userChoice = oIdx;
+
+    const chosenOpt = q.options[oIdx];
+    const statusEl = document.getElementById(`rev-status-${qIdx}`);
+    statusEl.classList.remove('hidden');
+
+    if (chosenOpt.isCorrect) {
+        reviewCorrectCount++;
+        statusEl.textContent = 'CHÍNH XÁC';
+        statusEl.className = 'q-status correct';
+    } else {
+        reviewWrongCount++;
+        statusEl.textContent = 'CHƯA ĐÚNG';
+        statusEl.className = 'q-status wrong';
+    }
+
+    // Bôi màu xanh đáp án đúng và bôi đỏ nếu chọn sai NGAY LẬP TỨC
+    q.options.forEach((opt, idx) => {
+        const btn = document.getElementById(`rev-opt-${qIdx}-${idx}`);
+        btn.classList.add('disabled');
+        if (opt.isCorrect) {
+            btn.classList.add('correct-answer');
+        } else if (idx === oIdx && !opt.isCorrect) {
+            btn.classList.add('wrong-answer');
+        }
+    });
+
+    updateReviewStatsUI();
+}
+
+function updateReviewStatsUI() {
+    document.getElementById('review-batch-info').textContent = `Đang hiển thị: ${reviewQuestions.length} câu ngẫu nhiên`;
+    document.getElementById('review-correct-count').textContent = `Đúng: ${reviewCorrectCount}`;
+    document.getElementById('review-wrong-count').textContent = `Sai: ${reviewWrongCount}`;
+}
+
+// ================= CHẾ ĐỘ LÀM ĐỀ =================
+function startNewExam() {
+    const size = parseInt(document.getElementById('exam-size').value, 10) || 60;
+    examQuestions = getRandomQuestions(size);
+    isExamSubmitted = false;
+
+    // Reset đồng hồ
+    if (examTimerInterval) clearInterval(examTimerInterval);
+    examSecondsElapsed = 0;
+    updateExamTimerUI();
+    examTimerInterval = setInterval(() => {
+        if (!isExamSubmitted) {
+            examSecondsElapsed++;
+            updateExamTimerUI();
+        }
+    }, 1000);
+
+    document.getElementById('exam-active-area').classList.remove('hidden');
+    document.getElementById('exam-result-area').classList.add('hidden');
+    updateExamProgressUI();
+
+    const container = document.getElementById('exam-questions-container');
+    container.innerHTML = '';
+
+    const labels = ['A', 'B', 'C', 'D'];
+    examQuestions.forEach((q, qIdx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = `exam-q-${qIdx}`;
+
+        const optionsHtml = q.options.map((opt, oIdx) => `
+            <button class="opt-btn" id="exam-opt-${qIdx}-${oIdx}" onclick="handleExamSelect(${qIdx}, ${oIdx})">
+                <span class="opt-label">${labels[oIdx]}</span>
+                <span>${opt.text}</span>
+            </button>
+        `).join('');
+
+        card.innerHTML = `
+            <div class="q-header">
+                <span class="q-number">Câu ${q.number}</span>
+            </div>
+            <div class="q-text">${q.qText}</div>
+            <div class="options-grid">
+                ${optionsHtml}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function handleExamSelect(qIdx, oIdx) {
+    if (isExamSubmitted) return;
+    const q = examQuestions[qIdx];
+    q.userChoice = oIdx;
+
+    // Chỉ đánh dấu đáp án đã chọn, TUYỆT ĐỐI KHÔNG hiển thị đúng hay sai
+    q.options.forEach((_, idx) => {
+        const btn = document.getElementById(`exam-opt-${qIdx}-${idx}`);
+        btn.classList.toggle('selected-exam', idx === oIdx);
+    });
+
+    updateExamProgressUI();
+}
+
+function updateExamProgressUI() {
+    const answered = examQuestions.filter(q => q.userChoice !== null).length;
+    document.getElementById('exam-progress-badge').textContent = `Đã chọn: ${answered} / ${examQuestions.length} câu`;
+}
+
+function updateExamTimerUI() {
+    const mins = String(Math.floor(examSecondsElapsed / 60)).padStart(2, '0');
+    const secs = String(examSecondsElapsed % 60).padStart(2, '0');
+    document.getElementById('exam-timer-badge').textContent = `Thời gian: ${mins}:${secs}`;
+}
+
+function submitExam() {
+    if (isExamSubmitted) return;
+    isExamSubmitted = true;
+    if (examTimerInterval) clearInterval(examTimerInterval);
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    examQuestions.forEach(q => {
+        if (q.userChoice === null) {
+            unanswered++;
+        } else if (q.options[q.userChoice].isCorrect) {
+            correct++;
+        } else {
+            wrong++;
+        }
+    });
+
+    const total = examQuestions.length;
+    const score10 = ((correct / total) * 10).toFixed(2);
+    const percent = ((correct / total) * 100).toFixed(1);
+
+    // Chuyển sang giao diện thống kê
+    document.getElementById('exam-active-area').classList.add('hidden');
+    document.getElementById('exam-result-area').classList.remove('hidden');
+
+    document.getElementById('stat-score-10').textContent = score10;
+    document.getElementById('stat-summary-text').textContent = `Đạt ${correct}/${total} câu (${percent}%) — Làm sai (kể cả chưa chọn): ${wrong + unanswered} câu`;
+    document.getElementById('stat-total-q').textContent = total;
+    document.getElementById('stat-correct-q').textContent = correct;
+    document.getElementById('stat-wrong-q').textContent = wrong;
+    document.getElementById('stat-unanswered-q').textContent = unanswered;
+
+    renderExamReviewList('all');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderExamReviewList(filterType) {
+    const container = document.getElementById('exam-review-container');
+    container.innerHTML = '';
+
+    const labels = ['A', 'B', 'C', 'D'];
+    examQuestions.forEach((q) => {
+        const isUnanswered = q.userChoice === null;
+        const isCorrect = !isUnanswered && q.options[q.userChoice].isCorrect;
+
+        if (filterType === 'correct' && !isCorrect) return;
+        if (filterType === 'wrong' && isCorrect) return;
+
+        let statusClass = 'unanswered';
+        let statusText = 'CHƯA CHỌN ĐÁP ÁN (SAI)';
+        if (isCorrect) {
+            statusClass = 'correct';
+            statusText = 'LÀM ĐÚNG';
+        } else if (!isUnanswered) {
+            statusClass = 'wrong';
+            statusText = 'LÀM SAI';
+        }
+
+        const optionsHtml = q.options.map((opt, oIdx) => {
+            let optClass = 'opt-btn disabled';
+            let noteTag = '';
+            if (opt.isCorrect) {
+                optClass += ' correct-answer';
+                noteTag = ' <strong style="margin-left:auto;font-size:0.82rem;">(Đáp án đúng)</strong>';
+            } else if (q.userChoice === oIdx && !opt.isCorrect) {
+                optClass += ' wrong-answer';
+                noteTag = ' <strong style="margin-left:auto;font-size:0.82rem;">(Đáp án bạn đã chọn)</strong>';
+            }
+            return `
+                <div class="${optClass}">
+                    <span class="opt-label">${labels[oIdx]}</span>
+                    <span style="flex:1;">${opt.text}</span>
+                    ${noteTag}
+                </div>
+            `;
+        }).join('');
+
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+            <div class="q-header">
+                <span class="q-number">Câu ${q.number}</span>
+                <span class="q-status ${statusClass}">${statusText}</span>
+            </div>
+            <div class="q-text">${q.qText}</div>
+            <div class="options-grid">
+                ${optionsHtml}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function filterResultQuestions(type) {
+    document.getElementById('filter-all').className = type === 'all' ? 'btn btn-primary' : 'btn btn-outline';
+    document.getElementById('filter-wrong').className = type === 'wrong' ? 'btn btn-primary' : 'btn btn-outline';
+    document.getElementById('filter-correct').className = type === 'correct' ? 'btn btn-primary' : 'btn btn-outline';
+    renderExamReviewList(type);
+}
+
+// Khởi chạy ứng dụng khi tải trang
+window.addEventListener('DOMContentLoaded', () => {
+    initDatabase();
+    loadReviewBatch();
+});
+</script>
+</body>
+</html>
